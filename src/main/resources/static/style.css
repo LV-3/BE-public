@@ -1,0 +1,73 @@
+/* style.css */
+
+/* 전체 페이지 스타일 */
+body {
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* 컨테이너 스타일 */
+.container {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 50px auto;
+    max-width: 800px;
+    padding: 20px;
+}
+
+/* 제목 스타일 */
+h2 {
+    color: #333;
+}
+
+/* 메뉴 항목 스타일 */
+p {
+    margin: 10px 0;
+}
+
+a {
+    text-decoration: none;
+    color: #007bff;
+    margin-right: 10px;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #0056b3;
+}
+
+/* 버튼 스타일 */
+a.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+a.button:hover {
+    background-color: #0056b3;
+}
+
+/* 네비게이션 메뉴 스타일 */
+.nav-menu {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    margin: 0;
+}
+
+.nav-menu li {
+    margin-right: 20px;
+}
+
+/* 추가 스타일링을 원하는 요소에 스타일을 적용하세요. */
