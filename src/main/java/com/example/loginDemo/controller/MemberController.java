@@ -55,7 +55,7 @@ public class MemberController {
         joinRequestDto.setEmail(form.getEmail());
         joinRequestDto.setPassword(form.getPassword());
 
-        //제대로 들어갔는지 확인용
+        //제대로 들어갔는지 확인
         System.out.println("memberEmail = " + joinRequestDto.getEmail());
 //        System.out.println("memberUsername = " + joinRequestDto.getUsername());
         System.out.println("memberPassword = " + joinRequestDto.getPassword());
