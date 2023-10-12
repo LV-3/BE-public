@@ -1,6 +1,9 @@
 package com.example.loginDemo.dto;
 
 import com.example.loginDemo.domain.Member;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
 
@@ -15,10 +18,14 @@ public class JoinRequestDto {
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-//    @Column(nullable = false, unique = true)
+    //    @Column(nullable = false, unique = true)
 //    private String username;
+
     private String email;
+
+
     private String password;
+
     private String genre1;
     private String genre2;
     private String genre3;

@@ -20,5 +20,6 @@ public class Movie {
     private String country;
     private String genre;
     private String director;
+    private String posterurl;
 
 }

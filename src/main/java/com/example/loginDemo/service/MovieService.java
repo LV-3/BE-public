@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,5 +20,9 @@ public class MovieService {
     public List<Movie> getAllMovies(){
         return movieRepository.findAll();
     }
+//    public List<String> getAllposterUrls(){
+//        List<String> allPosterUrls = new ArrayList<>();
+//        allPosterUrls.add(movieRepository.findById())
+//    }
 
 }

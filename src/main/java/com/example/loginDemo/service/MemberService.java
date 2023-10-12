@@ -19,8 +19,9 @@ public class MemberService {
     public MemberService(MemberRepository memberRepository) {
         //memberRepository를 직접 여기서 생성하는 게 아니라
         //외부에서 넣어주도록 코드 바꿔쥬기(???? 확인 필요 10.5)
+
         //MemberRepository인터페이스의 구현체인 MemoryMemberRepository를
-        //스프링컨테이너에서 꺼내서 Service에 주입해줌
+        //스프링컨테이너에서 꺼내서 Service에 주입해줌<이거 강의 필긴데,,,뭔소리더라
         this.memberRepository = memberRepository;
     }
 
@@ -39,7 +40,7 @@ public class MemberService {
         return joinRequestDto.getEmail(); //일단 임의대로 아이디 반환하기
     }
 
-    // 같은 이름 가진 중복회원은 안받겠다
+    // 같은 이메일 가진 중복회원은 안 받겠다
     private void validateDuplicateMember(JoinRequestDto joinRequestDto) { // 중복 회원 검증
         memberRepository.findByEmail(joinRequestDto.getEmail()) // Optional member 나옴
                 .ifPresent(m -> { //result가 null이 아니면 이하 로직 동작(ifPresent는 Optional이라 가능한 것)

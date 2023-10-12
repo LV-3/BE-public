@@ -5,9 +5,11 @@ import com.example.loginDemo.dto.JoinRequestDto;
 import com.example.loginDemo.dto.LoginRequestDto;
 import com.example.loginDemo.service.MemberService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,29 +51,33 @@ public class MemberController {
     }
 
     @PostMapping("/members/new") // url이 똑같아도 form으로 데이터 넘어오면 post라서 얘가 선택됨
-    public String create(MemberForm form, @RequestParam("selectGenre1") Optional selectGenre1, @RequestParam( "selectGenre2") Optional selectGenre2, @RequestParam( "selectGenre3") Optional selectGenre3) {
-        JoinRequestDto joinRequestDto = new JoinRequestDto();
+    public String create(@Valid MemberForm form, @RequestParam("selectGenre1") Optional selectGenre1, @RequestParam( "selectGenre2") Optional selectGenre2, @RequestParam( "selectGenre3") Optional selectGenre3, Errors errors) {
+        if (errors.hasErrors()) {
+            return "redirect:/";
+        } else {
+            JoinRequestDto joinRequestDto = new JoinRequestDto();
 //        joinRequestDto.setUsername(form.getUsername());
-        joinRequestDto.setEmail(form.getEmail());
-        joinRequestDto.setPassword(form.getPassword());
+            joinRequestDto.setEmail(form.getEmail());
+            joinRequestDto.setPassword(form.getPassword());
 
-        //제대로 들어갔는지 확인
-        System.out.println("memberEmail = " + joinRequestDto.getEmail());
+            //제대로 들어갔는지 확인
+            System.out.println("memberEmail = " + joinRequestDto.getEmail());
 //        System.out.println("memberUsername = " + joinRequestDto.getUsername());
-        System.out.println("memberPassword = " + joinRequestDto.getPassword());
+            System.out.println("memberPassword = " + joinRequestDto.getPassword());
 
-        System.out.println(selectGenre1);
-        System.out.println(selectGenre2);
-        System.out.println(selectGenre3);
+            System.out.println(selectGenre1);
+            System.out.println(selectGenre2);
+            System.out.println(selectGenre3);
 
-        selectGenre1.ifPresent(g -> joinRequestDto.setGenre1(g.toString()));
-        selectGenre2.ifPresent(g -> joinRequestDto.setGenre2(g.toString()));
-        selectGenre3.ifPresent(g -> joinRequestDto.setGenre3(g.toString()));
+            selectGenre1.ifPresent(g -> joinRequestDto.setGenre1(g.toString()));
+            selectGenre2.ifPresent(g -> joinRequestDto.setGenre2(g.toString()));
+            selectGenre3.ifPresent(g -> joinRequestDto.setGenre3(g.toString()));
 
 
-        memberService.join(joinRequestDto);
+            memberService.join(joinRequestDto);
 
-        return "home";
+            return "home";
+        }
     }
 
 

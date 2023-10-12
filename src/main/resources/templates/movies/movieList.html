@@ -20,7 +20,8 @@
                 <td th:text="${movie.country}"></td>
                 <td th:text="${movie.genre}"></td>
                 <td th:text="${movie.director}"></td>
-
+<!--                posterUrl로 했더니 얘만 화면에 출력되지 않는 문제 있었음 -> 이름 바꿔서 해결 (왜?)-->
+                <td th:text="${movie.posterurl}"></td>
             </tr>
             </tbody>
         </table>
