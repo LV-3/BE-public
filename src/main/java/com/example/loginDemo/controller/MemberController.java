@@ -4,6 +4,7 @@ import com.example.loginDemo.domain.Member;
 import com.example.loginDemo.dto.JoinRequestDto;
 import com.example.loginDemo.dto.LoginRequestDto;
 import com.example.loginDemo.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,9 @@ public class MemberController {
     @PostMapping("/members/new") // url이 똑같아도 form으로 데이터 넘어오면 post라서 얘가 선택됨
     public String create(@Valid MemberForm form, @RequestParam("selectGenre1") Optional selectGenre1, @RequestParam( "selectGenre2") Optional selectGenre2, @RequestParam( "selectGenre3") Optional selectGenre3, Errors errors) {
         if (errors.hasErrors()) {
-            return "redirect:/";
+            System.out.println("회원가입 실패");
+            //유효성 검사 제대로 되나 찍어보고 싶은데 html자체 기능으로 email 검사해줘서 회원가입 버튼이 안 눌림(231012)
+            return "redirect:/"; //231012 이거 안됨ㅎ
         } else {
             JoinRequestDto joinRequestDto = new JoinRequestDto();
 //        joinRequestDto.setUsername(form.getUsername());
@@ -87,12 +90,17 @@ public class MemberController {
     }
 
     @PostMapping("/member/login")
-    public String login(@ModelAttribute LoginRequestDto loginRequestDto, HttpSession session) {
+    public String login(@ModelAttribute LoginRequestDto loginRequestDto, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.setMaxInactiveInterval(-1);//세션 유지시간 무한대
+        //로그아웃 시 invalidate() 이용
+
         LoginRequestDto loginResult = memberService.login(loginRequestDto);
         if (loginResult != null) { // login의 리턴타입 Optional로 고쳐서 isNullable로 수정 고려(231005)
             session.setAttribute("loginEmail", loginResult.getEmail());
+
             System.out.println("로그인 성공");
-            return "afterlogin";
+            return "redirect:/movies/posters";
         } else {
             System.out.println("로그인 실패");
             return "members/login"; // throw Exception으로 바꿀 수 있음(231005)
