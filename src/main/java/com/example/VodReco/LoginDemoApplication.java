@@ -1,4 +1,4 @@
-package com.example.loginDemo;
+package com.example.VodReco;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

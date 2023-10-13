@@ -1,6 +1,6 @@
-package com.example.loginDemo.dto;
+package com.example.VodReco.dto;
 
-import com.example.loginDemo.domain.Member;
+import com.example.VodReco.domain.Member;
 import lombok.*;
 
 @Getter

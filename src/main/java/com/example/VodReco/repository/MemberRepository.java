@@ -1,6 +1,6 @@
-package com.example.loginDemo.repository;
+package com.example.VodReco.repository;
 
-import com.example.loginDemo.domain.Member;
+import com.example.VodReco.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

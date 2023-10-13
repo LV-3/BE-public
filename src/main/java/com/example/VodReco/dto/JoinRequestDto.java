@@ -1,35 +1,34 @@
-package com.example.loginDemo.dto;
+package com.example.VodReco.dto;
 
-import com.example.loginDemo.domain.Member;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import com.example.VodReco.domain.Member;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.*;
-import org.springframework.boot.autoconfigure.mail.MailProperties;
-
-import java.util.List;
-import java.util.Map;
 
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
+//@NoArgsConstructor
 public class JoinRequestDto {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    //    @Column(nullable = false, unique = true)
-//    private String username;
 
     private String email;
 
-
     private String password;
 
-    private String genre1;
-    private String genre2;
-    private String genre3;
+    private Integer genre1;
 
+    private Integer genre2;
+    private Integer genre3;
+
+    public JoinRequestDto(){
+        genre1 = 0;
+        genre2 = 0;
+        genre3 = 0;
+    }
 
 
     public Member toMemberEntity(){
@@ -45,7 +44,7 @@ public class JoinRequestDto {
         return build;
     }
     @Builder
-    public JoinRequestDto(Integer id, String email,String password, String genre1, String genre2, String genre3){
+    public JoinRequestDto(Integer id, String email,String password, Integer genre1, Integer genre2, Integer genre3){
         this.id = id;
         this.email = email;
 //        this.username = username;

@@ -4,52 +4,18 @@
   <meta charset="UTF-8">
   <title>영화 포스터와 평점</title>
   <link rel="stylesheet" type="text/css" href="/poster.css">
-<!--  스타일시트 링크 수정 필요-->
-
 </head>
 <body>
 <div class="container">
   <h3>영화 포스터 목록</h3>
   <div class="poster-list">
     <!-- 영화 포스터 목록을 동적으로 생성 -->
-    <div class="movie-poster" th:each="movie : ${movies}">
-      <img th:src="${movie.posterurl}" alt="Movie Poster" th:attr="data-movie-title=${movie.title}" />
+    <div class="movie-poster" th:each="movie : ${movies}" th:attr="data-movie-mcode=${movie.mcode}">
+      <a th:href="@{'/movies/' + ${movie.mcode}}"> <!-- 링크로 수정 -->
+        <img th:src="${movie.posterurl}" alt="Movie Poster" th:attr="data-movie-title=${movie.title}" />
+      </a>
     </div>
   </div>
 </div>
-
-<div class="popup" id="rating-popup">
-  <h3>평점 매기기</h3>
-  <form action="/rate-movie" method="post">
-    <input type="hidden" name="movieId" id="popup-movie-id" value="" />
-    <input type="hidden" name="movieTitle" id="popup-movie-title" value="" /> <!-- 영화 제목을 숨겨진 필드로 추가 -->
-    <label for="rating">평점:</label>
-    <input type="number" id="rating" name="rating" min="1" max="5" required />
-    <button type="submit">평점 제출</button>
-  </form>
-  <button id="close-popup">닫기</button>
-</div>
-
-<script>
-  const posters = document.querySelectorAll('.movie-poster');
-  const ratingPopup = document.getElementById('rating-popup');
-  const closePopup = document.getElementById('close-popup');
-  const popupMovieId = document.getElementById('popup-movie-id');
-  const popupMovieTitle = document.getElementById('popup-movie-title'); // 영화 제목 필드
-
-  posters.forEach(poster => {
-    poster.addEventListener('click', () => {
-      const movieId = poster.getAttribute('data-movie-id');
-      const movieTitle = poster.getAttribute('data-movie-title'); // 영화 제목
-      popupMovieId.value = movieId;
-      popupMovieTitle.value = movieTitle; // 영화 제목 설정
-      ratingPopup.style.display = 'block';
-    });
-  });
-
-  closePopup.addEventListener('click', () => {
-    ratingPopup.style.display = 'none';
-  });
-</script>
 </body>
 </html>
