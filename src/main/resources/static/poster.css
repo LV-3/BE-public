@@ -9,16 +9,17 @@
 .poster-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 500px;
+    gap: 20px; /* 사진 사이 간격 조절 */
+    justify-content: space-between; /* 사진을 화면 가로 방향으로 균등하게 배치 */
 }
 
 .movie-poster {
     cursor: pointer;
-    width: 10px;
-    margin-bottom: 20px; /* 포스터 아래 간격 조절 */
+    width: calc(20% - 20px); /* 사진 5개를 가로 방향으로 균등하게 배치하려면 20%로 설정 */
+    margin-bottom: 20px;
 }
 
-/* 팝업 스타일 */
+/* 팝업 스타일 (만약 팝업을 사용하고 싶지 않다면 이 부분은 제거해도 됩니다) */
 .popup {
     display: none;
     position: fixed;

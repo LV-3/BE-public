@@ -1,4 +1,4 @@
-package com.example.loginDemo.domain;
+package com.example.VodReco.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,14 +18,14 @@ public class Member {
     @Column
     private String password;
     @Column
-    private String genre1;
+    private Integer genre1;
     @Column
-    private String genre2;
+    private Integer genre2;
     @Column
-    private String genre3;
+    private Integer genre3;
 
     @Builder
-    public Member(Integer id, String email, String password, String genre1, String genre2, String genre3) {
+    public Member(Integer id, String email, String password, Integer genre1,Integer genre2, Integer genre3) {
         this.id = id;
         this.email = email;
 //        this.username = username;

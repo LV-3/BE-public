@@ -1,4 +1,4 @@
-package com.example.loginDemo.domain;
+package com.example.VodReco.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

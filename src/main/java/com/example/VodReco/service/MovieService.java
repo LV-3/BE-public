@@ -1,12 +1,10 @@
-package com.example.loginDemo.service;
+package com.example.VodReco.service;
 
-import com.example.loginDemo.domain.Movie;
-import com.example.loginDemo.repository.MovieRepository;
-import lombok.Setter;
+import com.example.VodReco.domain.Movie;
+import com.example.VodReco.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,9 +18,11 @@ public class MovieService {
     public List<Movie> getAllMovies(){
         return movieRepository.findAll();
     }
-//    public List<String> getAllposterUrls(){
-//        List<String> allPosterUrls = new ArrayList<>();
-//        allPosterUrls.add(movieRepository.findById())
-//    }
+
+
+    // mcode로 movie 조회
+    public Movie getMovie(String mcode) {
+        return movieRepository.findByMcode(mcode);
+    }
 
 }

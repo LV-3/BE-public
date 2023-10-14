@@ -1,9 +1,9 @@
-package com.example.loginDemo.service;
+package com.example.VodReco.service;
 
-import com.example.loginDemo.domain.Member;
-import com.example.loginDemo.dto.JoinRequestDto;
-import com.example.loginDemo.dto.LoginRequestDto;
-import com.example.loginDemo.repository.MemberRepository;
+import com.example.VodReco.domain.Member;
+import com.example.VodReco.dto.JoinRequestDto;
+import com.example.VodReco.dto.LoginRequestDto;
+import com.example.VodReco.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,7 +34,6 @@ public class MemberService {
         validateDuplicateMember(joinRequestDto);
         //Ctrl+Alt+V가 리턴 만들어주는 단축키
         System.out.println("joinDto 제대로 들어오는지 확인 =" + joinRequestDto.getEmail()); // 여기까지는 나옴 -> toMemberEntity가 문제다
-
         System.out.println("이메일 나오나 확인 =" + joinRequestDto.toMemberEntity().getEmail());
         memberRepository.save(joinRequestDto.toMemberEntity());
         return joinRequestDto.getEmail(); //일단 임의대로 아이디 반환하기
@@ -46,6 +45,21 @@ public class MemberService {
                 .ifPresent(m -> { //result가 null이 아니면 이하 로직 동작(ifPresent는 Optional이라 가능한 것)
                     throw new IllegalStateException("이미 존재하는 회원입니다.");
                 });//추후 예외용 페이지 만들어야 함(231005)
+    }
+
+
+    //장르 2개 이상 선택
+    public boolean validateGenres(Optional<Integer>[] optionals) {
+        int count = 0;
+        for (Optional<Integer> optional : optionals){
+            if (optional.isPresent()) {
+                count++;
+            }
+        }
+        if (count >= 2) {
+            return true;
+        }
+        return false;
     }
 
 
