@@ -81,20 +81,23 @@ public class VodController {
         WishRating wishRating = new WishRating();
 
         if (closeVodDetail.getWish() || closeVodDetail.getRating() != 0) {
+            wishRating.setVcode(vcode);
             wishRating.setWish(1);
             wishRating.setRating(closeVodDetail.getRating());
-
-            wishRating.setVcode(vcode);
-
+//            확인
+            System.out.println("평점 = " + wishRating.getRating());
+            wishRating.setUserEmail("1@1.com");
+            vodService.saveWishRating(wishRating);
             //session에서 email 꺼내오기
-            HttpServletRequest session = (HttpServletRequest) request.getSession(false);
-            if (session != null) {
-                String useremail = (String) session.getAttribute("useremail");
-                if (useremail != null) {
-                    wishRating.setUserEmail(useremail);
-                    vodService.saveWishRating(wishRating);
-                }
-            }
+//            HttpServletRequest session = (HttpServletRequest) request.getSession(false);
+//            if (session != null) {
+//                String useremail = (String) session.getAttribute("useremail");
+//                if (useremail != null) {
+//                    wishRating.setUserEmail(useremail);
+//                    vodService.saveWishRating(wishRating);
+//
+//                }
+//            }
             //문제점: 평점은 0, 찜은 false가 기본값인데 둘 중 하나만 하고 나가버리면 평점이 0으로 들어가는 거 아닌가?
             //알아서 0과 false는 빼고 집어넣겠지??
         }
