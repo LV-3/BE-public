@@ -29,14 +29,15 @@ public class MemberService {
     /**
      * 회원 가입
      */
-    public String join(JoinRequestDto joinRequestDto){
+
+    //리턴 void로 수정(231014)
+    public void join(JoinRequestDto joinRequestDto){
         // 같은 이름이 있는 중복 회원은 X
         validateDuplicateMember(joinRequestDto);
         //Ctrl+Alt+V가 리턴 만들어주는 단축키
         System.out.println("joinDto 제대로 들어오는지 확인 =" + joinRequestDto.getEmail()); // 여기까지는 나옴 -> toMemberEntity가 문제다
         System.out.println("이메일 나오나 확인 =" + joinRequestDto.toMemberEntity().getEmail());
         memberRepository.save(joinRequestDto.toMemberEntity());
-        return joinRequestDto.getEmail(); //일단 임의대로 아이디 반환하기
     }
 
     // 같은 이메일 가진 중복회원은 안 받겠다
@@ -56,26 +57,16 @@ public class MemberService {
                 count++;
             }
         }
-        if (count >= 2) {
-            return true;
-        }
-        return false;
+        return (count >= 2);
     }
 
 
     //로그인
     public LoginRequestDto login(LoginRequestDto loginRequestDto) {
         Optional<Member> byEmail = memberRepository.findByEmail(loginRequestDto.getEmail());
-//        System.out.println(member.getEmail());
-//        System.out.println(member.getUsername()); // null
-//        System.out.println(member.getPassword()); // null -> 의문점: 로그인 시에는 이메일+비번밖에 안 들어오는데 어떻게 객체 member를 login메서드의 인풋으로 받는 거지
         if (byEmail.isPresent()) {
-//            System.out.println("이메일 조회 가능"); // 여기까지는 들어오는 거 확인됨
-//            System.out.println(byEmail.get().getEmail()); // 여기도 들어옴
-//            System.out.println(byEmail.get().getPassword()); // 들어옴: getPassword 메서드는 정상
-//            System.out.println(member.getPassword()); // 이게 null리턴함 ^^ 왜????????왜???????
+
             if (byEmail.get().getPassword().equals(loginRequestDto.getPassword())) {
-//                System.out.println("비밀번호 조회 가능"); // 안들어옴~}
                  return loginRequestDto;
 
             } else {

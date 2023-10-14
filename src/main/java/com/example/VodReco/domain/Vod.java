@@ -8,15 +8,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "movies") //DB에 존재하는 테이블과 매핑해서 데이터 가져오는 어노테이션
+@Table(name = "vods") //DB에 존재하는 테이블과 매핑해서 데이터 가져오는 어노테이션
                         //DB의 컬럼명과 정확히 같게 설정해야 함
 @Getter
 @Setter
 @NoArgsConstructor
-public class Movie {
+public class Vod {
     @Id
     private String title;
-    private String mcode;
+    private String vcode;
     private String country;
     private String genre;
     private String director;
