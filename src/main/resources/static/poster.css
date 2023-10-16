@@ -7,15 +7,14 @@
 
 /* 영화 포스터 목록 스타일 */
 .poster-list {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); /* 컬럼 크기를 조절하여 자동으로 각 사진의 크기를 조절합니다. */
     gap: 20px; /* 사진 사이 간격 조절 */
-    justify-content: space-between; /* 사진을 화면 가로 방향으로 균등하게 배치 */
 }
 
 .movie-poster {
     cursor: pointer;
-    width: calc(20% - 20px); /* 사진 5개를 가로 방향으로 균등하게 배치하려면 20%로 설정 */
+    width: 100%; /* 각 사진의 너비를 100%로 설정하여 각각을 비슷한 크기로 조절합니다. */
     margin-bottom: 20px;
 }
 
