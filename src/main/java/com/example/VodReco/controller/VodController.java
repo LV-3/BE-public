@@ -1,9 +1,8 @@
 package com.example.VodReco.controller;
 
-import com.example.VodReco.domain.CloseVodDetail;
 import com.example.VodReco.domain.Vod;
-import com.example.VodReco.domain.Wish;
-import com.example.VodReco.domain.WishRating;
+import com.example.VodReco.domain.UserWish;
+import com.example.VodReco.domain.VodDetailWish;
 import com.example.VodReco.service.VodService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,22 +74,22 @@ public class VodController {
     // 엔드포인트 2개 따로 postmapping해서 각기 다른 repository에 저장, 테이블 분리
 
 
-    //찜: 기본값 false(테이블 분리하면 기본값 필요 없을 수도), 찜 누르면 true
+    //찜: 1
     //평점: 1~5
-    //{"wish":true} vcode는 이쪽에 있어서 안 받아도 됨
-    //{"rating":1~5}
 
     //wish
+    //테스트 완료
     @PostMapping(value = "/{vcode}/wish")
-    public void wish(@PathVariable("vcode") String vcode, @RequestBody CloseVodDetail closeVodDetail, HttpServletRequest request) {
-        Wish wish = new Wish();
-
-            wish.setVcode(vcode);
-            wish.setWish(1);
+    //@RequestBody가 들어오는 json데이터 미리 선언한 엔터티 객체로 매핑해서 들어오게 해줌
+    //{"vcode":"20220620", "wish":1} 형식으로 데이터 받아서 vodDetailWish객체로 받기(내부 필드 vcode, wish)
+    public UserWish wish(@PathVariable("vcode") String vcode, @RequestBody VodDetailWish vodDetailWish, HttpServletRequest request) {
+        UserWish userWish = UserWish.builder().userEmail("1@1.com").vcode(vodDetailWish.getVcode()).wish(vodDetailWish.getWish()).build();
 //            확인
-            System.out.println("찜 = " + wish.getWish());
-            wish.setUserEmail("1@1.com");
-            vodService.saveWish(wish);
+        System.out.println("찜 = " + userWish.getWish());
+        vodService.saveWish(userWish);
+//        API 테스트용 리턴
+//        return userWish;
+
             //session에서 email 꺼내오기
 //            HttpServletRequest session = (HttpServletRequest) request.getSession(false);
 //            if (session != null) {
@@ -106,30 +105,29 @@ public class VodController {
             //알아서 0과 false는 빼고 집어넣겠지??
     }
 
-    @PostMapping(value = "/{vcode}/close")
-    // 프론트에서 localstorage(sessionstorage?)에 저장한 뒤 close이벤트 시 전달받기
-    public void wishRating(@PathVariable("vcode") String vcode, @RequestBody CloseVodDetail closeVodDetail, HttpServletRequest request) {
-        WishRating wishRating = new WishRating();
-
-        if (closeVodDetail.getWish() || closeVodDetail.getRating() != 0) {
-            wishRating.setVcode(vcode);
-            wishRating.setWish(1);
-            wishRating.setRating(closeVodDetail.getRating());
-//            확인
-            System.out.println("평점 = " + wishRating.getRating());
-            wishRating.setUserEmail("1@1.com");
-            vodService.saveWishRating(wishRating);
-            //session에서 email 꺼내오기
-//            HttpServletRequest session = (HttpServletRequest) request.getSession(false);
-//            if (session != null) {
-//                String useremail = (String) session.getAttribute("useremail");
-//                if (useremail != null) {
-//                    wishRating.setUserEmail(useremail);
-//                    vodService.saveWishRating(wishRating);
+//    @PostMapping(value = "/{vcode}/close")
+//    // 프론트에서 localstorage(sessionstorage?)에 저장한 뒤 close이벤트 시 전달받기
+//    public void wishRating(@PathVariable("vcode") String vcode, @RequestBody CloseVodDetail closeVodDetail, HttpServletRequest request) {
+//        WishRating wishRating = new WishRating();
 //
-//                }
-//            }
+//        if (closeVodDetail.getWish() || closeVodDetail.getRating() != 0) {
+//            wishRating.setVcode(vcode);
+//            wishRating.setWish(1);
+//            wishRating.setRating(closeVodDetail.getRating());
+////            확인
+//            System.out.println("평점 = " + wishRating.getRating());
+//            wishRating.setUserEmail("1@1.com");
+//            vodService.saveWishRating(wishRating);
+//            //session에서 email 꺼내오기
+////            HttpServletRequest session = (HttpServletRequest) request.getSession(false);
+////            if (session != null) {
+////                String useremail = (String) session.getAttribute("useremail");
+////                if (useremail != null) {
+////                    wishRating.setUserEmail(useremail);
+////                    vodService.saveWishRating(wishRating);
+////
+////                }
+////            }
 
         }
-    }
-}
+

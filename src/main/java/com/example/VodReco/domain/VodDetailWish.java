@@ -1,15 +1,19 @@
 package com.example.VodReco.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Getter;
 import lombok.Setter;
+
+//프론트에서 들어오는 찜 데이터
+//{wish:true}
 
 @Getter
 @Setter
 public class VodDetailWish {
-    private boolean wish;
+    @Column(nullable = false, unique = true)
+    private String vcode;
+    private Integer wish;
 
-    //boolean타입은 getter가 is__ 이름으로 만들어짐
-    public boolean getWish() {
-        return this.wish;
-    }
 }
