@@ -5,9 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CloseVodDetail {
+public class VodDetailWish {
     private boolean wish;
-    private Integer rating;
 
     //boolean타입은 getter가 is__ 이름으로 만들어짐
     public boolean getWish() {

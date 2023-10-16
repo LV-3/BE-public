@@ -26,6 +26,8 @@ public class MemberController {
     }
 
 
+//    1. View
+
     //join
     @GetMapping("/members/new")
     public String createForm() {
@@ -111,3 +113,5 @@ public class MemberController {
         return "members/memberList";
     }
 }
+
+

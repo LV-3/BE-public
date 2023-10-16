@@ -36,8 +36,8 @@ public class MemberService {
         validateDuplicateMember(joinRequestDto);
         //Ctrl+Alt+V가 리턴 만들어주는 단축키
         System.out.println("joinDto 제대로 들어오는지 확인 =" + joinRequestDto.getEmail()); // 여기까지는 나옴 -> toMemberEntity가 문제다
-        System.out.println("이메일 나오나 확인 =" + joinRequestDto.toMemberEntity().getEmail());
-        memberRepository.save(joinRequestDto.toMemberEntity());
+        System.out.println("이메일 나오나 확인 =" + joinRequestDto.toMemberEntity(joinRequestDto).getEmail());
+        memberRepository.save(joinRequestDto.toMemberEntity(joinRequestDto));
     }
 
     // 같은 이메일 가진 중복회원은 안 받겠다

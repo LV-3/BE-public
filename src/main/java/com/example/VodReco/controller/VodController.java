@@ -2,16 +2,15 @@ package com.example.VodReco.controller;
 
 import com.example.VodReco.domain.CloseVodDetail;
 import com.example.VodReco.domain.Vod;
+import com.example.VodReco.domain.Wish;
 import com.example.VodReco.domain.WishRating;
 import com.example.VodReco.service.VodService;
-import io.micrometer.common.lang.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
-import java.util.Map;
 
 
 // 1. view
@@ -71,10 +70,42 @@ public class VodController {
     }
 
 
-    //기본값 false, 찜 누르면 true
-    //기본값 0, 평점 매기면 1~5
+
+    //찜 <-> 평점 분리
+    // 엔드포인트 2개 따로 postmapping해서 각기 다른 repository에 저장, 테이블 분리
+
+
+    //찜: 기본값 false(테이블 분리하면 기본값 필요 없을 수도), 찜 누르면 true
+    //평점: 1~5
     //{"wish":true} vcode는 이쪽에 있어서 안 받아도 됨
     //{"rating":1~5}
+
+    //wish
+    @PostMapping(value = "/{vcode}/wish")
+    public void wish(@PathVariable("vcode") String vcode, @RequestBody CloseVodDetail closeVodDetail, HttpServletRequest request) {
+        Wish wish = new Wish();
+
+            wish.setVcode(vcode);
+            wish.setWish(1);
+//            확인
+            System.out.println("찜 = " + wish.getWish());
+            wish.setUserEmail("1@1.com");
+            vodService.saveWish(wish);
+            //session에서 email 꺼내오기
+//            HttpServletRequest session = (HttpServletRequest) request.getSession(false);
+//            if (session != null) {
+//                String useremail = (String) session.getAttribute("useremail");
+//                if (useremail != null) {
+//                    wishRating.setUserEmail(useremail);
+//                    vodService.saveWishRating(wishRating);
+//
+//                }
+//            }
+
+            //문제점: 평점은 0, 찜은 false가 기본값인데 둘 중 하나만 하고 나가버리면 평점이 0으로 들어가는 거 아닌가?
+            //알아서 0과 false는 빼고 집어넣겠지??
+    }
+
     @PostMapping(value = "/{vcode}/close")
     // 프론트에서 localstorage(sessionstorage?)에 저장한 뒤 close이벤트 시 전달받기
     public void wishRating(@PathVariable("vcode") String vcode, @RequestBody CloseVodDetail closeVodDetail, HttpServletRequest request) {
@@ -98,8 +129,7 @@ public class VodController {
 //
 //                }
 //            }
-            //문제점: 평점은 0, 찜은 false가 기본값인데 둘 중 하나만 하고 나가버리면 평점이 0으로 들어가는 거 아닌가?
-            //알아서 0과 false는 빼고 집어넣겠지??
+
         }
     }
 }

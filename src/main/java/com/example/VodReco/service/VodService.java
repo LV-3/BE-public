@@ -35,7 +35,7 @@ public class VodService {
         return posterUrls;
     }
 
-    // mcode로 Vod 조회
+    // vcode로 Vod 조회
     public Vod getVod(String vcode) {
         return vodRepository.findByVcode(vcode);
     }
