@@ -3,10 +3,8 @@ package com.example.VodReco.service;
 import com.example.VodReco.domain.UserRating;
 import com.example.VodReco.domain.UserWish;
 import com.example.VodReco.domain.Vod;
-import com.example.VodReco.domain.WishRating;
 import com.example.VodReco.repository.RatingRepository;
 import com.example.VodReco.repository.VodRepository;
-import com.example.VodReco.repository.WishRatingRepository;
 import com.example.VodReco.repository.WishRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,15 +44,5 @@ public class VodService {
         return vodRepository.findByVcode(vcode);
     }
 
-
-    // 컬럼: useremail / vcode / wish(0or1)
-    public void saveWish(UserWish userWish) {
-        wishRepository.save(userWish);
-    }
-
-    //컬럼: usermail/ vcode / rating(1~5)
-    public void saveRating(UserRating userRating) {
-        ratingRepository.save(userRating);
-    }
 
 }

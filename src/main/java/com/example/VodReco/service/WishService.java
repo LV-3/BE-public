@@ -1,6 +1,6 @@
 package com.example.VodReco.service;
 
-import com.example.VodReco.repository.WishRatingRepository;
+import com.example.VodReco.domain.UserWish;
 import com.example.VodReco.repository.WishRepository;
 import org.springframework.stereotype.Service;
 
@@ -10,5 +10,10 @@ public class WishService {
 
     public WishService(WishRepository wishRepository) {
         this.wishRepository = wishRepository;
+    }
+
+    // 컬럼: useremail / vcode / wish(0or1)
+    public void saveWish(UserWish userWish) {
+        wishRepository.save(userWish);
     }
 }

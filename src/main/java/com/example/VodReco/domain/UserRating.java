@@ -21,10 +21,10 @@ public class UserRating {
 
 
     @Builder
-    public UserRating(String userEmail, String vcode, Integer wish) {
+    public UserRating(String userEmail, String vcode, Integer rating) {
         this.userEmail = userEmail;
         this.vcode = vcode;
-        this.rating = wish;
+        this.rating = rating;
     }
 
 }

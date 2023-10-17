@@ -6,8 +6,8 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Getter;
 import lombok.Setter;
 
-//프론트에서 들어오는 찜 데이터
-//{wish:true}
+//프론트에서 들어오는 찜 데이터 매핑
+//{"vcode":"20200620", "rating":1}
 
 @Getter
 @Setter
