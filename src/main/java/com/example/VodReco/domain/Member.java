@@ -5,14 +5,11 @@ import lombok.*;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
+//@NoArgsConstructor 기본생성자 직접 작성함
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-//    @Column
-//    private String username;
+    private int id;
     @Column(nullable = false, unique = true)
     private String email;
     @Column
@@ -24,14 +21,23 @@ public class Member {
     @Column
     private Integer genre3;
 
-    @Builder
-    public Member(Integer id, String email, String password, Integer genre1,Integer genre2, Integer genre3) {
+     public Member(){
+    }
+
+
+     @Builder
+    public Member(int id, String email, String password, Integer genre1, Integer genre2, Integer genre3) {
         this.id = id;
         this.email = email;
-//        this.username = username;
         this.password = password;
         this.genre1 = genre1;
         this.genre2 = genre2;
         this.genre3 = genre3;
     }
+
 }
+
+
+
+
+

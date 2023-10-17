@@ -1,17 +1,15 @@
 package com.example.VodReco.controller;
 
-import com.example.VodReco.domain.CloseVodDetail;
-import com.example.VodReco.domain.Vod;
-import com.example.VodReco.domain.WishRating;
+import com.example.VodReco.domain.*;
+import com.example.VodReco.service.RatingService;
 import com.example.VodReco.service.VodService;
-import io.micrometer.common.lang.Nullable;
+import com.example.VodReco.service.WishService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
-import java.util.Map;
 
 
 // 1. view
@@ -51,10 +49,15 @@ import java.util.Map;
 @RequestMapping("/vods")
 public class VodController {
     private final VodService vodService;
+    private final WishService wishService;
+    private final RatingService ratingService;
+
 
     @Autowired
-    public VodController(VodService vodService) {
+    public VodController(VodService vodService, WishService wishService, RatingService ratingService) {
         this.vodService = vodService;
+        this.wishService = wishService;
+        this.ratingService = ratingService;
     }
 
     //메인화면(포스터)
@@ -71,24 +74,28 @@ public class VodController {
     }
 
 
-    //기본값 false, 찜 누르면 true
-    //기본값 0, 평점 매기면 1~5
-    //{"wish":true} vcode는 이쪽에 있어서 안 받아도 됨
-    //{"rating":1~5}
-    @PostMapping(value = "/{vcode}/close")
-    // 프론트에서 localstorage(sessionstorage?)에 저장한 뒤 close이벤트 시 전달받기
-    public void wishRating(@PathVariable("vcode") String vcode, @RequestBody CloseVodDetail closeVodDetail, HttpServletRequest request) {
-        WishRating wishRating = new WishRating();
+    //찜 <-> 평점 분리
+    // 엔드포인트 2개 따로 postmapping해서 각기 다른 repository에 저장, 테이블 분리
 
-        if (closeVodDetail.getWish() || closeVodDetail.getRating() != 0) {
-            wishRating.setVcode(vcode);
-            wishRating.setWish(1);
-            wishRating.setRating(closeVodDetail.getRating());
+
+    //찜: 1
+    //평점: 1~5
+
+    //wish
+    //테스트 완료
+    @PostMapping(value = "/{vcode}/wish")
+    //@RequestBody가 들어오는 json데이터 미리 선언한 엔터티 객체로 매핑해서 들어오게 해줌
+    //{"vcode":"20220620", "wish":1} 형식으로 데이터 받아서 vodDetailWish객체로 받기(내부 필드 vcode, wish)
+    //! vcode까지 프론트에서 받을지 or 서버 거 갖다쓸지 논의 필요
+    public UserWish wish(@PathVariable("vcode") String vcode, @RequestBody VodDetailWish vodDetailWish, HttpServletRequest request) {
+        UserWish userWish = UserWish.builder().userEmail("1@1.com").vcode(vodDetailWish.getVcode()).wish(vodDetailWish.getWish()).build();
 //            확인
-            System.out.println("평점 = " + wishRating.getRating());
-            wishRating.setUserEmail("1@1.com");
-            vodService.saveWishRating(wishRating);
-            //session에서 email 꺼내오기
+        System.out.println("찜 = " + userWish.getWish());
+        wishService.saveWish(userWish);
+//        API 테스트용 리턴
+        return userWish;
+
+        //session에서 email 꺼내오기
 //            HttpServletRequest session = (HttpServletRequest) request.getSession(false);
 //            if (session != null) {
 //                String useremail = (String) session.getAttribute("useremail");
@@ -98,8 +105,35 @@ public class VodController {
 //
 //                }
 //            }
-            //문제점: 평점은 0, 찜은 false가 기본값인데 둘 중 하나만 하고 나가버리면 평점이 0으로 들어가는 거 아닌가?
-            //알아서 0과 false는 빼고 집어넣겠지??
-        }
+
+    }
+
+    //rating
+    //테스트 완료
+    @PostMapping(value = "/{vcode}/rating")
+    //@RequestBody가 들어오는 json데이터 미리 선언한 엔터티 객체로 매핑해서 들어오게 해줌
+    //{"vcode":"20220620", "rating":1~5} 형식으로 데이터 받아서 vodDetailRating객체로 받기(내부 필드 vcode, rating)
+    //! vcode까지 프론트에서 받을지 or 서버 거 갖다쓸지 논의 필요
+    public UserRating rating(@PathVariable("vcode") String vcode, @RequestBody VodDetailRating vodDetailRating, HttpServletRequest request) {
+        UserRating userRating = UserRating.builder().userEmail("1@1.com")
+                .vcode(vodDetailRating.getVcode()).rating(vodDetailRating.getRating()).build();
+//            확인
+        System.out.println("찜 = " + userRating.getRating());
+        ratingService.saveRating(userRating);
+//        API 테스트용 리턴
+        return userRating;
+
+        //session에서 email 꺼내오기
+//            HttpServletRequest session = (HttpServletRequest) request.getSession(false);
+//            if (session != null) {
+//                String useremail = (String) session.getAttribute("useremail");
+//                if (useremail != null) {
+//                    wishRating.setUserEmail(useremail);
+//                    vodService.saveWishRating(wishRating);
+//
+//                }
+//            }
+
     }
 }
+
