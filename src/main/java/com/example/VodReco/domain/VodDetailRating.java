@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class VodDetailRating {
-    @Column(nullable = false, unique = true)
-    private String vcode;
+//    @Column(nullable = false, unique = true)
+//    private String vcode;
     private Integer Rating;
 }
