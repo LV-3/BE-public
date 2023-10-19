@@ -89,7 +89,7 @@ public class VodController {
     @PostMapping(value = "/{vcode}/wish")
     //@RequestBody가 들어오는 json데이터 미리 선언한 엔터티 객체로 매핑해서 들어오게 해줌
     //{"wish":1} 형식으로 데이터 받아서 vodDetailWish객체로 받기(내부 필드 wish)
-    public UserWish wish(@PathVariable("vcode") String vcode, @RequestBody VodDetailWish vodDetailWish, HttpServletRequest request) {
+    public UserWish wish(@PathVariable("vcode") String vcode, @RequestBody VodDetailWish vodDetailWish) {
         UserWish userWish = UserWish.builder().userEmail("1@1.com").vcode(vcode).wish(vodDetailWish.getWish()).build();
 //            확인
         System.out.println("찜 = " + userWish.getWish());
@@ -105,7 +105,7 @@ public class VodController {
     //@RequestBody가 들어오는 json데이터 미리 선언한 엔터티 객체로 매핑해서 들어오게 해줌
     //{"rating":1~5} 형식으로 데이터 받아서 vodDetailRating객체로 받기(내부 필드 rating)
     //! vcode까지 프론트에서 받을지 or 서버 거 갖다쓸지 논의 필요
-    public UserRating rating(@PathVariable("vcode") String vcode, @RequestBody VodDetailRating vodDetailRating, HttpServletRequest request) {
+    public UserRating rating(@PathVariable("vcode") String vcode, @RequestBody VodDetailRating vodDetailRating) {
         UserRating userRating = UserRating.builder().userEmail("1@1.com")
                 .vcode(vcode).rating(vodDetailRating.getRating()).build();
 //            확인
