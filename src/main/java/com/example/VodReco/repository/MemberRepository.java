@@ -11,8 +11,6 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<Member, Integer> {
     Member save(Member member);
 
-    Optional<Member> findById(Integer id);
-
     Optional<Member> findByEmail(String email);
 
     List<Member> findAll();
