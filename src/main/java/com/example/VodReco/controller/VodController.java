@@ -5,7 +5,6 @@ import com.example.VodReco.dto.VodDto;
 import com.example.VodReco.service.RatingServiceImpl;
 import com.example.VodReco.service.VodServiceImpl;
 import com.example.VodReco.service.WishServiceImpl;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,16 +48,16 @@ import org.springframework.web.bind.annotation.*;
 @RestController // = @Controller + @ResponseBody 객체 리턴하면 json으로 만들어줌
 @RequestMapping("/vods")
 public class VodController {
-    private final VodServiceImpl vodService;
-    private final WishServiceImpl wishService;
-    private final RatingServiceImpl ratingService;
+    private final VodServiceImpl vodServiceImpl;
+    private final WishServiceImpl wishServiceImpl;
+    private final RatingServiceImpl ratingServiceImpl;
 
 
     @Autowired
-    public VodController(VodServiceImpl vodService, WishServiceImpl wishService, RatingServiceImpl ratingService) {
-        this.vodService = vodService;
-        this.wishService = wishService;
-        this.ratingService = ratingService;
+    public VodController(VodServiceImpl vodServiceImpl, WishServiceImpl wishServiceImpl, RatingServiceImpl ratingServiceImpl) {
+        this.vodServiceImpl = vodServiceImpl;
+        this.wishServiceImpl = wishServiceImpl;
+        this.ratingServiceImpl = ratingServiceImpl;
     }
 
     //메인화면(포스터) : 보류
@@ -71,7 +70,7 @@ public class VodController {
     //테스트 시 실제DB에 들어있는 vcode 가져올 것
     @GetMapping(value = "/{vcode}")
     public VodDto vodDetail(@PathVariable("vcode") String vcode) {//변하는 값을 얻을 때는 @PathVariable 써야함
-        return this.vodService.getVod(vcode);
+        return this.vodServiceImpl.getVod(vcode);
 
     }
 
@@ -93,7 +92,7 @@ public class VodController {
         UserWish userWish = UserWish.builder().userEmail("1@1.com").vcode(vcode).wish(vodDetailWish.getWish()).build();
 //            확인
         System.out.println("찜 = " + userWish.getWish());
-        wishService.saveWish(userWish);
+        wishServiceImpl.saveWish(userWish);
 //        API 테스트용 리턴
         return userWish;
     }
@@ -110,7 +109,7 @@ public class VodController {
                 .vcode(vcode).rating(vodDetailRating.getRating()).build();
 //            확인
         System.out.println("찜 = " + userRating.getRating());
-        ratingService.saveRating(userRating);
+        ratingServiceImpl.saveRating(userRating);
 //        API 테스트용 리턴
         return userRating;
 
