@@ -71,17 +71,13 @@ public class MemberController {
         joinRequestDto.setSelectedVods(form.getSelectedVods());
 
 
-        // 장르 2개 이상 선택
+        // 장르 2개 이상 선택 -> 리액트에서 처리
 //        if (this.memberServiceImpl.validateGenres(optionals)) {
         memberServiceImpl.join(joinRequestDto);
         //API 테스트용 리턴
         return memberServiceImpl.findOne(joinRequestDto.getEmail()).get();
         }
-//        else{return null;}
     }
-
-
-
 
 
 
