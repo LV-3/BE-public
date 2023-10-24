@@ -3,7 +3,7 @@ package com.example.VodReco.controller;
 import com.example.VodReco.domain.Member;
 import com.example.VodReco.dto.JoinRequestDto;
 import com.example.VodReco.dto.LoginRequestDto;
-import com.example.VodReco.service.MemberService;
+import com.example.VodReco.service.MemberServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -18,10 +18,10 @@ import java.util.Optional;
 
 @Controller
 public class MemberController {
-    private final MemberService memberService;
+    private final MemberServiceImpl memberService;
 
     @Autowired
-    public MemberController(MemberService memberService) {
+    public MemberController(MemberServiceImpl memberService) {
         this.memberService = memberService;
     }
 

@@ -1,5 +1,6 @@
 package com.example.VodReco.domain;
 
+import com.example.VodReco.dto.VodDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,5 +32,16 @@ public class Vod {
         this.genre = genre;
         this.director = director;
         this.posterurl = posterurl;
+    }
+
+    public VodDto toVodDto(Vod vod) {
+        return VodDto.builder()
+                .title(vod.getTitle())
+                .vcode(vod.getVcode())
+                .country(vod.getCountry())
+                .genre(vod.getGenre())
+                .director(vod.getDirector())
+                .posterurl(vod.getPosterurl())
+                .build();
     }
 }
