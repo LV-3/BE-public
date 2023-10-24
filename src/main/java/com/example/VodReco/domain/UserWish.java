@@ -19,7 +19,7 @@ public class UserWish {
 
     public UserWish(){}
 
-
+    //이건 받아오기만 하는 건데 builder가 필요할까 다시 고려하기
     @Builder
     public UserWish(String userEmail, String vcode, Integer wish) {
         this.userEmail = userEmail;

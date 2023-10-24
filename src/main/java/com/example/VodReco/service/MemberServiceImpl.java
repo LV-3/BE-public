@@ -63,22 +63,22 @@ public class MemberServiceImpl implements MemberService {
     }
 
 
-    //로그인
-    @Override
-    public LoginRequestDto login(LoginRequestDto loginRequestDto) {
-        Optional<Member> byEmail = memberRepository.findByEmail(loginRequestDto.getEmail());
-        if (byEmail.isPresent()) {
-
-            if (byEmail.get().getPassword().equals(loginRequestDto.getPassword())) {
-                 return loginRequestDto;
-
-            } else {
-                return null; // throw Exception으로 변경 고려(231005), 패스워드 불일치하는 경우
-            }
-        }else{
-            return null; // email로 조회 안 됨(회원가입 안 되어있는 경우)
-        }
-    }
+    //로그인(보류)
+//    @Override
+//    public LoginRequestDto login(LoginRequestDto loginRequestDto) {
+//        Optional<Member> byEmail = memberRepository.findByEmail(loginRequestDto.getEmail());
+//        if (byEmail.isPresent()) {
+//
+//            if (byEmail.get().getPassword().equals(loginRequestDto.getPassword())) {
+//                 return loginRequestDto;
+//
+//            } else {
+//                return null; // throw Exception으로 변경 고려(231005), 패스워드 불일치하는 경우
+//            }
+//        }else{
+//            return null; // email로 조회 안 됨(회원가입 안 되어있는 경우)
+//        }
+//    }
 
 
 
@@ -88,8 +88,8 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findAll();
     }
     @Override
-    public Optional<Member> findOne(Integer memberId) {
-        return memberRepository.findById(memberId); // id들어오면 저장소(memberRepository 내의 store)에서 찾아서
+    public Optional<Member> findOne(String email) {
+        return memberRepository.findByEmail(email); // id들어오면 저장소(memberRepository 내의 store)에서 찾아서
         //있으면 해당하는 member optional로 싸서 리턴
         // optional 사용이유: isPresent, isempty, isNullable 등 쓰려고
     }

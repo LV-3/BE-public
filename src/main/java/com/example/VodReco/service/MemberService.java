@@ -13,9 +13,9 @@ public interface MemberService {
 
     boolean validateGenres(Optional<Integer>[] optionals);
 
-    LoginRequestDto login(LoginRequestDto loginRequestDto);
+//    LoginRequestDto login(LoginRequestDto loginRequestDto);
 
     List<Member> findMembers();
 
-    Optional<Member> findOne(Integer memberId);
+    Optional<Member> findOne(String email);
 }
