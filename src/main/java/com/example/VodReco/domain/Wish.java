@@ -3,29 +3,27 @@ package com.example.VodReco.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Builder;
 import lombok.Getter;
 
 @Entity
 @Getter
-public class UserRating {
+public class Wish {
     @Id
     @Column(nullable = false, unique = true)
     private String userEmail;
     @Column(nullable = false, unique = true)
     private String vcode;
-    private Integer rating;
+    private Integer wish;
 
-    public UserRating(){}
+    public Wish(){}
 
-
+    //이건 받아오기만 하는 건데 builder가 필요할까 다시 고려하기
     @Builder
-    public UserRating(String userEmail, String vcode, Integer rating) {
+    public Wish(String userEmail, String vcode, Integer wish) {
         this.userEmail = userEmail;
         this.vcode = vcode;
-        this.rating = rating;
+        this.wish = wish;
     }
 
 }
-
