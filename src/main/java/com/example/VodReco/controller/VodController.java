@@ -1,11 +1,16 @@
 package com.example.VodReco.controller;
 
 import com.example.VodReco.dto.*;
+import com.example.VodReco.jwt.TokenProvider;
 import com.example.VodReco.service.RatingServiceImpl;
 import com.example.VodReco.service.VodServiceImpl;
 import com.example.VodReco.service.WishServiceImpl;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 //Response <-> Request 컨트롤러 분리 고려
 
@@ -15,13 +20,15 @@ public class VodController {
     private final VodServiceImpl vodServiceImpl;
     private final WishServiceImpl wishServiceImpl;
     private final RatingServiceImpl ratingServiceImpl;
+    private final TokenProvider tokenProvider;
 
 
     @Autowired
-    public VodController(VodServiceImpl vodServiceImpl, WishServiceImpl wishServiceImpl, RatingServiceImpl ratingServiceImpl) {
+    public VodController(VodServiceImpl vodServiceImpl, WishServiceImpl wishServiceImpl, RatingServiceImpl ratingServiceImpl, TokenProvider tokenProvider) {
         this.vodServiceImpl = vodServiceImpl;
         this.wishServiceImpl = wishServiceImpl;
         this.ratingServiceImpl = ratingServiceImpl;
+        this.tokenProvider = tokenProvider;
     }
 
     //메인화면(포스터) : 보류
@@ -51,8 +58,13 @@ public class VodController {
     @PostMapping(value = "/{vcode}/wish")
     //@RequestBody가 들어오는 json데이터 미리 선언한 엔터티 객체로 매핑해서 들어오게 해줌
     //{"wish":1} 형식으로 데이터 받아서 vodDetailWish객체로 받기(내부 필드 wish)
-    public WishResponseDto wish(@PathVariable("vcode") String vcode, @RequestBody WishRequestDto wishRequestDto) {
-        WishResponseDto wishResponseDto = WishResponseDto.builder().email("1@1.com").vcode(vcode).wish(wishRequestDto.getWish()).build();
+
+    //token의 payload에서 현재 접속 중인 user의 email 추출해서 wishResponseDto 내부 email필드에 주입
+    //구현 성공(231031)
+    public WishResponseDto wish(@PathVariable("vcode") String vcode, @RequestBody WishRequestDto wishRequestDto, ServletRequest servletRequest)
+            throws ServletException, IOException {
+        WishResponseDto wishResponseDto = WishResponseDto.builder().email(tokenProvider.getEmailFromToken(servletRequest))
+                .vcode(vcode).wish(wishRequestDto.getWish()).build();
 //            확인
         System.out.println("찜 = " + wishResponseDto.getWish());
 
@@ -67,8 +79,12 @@ public class VodController {
     //@RequestBody가 들어오는 json데이터 미리 선언한 엔터티 객체로 매핑해서 들어오게 해줌
     //{"rating":1~5} 형식으로 데이터 받아서 vodDetailRating객체로 받기(내부 필드 rating)
     //! vcode까지 프론트에서 받을지 or 서버 거 갖다쓸지 논의 필요
-    public RatingResponseDto rating(@PathVariable("vcode") String vcode, @RequestBody RatingRequestDto ratingRequestDto) {
-        RatingResponseDto ratingResponseDto = RatingResponseDto.builder().email("1@2.com")
+
+    //token의 payload에서 현재 접속 중인 user의 email 추출해서 ratingResponseDto 내부 email필드에 주입
+    //구현 성공(231031)
+    public RatingResponseDto rating(@PathVariable("vcode") String vcode, @RequestBody RatingRequestDto ratingRequestDto, ServletRequest servletRequest)
+            throws ServletException, IOException {
+        RatingResponseDto ratingResponseDto = RatingResponseDto.builder().email(tokenProvider.getEmailFromToken(servletRequest))
                 .vcode(vcode).rating(ratingRequestDto.getRating()).build();
 //            확인
         System.out.println("찜 = " + ratingResponseDto.getRating());

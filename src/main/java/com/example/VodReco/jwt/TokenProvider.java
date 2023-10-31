@@ -4,6 +4,9 @@ package com.example.VodReco.jwt;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -14,7 +17,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
+import java.io.IOException;
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,6 +29,7 @@ import java.util.stream.Collectors;
 @Component
 public class TokenProvider implements InitializingBean {
 
+    private static final String AUTHORIZATION_HEADER = "Authorization"; // 추가(231031)
     private final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
     private static final String AUTHORITIES_KEY = "auth";
     private final String secret;
@@ -52,10 +58,7 @@ public class TokenProvider implements InitializingBean {
         long now = (new Date((System.currentTimeMillis())).getTime());
         Date validity = new Date(now + this.tokenValidityInMilliseconds);
 
-        //이거 로그가 안 찍히는 문제(231029) -> 아니그럼 토큰이 생기긴 하는거냐??ㄷㄷㅋㅋ ㅅㅣ바ㅋㅋㅋㄴㅇㄹㅋㅋ
-        //확인 결과 /api/authenticate (로그인) 시도 시에만 createToken 메서드 이용됨
-        //로그인 이외에는 토큰 안 생기는 거 맞는데 -> 그럼 웬 만료된 토큰이지랄? 황당하기 그지없네요
-        //아설마 포스트맨에서 토큰저장해놔서그런가 .............................
+        //삭제 고려(231031)
         logger.info(String.valueOf(now));
         logger.info(String.valueOf(validity));
 
@@ -66,6 +69,36 @@ public class TokenProvider implements InitializingBean {
                 .setExpiration(validity)
                 .compact();
     }
+
+
+
+
+    //토큰의 payload내부 email 꺼내오는 메서드(231031)
+    public String getEmailFromToken(ServletRequest servletRequest) throws IOException, ServletException {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        String jwt = resolveToken(httpServletRequest);
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody().getSubject();
+    } // email형태로 리턴
+
+    //JwtFilter 클래스에서 똑같이 가져옴
+    //httpServletRequest로부터 token 추출하는(?) 메서드
+    //여기에 AUTHORIZATION_HEADER 필요해서 위에 필드 선언한 것
+    private String resolveToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
+
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+
+        return null;
+    }
+
+
+
+
+
+
+
 
     public Authentication getAuthentication(String token) {
         Claims claims = Jwts
@@ -79,7 +112,8 @@ public class TokenProvider implements InitializingBean {
                 Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
-
+        //이 User는 직접 구현한 User클래스랑 다름! Spring Security 내부 클래스 User
+        //여기 claims.getSubject()가 username = 우리가 쓰는 email
         User principal = new User(claims.getSubject(), "", authorities);
 
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
