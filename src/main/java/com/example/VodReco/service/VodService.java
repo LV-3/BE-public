@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface VodService {
 
-//    VodDto VodtoVodDto(Vod vod);
+    //    VodDto VodtoVodDto(Vod vod);
     List<VodDto> getAllVods();
 
     List<String> getAllPosterUrls();

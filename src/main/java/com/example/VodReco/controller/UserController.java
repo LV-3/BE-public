@@ -1,13 +1,11 @@
 package com.example.VodReco.controller;
 
-import com.example.VodReco.dto.JoinRequestDto;
 import com.example.VodReco.dto.UserDto;
 import com.example.VodReco.dto.ValidateEmailDto;
 import com.example.VodReco.dto.ValidateNicknameDto;
 import com.example.VodReco.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -48,10 +46,10 @@ public class UserController {
     }
 
 
-    @GetMapping("/user/{username}")
+    @GetMapping("/user/{email}")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<UserDto> getUserInfo(@PathVariable String username) {
-        return ResponseEntity.ok(userService.getUserWithAuthorities(username));
+    public ResponseEntity<UserDto> getUserInfo(@PathVariable String email) {
+        return ResponseEntity.ok(userService.getUserWithAuthorities(email));
     }
 
     @GetMapping("/user")

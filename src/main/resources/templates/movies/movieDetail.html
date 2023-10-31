@@ -23,8 +23,8 @@
 
     <form action="/rate-movie" method="post">
         <input type="hidden" name="movieId" th:value="${movie.mcode}" />
-        <label for="rating">평점:</label>
-        <select id="rating" name="rating" required>
+        <label for="ratingResponseDto">평점:</label>
+        <select id="ratingResponseDto" name="ratingResponseDto" required>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>

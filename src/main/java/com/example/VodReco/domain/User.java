@@ -30,11 +30,12 @@ public class User {
     @Column(name = "nickname")
     private String nickname;
 
-    @ElementCollection
-    @CollectionTable(name = "selected_vods" )
-    //, joinColumns = @JoinColumn(name = "email"))
-    @Column(name="selected_vods")
-    private List<String> selectedVods = new ArrayList<>();
+//    @ElementCollection
+//    @CollectionTable(name = "selected_vods" )
+//    //, joinColumns = @JoinColumn(name = "email"))
+//    @Column(name="selected_vods")
+//    @Convert(converter = StringArrayConverter.class)
+//    private List<String> selectedVods;
 
     @Column(name = "activated")
     private boolean activated;

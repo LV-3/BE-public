@@ -23,7 +23,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(final String email) { // Override라 메서드 이름은 Username에서 고칠 수가 없었음ㅎ
+    public UserDetails loadUserByUsername(final String email) { // Override라 메서드 이름은 getUsername
+        //딱 Override한 메서드 이름까지만 Username이고 이 메서드에 들어가는 파라미터는 email로 변경. 이후 전부 email 사용할 것
         return userRepository.findOneWithAuthoritiesByEmail(email)
                 .map(user -> createUser(email, user))
                 .orElseThrow(() -> new UsernameNotFoundException(email + " -> 데이터베이스에서 찾을 수 없습니다."));
