@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Entity
 @Table(name = "vods") //DB에 존재하는 테이블과 매핑해서 데이터 가져오는 어노테이션
-                        //DB의 컬럼명과 정확히 같게 설정해야 함
+//DB의 컬럼명과 정확히 같게 설정해야 함
 @Getter
 //@NoArgsConstructor 기본 생성자 직접 작성
 public class Vod {

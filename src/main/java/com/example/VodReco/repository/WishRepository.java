@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface WishRepository extends JpaRepository<UserWish, Integer> {
+
+    UserWish findByVcode(String vcode);
 }

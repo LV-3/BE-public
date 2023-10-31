@@ -1,47 +1,11 @@
 package com.example.VodReco.controller;
 
-import com.example.VodReco.domain.*;
-import com.example.VodReco.dto.VodDto;
+import com.example.VodReco.dto.*;
 import com.example.VodReco.service.RatingServiceImpl;
 import com.example.VodReco.service.VodServiceImpl;
 import com.example.VodReco.service.WishServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-
-// 1. view
-
-//@Controller
-//public class MovieController {
-//
-//    private final MovieService movieService;
-//
-//    @Autowired
-//    public MovieController(MovieService movieService) {
-//        this.movieService = movieService;
-//    }
-
-//    @GetMapping("/movies/posters") // 포스터
-//    public String displayMovies(Model model) {
-//        List<Movie> movies = movieService.getAllMovies();
-//        model.addAttribute("movies", movies);
-//        return "movies/poster";
-//    }
-//
-//    //상세페이지
-//    @GetMapping(value = "/movies/{vcode}") //title? vcode?
-//    public String detail(Model model, @PathVariable("vcode") String vcode){//변하는 id값을 얻을 때는 @PathVariable 써야함
-//
-//        Movie movie = this.movieService.getMovie(mcode);
-//        model.addAttribute("movie", movie);
-//        return "movies/movieDetail";
-//
-//    }
-//}
-
-
-// 2. API
-
 
 //Response <-> Request 컨트롤러 분리 고려
 
@@ -75,43 +39,42 @@ public class VodController {
     }
 
 
-    //상세페이지 click 시 유저정보 조회
-    //로그인 구현 이후
 
+    //상세페이지 click 시 유저정보 조회
+    //로그인 구현 이후 처리하기
 
 
     //찜: 1
     //평점: 1~5
 
     //wish
-    //테스트 완료
     @PostMapping(value = "/{vcode}/wish")
     //@RequestBody가 들어오는 json데이터 미리 선언한 엔터티 객체로 매핑해서 들어오게 해줌
     //{"wish":1} 형식으로 데이터 받아서 vodDetailWish객체로 받기(내부 필드 wish)
-    public UserWish wish(@PathVariable("vcode") String vcode, @RequestBody VodDetailWish vodDetailWish) {
-        UserWish userWish = UserWish.builder().userEmail("1@1.com").vcode(vcode).wish(vodDetailWish.getWish()).build();
+    public WishResponseDto wish(@PathVariable("vcode") String vcode, @RequestBody WishRequestDto wishRequestDto) {
+        WishResponseDto wishResponseDto = WishResponseDto.builder().email("1@1.com").vcode(vcode).wish(wishRequestDto.getWish()).build();
 //            확인
-        System.out.println("찜 = " + userWish.getWish());
-        wishServiceImpl.saveWish(userWish);
+        System.out.println("찜 = " + wishResponseDto.getWish());
+
+        wishServiceImpl.saveWish(wishResponseDto.toWishEntity(wishResponseDto));
 //        API 테스트용 리턴
-        return userWish;
+        return this.wishServiceImpl.findUserWishByVcode(vcode);
     }
 
 
     //rating
-    //테스트 완료
     @PostMapping(value = "/{vcode}/rating")
     //@RequestBody가 들어오는 json데이터 미리 선언한 엔터티 객체로 매핑해서 들어오게 해줌
     //{"rating":1~5} 형식으로 데이터 받아서 vodDetailRating객체로 받기(내부 필드 rating)
     //! vcode까지 프론트에서 받을지 or 서버 거 갖다쓸지 논의 필요
-    public UserRating rating(@PathVariable("vcode") String vcode, @RequestBody VodDetailRating vodDetailRating) {
-        UserRating userRating = UserRating.builder().userEmail("1@1.com")
-                .vcode(vcode).rating(vodDetailRating.getRating()).build();
+    public RatingResponseDto rating(@PathVariable("vcode") String vcode, @RequestBody RatingRequestDto ratingRequestDto) {
+        RatingResponseDto ratingResponseDto = RatingResponseDto.builder().email("1@2.com")
+                .vcode(vcode).rating(ratingRequestDto.getRating()).build();
 //            확인
-        System.out.println("찜 = " + userRating.getRating());
-        ratingServiceImpl.saveRating(userRating);
+        System.out.println("찜 = " + ratingResponseDto.getRating());
+        ratingServiceImpl.saveRating(ratingResponseDto.toRatingEntity(ratingResponseDto));
 //        API 테스트용 리턴
-        return userRating;
+        return this.ratingServiceImpl.findUserRatingByVcode(vcode);
 
     }
 }

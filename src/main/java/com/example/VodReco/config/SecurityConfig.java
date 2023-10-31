@@ -1,14 +1,12 @@
 package com.example.VodReco.config;
 
 
-
 import com.example.VodReco.jwt.JwtAccessDeniedHandler;
 import com.example.VodReco.jwt.JwtAuthenticationEntryPoint;
 import com.example.VodReco.jwt.JwtSecurityConfig;
 import com.example.VodReco.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;

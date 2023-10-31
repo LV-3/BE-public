@@ -1,15 +1,17 @@
 package com.example.VodReco.domain;
 
+import com.example.VodReco.dto.WishResponseDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 
-@Entity
 @Getter
-public class Wish {
+@Entity
+@Table(name = "user_wish")
+public class UserWish {
     @Id
     @Column(nullable = false, unique = true)
     private String email;
@@ -18,13 +20,21 @@ public class Wish {
     private Integer wish;
 
     @Builder
-    public Wish(String email, String vcode, Integer wish) {
+    public UserWish(String email, String vcode, Integer wish) {
         this.email = email;
         this.vcode = vcode;
         this.wish = wish;
     }
 
-    public Wish() {
+    public UserWish() {
 
+    }
+
+    public WishResponseDto toWishResponseDto(UserWish userWish) {
+        return WishResponseDto.builder()
+                .email(email)
+                .vcode(vcode)
+                .wish(wish)
+                .build();
     }
 }

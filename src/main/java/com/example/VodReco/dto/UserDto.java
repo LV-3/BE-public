@@ -4,7 +4,6 @@ package com.example.VodReco.dto;
 import com.example.VodReco.domain.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.List;
@@ -29,7 +28,7 @@ public class UserDto {
     @NotNull
     private String nickname;
 
-    private List<String> selectedVods;
+//    private List<String> selectedVods;
 
     private Set<AuthorityDto> authorityDtoSet;
 
@@ -39,7 +38,7 @@ public class UserDto {
         return UserDto.builder()
                 .email(user.getEmail())
                 .nickname(user.getNickname())
-                .selectedVods(user.getSelectedVods())
+//                .selectedVods(user.getSelectedVods())
                 .authorityDtoSet(user.getAuthorities().stream()
                         .map(authority -> AuthorityDto.builder().authorityName(authority.getAuthorityName()).build())
                         .collect(Collectors.toSet()))

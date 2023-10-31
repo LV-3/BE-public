@@ -3,7 +3,6 @@ package com.example.VodReco.service;
 
 import com.example.VodReco.domain.Authority;
 import com.example.VodReco.domain.User;
-import com.example.VodReco.dto.JoinRequestDto;
 import com.example.VodReco.dto.UserDto;
 import com.example.VodReco.dto.ValidateEmailDto;
 import com.example.VodReco.dto.ValidateNicknameDto;
@@ -14,7 +13,6 @@ import com.example.VodReco.util.SecurityUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Collections;
 

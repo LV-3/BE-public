@@ -1,6 +1,7 @@
 package com.example.VodReco.service;
 
 import com.example.VodReco.domain.UserRating;
+import com.example.VodReco.dto.RatingResponseDto;
 import com.example.VodReco.repository.RatingRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +13,15 @@ public class RatingServiceImpl implements RatingService{
         this.ratingRepository = ratingRepository;
     }
 
-    //컬럼: usermail/ vcode / rating(1~5)
+    //컬럼: email/ vcode / rating(1~5)
     @Override
     public void saveRating(UserRating userRating) {
         ratingRepository.save(userRating);
+    }
+
+    @Override
+    public RatingResponseDto findUserRatingByVcode(String vcode) {
+        UserRating userRating = ratingRepository.findByVcode(vcode);
+        return userRating.toRatingResponseDto(userRating);
     }
 }
