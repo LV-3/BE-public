@@ -1,4 +1,4 @@
 package com.example.VodReco.dto;
 
-public class UserWishRequestDto {
+public class RatingRequestDto {
 }
