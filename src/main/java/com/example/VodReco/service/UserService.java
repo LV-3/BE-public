@@ -59,6 +59,8 @@ public class UserService {
                 .email(userDto.getEmail())
                 .password(passwordEncoder.encode(userDto.getPassword()))
                 .nickname(userDto.getNickname())
+                .gender(userDto.getGender())
+                .birthYear(userDto.getBirthYear())
                 .authorities(Collections.singleton(authority))
                 .activated(true)
                 .build();
@@ -67,7 +69,7 @@ public class UserService {
     // API 테스트용 리턴
 
         //새로 안 사실: jpa의 save는 사실 save된 entity 반환함
-        //지금까지 리턴값이 있단 사실도 몰라서 어디다 담아서 받지도 않아봄ㅎ
+        //지금까지 리턴값이 있단 사실도 몰라서 어디다 담아서 받지도 않아봤다
         //따라서 from의 input으로 user가 들어감
         return UserDto.from(userRepository.save(user));
     }
@@ -79,6 +81,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public UserDto getMyUserWithAuthorities() {
+        //이건 유저가 자기 정보 확인하는 용도. 여기도 gender와 age 필요한지 논의 필요(231031)
         return UserDto.from(
                 SecurityUtil.getCurrentUsername()
                         .flatMap(userRepository::findOneWithAuthoritiesByEmail)

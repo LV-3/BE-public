@@ -30,6 +30,14 @@ public class User {
     @Column(name = "nickname")
     private String nickname;
 
+    @Column(name = "gender")
+    private String gender;
+
+    //변수명 합의 되면 수정(231031)
+    @Column(name = "birthYear")
+    private String birthYear;
+
+
 //    @ElementCollection
 //    @CollectionTable(name = "selected_vods" )
 //    //, joinColumns = @JoinColumn(name = "email"))

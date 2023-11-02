@@ -41,6 +41,7 @@ public class AuthController {
 
         String jwt = tokenProvider.createToken(authentication);
 
+        //http헤더에 토큰 넣기(로 예상됨) (231031)
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
