@@ -1,5 +1,6 @@
 package com.example.VodReco.controller;
 
+import com.example.VodReco.domain.Vod;
 import com.example.VodReco.dto.*;
 import com.example.VodReco.jwt.TokenProvider;
 import com.example.VodReco.service.RatingServiceImpl;
@@ -31,24 +32,29 @@ public class VodController {
         this.tokenProvider = tokenProvider;
     }
 
-    //메인화면(포스터) : 보류
+    //메인화면(포스터) : 보류 -> 모델로부터 받아와야 함, MainController에 구현 예정(231101)
 //    @GetMapping("/posters")
 //    public List<String> displayVods() {
 //        return vodService.getAllPosterUrls();
 //    }
 
+//    @PostMapping("/find-allVods")
+//    public Vod allVods(){
+//        return
+//    }
+
+
     //vod별 상세페이지
     //테스트 시 실제DB에 들어있는 vcode 가져올 것
+
+    //이거 왜 VodDto 리턴되게 짰지????(231101) ???????? 의도가 뭐지 posterUrl이 아니고?
     @GetMapping(value = "/{vcode}")
     public VodDto vodDetail(@PathVariable("vcode") String vcode) {//변하는 값을 얻을 때는 @PathVariable 써야함
+
         return this.vodServiceImpl.getVod(vcode);
 
     }
 
-
-
-    //상세페이지 click 시 유저정보 조회
-    //로그인 구현 이후 처리하기
 
 
     //찜: 1

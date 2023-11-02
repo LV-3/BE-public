@@ -14,16 +14,15 @@ import java.util.stream.Collectors;
 public class VodServiceImpl implements VodService{
     private final VodRepository vodRepository;
 
-
     @Autowired
     public VodServiceImpl(VodRepository vodRepository) {
         this.vodRepository = vodRepository;
     }
 
 
-
-
     //전체 VOD 조회
+
+    //테스트 코드 작성 포기함(231101)
     @Override
     public List<VodDto> getAllVods(){
         return vodRepository.findAll().stream()

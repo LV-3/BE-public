@@ -7,7 +7,6 @@ import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
 
-@Entity
 @Getter
 public class RatingResponseDto {
     @Id

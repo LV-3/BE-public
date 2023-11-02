@@ -1,5 +1,6 @@
 package com.example.VodReco.domain;
 
+import com.example.VodReco.service.StringAttributeConverter;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,15 +12,10 @@ import java.util.Set;
 @Table(name = "user")
 @Getter
 @Setter
-@Builder
-@AllArgsConstructor
+//@AllArgsConstructor // Accesslevel 좁히는 방법 있음, 목적이 있다면 추가 가능(231102)
 @NoArgsConstructor
+//@ToString // 필요성 생기면 활성화(231102)
 public class User {
-
-//    @Id
-//    @Column(name = "user_id")
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long userId;
     @Id
     @Column(name = "email",unique = true)
     private String email;
@@ -37,13 +33,9 @@ public class User {
     @Column(name = "birthYear")
     private String birthYear;
 
-
-//    @ElementCollection
-//    @CollectionTable(name = "selected_vods" )
-//    //, joinColumns = @JoinColumn(name = "email"))
-//    @Column(name="selected_vods")
-//    @Convert(converter = StringArrayConverter.class)
-//    private List<String> selectedVods;
+    @Column
+    @Convert(converter = StringAttributeConverter.class)
+    private List<String> selectedVods;
 
     @Column(name = "activated")
     private boolean activated;
@@ -55,4 +47,20 @@ public class User {
             joinColumns = {@JoinColumn(name = "email", referencedColumnName = "email")},
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
     private Set<Authority> authorities;
+
+
+
+    @Builder // User, UserDto @Builder 어노테이션 클래스 말고 메서드로 구현하기
+    public User(String email, String password, String nickname, String gender, String birthYear, List<String> selectedVods, boolean activated, Set<Authority> authorities) {
+       this.email = email;
+       this.password = password;
+       this.nickname = nickname;
+       this.gender = gender;
+       this.birthYear = birthYear;
+       this.selectedVods = selectedVods;
+       this.activated = activated;
+       this.authorities = authorities;
+    }
+
+
 }

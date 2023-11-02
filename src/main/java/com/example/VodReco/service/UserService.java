@@ -61,6 +61,7 @@ public class UserService {
                 .nickname(userDto.getNickname())
                 .gender(userDto.getGender())
                 .birthYear(userDto.getBirthYear())
+                .selectedVods(userDto.getSelectedVods())
                 .authorities(Collections.singleton(authority))
                 .activated(true)
                 .build();
