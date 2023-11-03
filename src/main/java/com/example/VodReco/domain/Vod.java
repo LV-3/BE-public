@@ -26,32 +26,38 @@ public class Vod {
     //@ResponseBody 써서 json으로 넘겨주면 될 것으로 예상(231101)
     @Column(nullable = false, unique = true)
     private String vcode;
-    private String country;
-
     @Column
 //    @Convert(converter = StringAttributeConverter.class)
     private String genre; // 한 컬럼으로 받아서 "," 기준으로 split해서 Array로 만들고 -> List로 convert
-
+    private String country;
     private String director;
+    private String actor; //한 컬럼으로 받아서 "," 기준으로 split해서 Array로 만들고 -> List로 split
     private String posterurl;
     private String description;
 
     public Vod(){
     }
 
-    //한 String으로 DB로부터 꺼내온 genre를 List<String>으로 변환하는 메서드 생성(231102)
-    public List<String> genretoList(String genre) {
+    //DB로부터 꺼내온 actor(String)을 List<String>으로 변환하는 메서드 생성(231102)
+    public List<String> actorToList(String actor) {
+        String[] splitedActor = actor.split(",");
+        return Arrays.stream(splitedActor).toList();
+    }
+
+    //DB로부터 꺼내온 genre(String)를 List<String>으로 변환하는 메서드 생성(231102)
+    public List<String> genreToList(String genre) {
         String[] splitedGenre = genre.split(",");
         return Arrays.stream(splitedGenre).toList();
     }
 
     @Builder
-    public Vod(String title, String vcode, String country, String genre, String director, String posterurl, String description) {
+    public Vod(String title, String vcode, String actor, String country, String genre, String director, String posterurl, String description) {
         this.title = title;
         this.vcode = vcode;
-        this.country = country;
         this.genre = genre;
+        this.country = country;
         this.director = director;
+        this.actor = actor;
         this.posterurl = posterurl;
         this.description = description;
 
@@ -64,9 +70,10 @@ public class Vod {
         return VodDto.builder()
                 .title(vod.getTitle())
                 .vcode(vod.getVcode())
+                .genre(vod.genreToList(vod.getGenre()))
                 .country(vod.getCountry())
-                .genre(vod.genretoList(vod.getGenre()))
                 .director(vod.getDirector())
+                .actor(vod.actorToList(getActor()))
                 .posterurl(vod.getPosterurl())
                 .description(vod.getDescription())
                 .build();

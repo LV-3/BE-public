@@ -38,19 +38,13 @@ public class VodController {
 //        return vodService.getAllPosterUrls();
 //    }
 
-//    @PostMapping("/find-allVods")
-//    public Vod allVods(){
-//        return
-//    }
-
 
     //vod별 상세페이지
     //테스트 시 실제DB에 들어있는 vcode 가져올 것
 
-    //이거 왜 VodDto 리턴되게 짰지????(231101) ???????? 의도가 뭐지 posterUrl이 아니고?
+    //리턴 타입 json 매핑 가능하게 바꾸기. 논의 필요(231102)
     @GetMapping(value = "/{vcode}")
     public VodDto vodDetail(@PathVariable("vcode") String vcode) {//변하는 값을 얻을 때는 @PathVariable 써야함
-
         return this.vodServiceImpl.getVod(vcode);
 
     }
