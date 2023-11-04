@@ -30,7 +30,7 @@ public class User {
     private String gender;
 
     //변수명 합의 되면 수정(231031)
-    @Column(name = "birthYear")
+    @Column(name = "birth_year")
     private String birthYear;
 
     @Column

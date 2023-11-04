@@ -6,23 +6,25 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class WishResponseDto {
     @Id
     @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false, unique = true)
-    private String vcode;
+    private String contentId;
     private Integer wish;
 
     public WishResponseDto(){}
 
     //이건 받아오기만 하는 건데 builder가 필요할까 다시 고려하기
     @Builder
-    public WishResponseDto(String email, String vcode, Integer wish) {
+    public WishResponseDto(String email, String contentId, Integer wish) {
         this.email = email;
-        this.vcode = vcode;
+        this.contentId = contentId;
         this.wish = wish;
     }
 
@@ -30,7 +32,7 @@ public class WishResponseDto {
     public UserWish toWishEntity(WishResponseDto wishResponseDto) {
         return UserWish.builder()
                 .email(email)
-                .vcode(vcode)
+                .contentId(contentId)
                 .wish(wish)
                 .build();
     }

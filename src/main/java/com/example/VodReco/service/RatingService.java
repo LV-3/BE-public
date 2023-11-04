@@ -10,5 +10,5 @@ public interface RatingService {
     //컬럼: usermail/ vcode / rating(1~5)
     void saveRating(UserRating userRating);
 
-    RatingResponseDto findUserRatingByVcode(String vcode);
+    RatingResponseDto findUserRatingByContentId(String contentId);
 }

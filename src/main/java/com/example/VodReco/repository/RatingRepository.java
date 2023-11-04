@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RatingRepository extends JpaRepository<UserRating, Integer> {
 
-    UserRating findByVcode(String vcode);
+    UserRating findByContentId(String contentId);
 }

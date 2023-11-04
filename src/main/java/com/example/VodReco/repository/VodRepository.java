@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VodRepository extends JpaRepository<Vod,String> {
-    Vod findByVcode(String vcode);
+    Vod findByContentId(String contentId);
 }

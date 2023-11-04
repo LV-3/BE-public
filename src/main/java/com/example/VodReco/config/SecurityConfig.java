@@ -10,6 +10,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,8 +49,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
-                .csrf(csrf -> csrf.disable())
+                // token을 사용하는 방식이기 때문에 csrf를 disable
+                .csrf(AbstractHttpConfigurer::disable)
 
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(exceptionHandling -> exceptionHandling
@@ -56,7 +59,7 @@ public class SecurityConfig {
                 )
 
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        .requestMatchers("/api/hello", "/signup/sign", "/signup/**", "/vods/**", "/login").permitAll()
+                        .requestMatchers("/main", "/main/20200622/wish", "/signup/sign", "/signup/**", "/vods/**", "/login").permitAll()
                         .anyRequest().authenticated()
                 )
 
@@ -67,8 +70,7 @@ public class SecurityConfig {
 
                 // enable h2-console
                 .headers(headers ->
-                        headers.frameOptions(options ->
-                                options.sameOrigin()
+                        headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin
                         )
                 )
 

@@ -1,10 +1,7 @@
 package com.example.VodReco.domain;
 
 import com.example.VodReco.dto.RatingResponseDto;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,13 +13,16 @@ import lombok.NoArgsConstructor;
 public class UserRating {
     @Id
     @Column(nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+//    @Column(nullable = false) // unique = true) wish, rating은 email 겹쳐도 됨. 사용자가 여러 개의 vod에 대한 평가 내림(231104)
     private String email;
-    @Column(nullable = false, unique = true)
-    private String vcode;
+//    @Column(nullable = false)//, unique = true)
+    private String contentId;
     @Builder
-    private UserRating(String email, String vcode, Integer rating) {
+    private UserRating(String email, String contentId, Integer rating) {
         this.email = email;
-        this.vcode = vcode;
+        this.contentId = contentId;
         this.rating = rating;
     }
 
@@ -32,7 +32,7 @@ public class UserRating {
     public RatingResponseDto toRatingResponseDto(UserRating userRating) {
         return RatingResponseDto.builder()
                 .email(email)
-                .vcode(vcode)
+                .contentId(contentId)
                 .rating(rating)//문제 발생: Rating 클래스 내부 필드 이름이 rating이라서 Rating rating의 인스턴스 이름과 겹침
                 //UserRating으로 리팩토링해서 해결(231031)
                 .build();

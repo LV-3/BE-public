@@ -17,7 +17,7 @@ public class VodDto {
     @Column(nullable = false)
     private String title;
     @Column(nullable = false, unique = true)
-    private String vcode;
+    private String contentId;
 
     private List<String> genre;
     private String country;
@@ -30,9 +30,9 @@ public class VodDto {
     }
 
     @Builder
-    public VodDto(String title, String vcode, List<String> actor, String country, List<String> genre, String director, String posterurl, String description) {
+    public VodDto(String title, String contentId, List<String> actor, String country, List<String> genre, String director, String posterurl, String description) {
         this.title = title;
-        this.vcode = vcode;
+        this.contentId = contentId;
         this.genre = genre;
         this.country = country;
         this.director = director;
@@ -60,7 +60,7 @@ public class VodDto {
         }
         return Vod.builder()
                 .title(vodDto.getTitle())
-                .vcode(vodDto.getVcode())
+                .contentId(vodDto.getContentId())
                 .genre(joinListGenre(vodDto.getGenre()))
                 .country(vodDto.getCountry())
                 .director(vodDto.getDirector())

@@ -24,8 +24,10 @@ public class Vod {
     //스프링 내에서는 contentId로 쓰다가 모델로 넘기는 ResponseDto 클래스 만들 때 필드 content_id로 선언하고
     //builder패턴으로 .content_id(contentId) 집어넣고
     //@ResponseBody 써서 json으로 넘겨주면 될 것으로 예상(231101)
-    @Column(nullable = false, unique = true)
-    private String vcode;
+
+    //스프링 단에서는 contentId, db에서는 content_id로 다루기 위해 name = 추가함(231103)
+    @Column(name = "content_id", nullable = false, unique = true)
+    private String contentId;
     @Column
 //    @Convert(converter = StringAttributeConverter.class)
     private String genre; // 한 컬럼으로 받아서 "," 기준으로 split해서 Array로 만들고 -> List로 convert
@@ -51,9 +53,9 @@ public class Vod {
     }
 
     @Builder
-    public Vod(String title, String vcode, String actor, String country, String genre, String director, String posterurl, String description) {
+    public Vod(String title, String contentId, String actor, String country, String genre, String director, String posterurl, String description) {
         this.title = title;
-        this.vcode = vcode;
+        this.contentId = contentId;
         this.genre = genre;
         this.country = country;
         this.director = director;
@@ -69,7 +71,7 @@ public class Vod {
         }
         return VodDto.builder()
                 .title(vod.getTitle())
-                .vcode(vod.getVcode())
+                .contentId(vod.getContentId())
                 .genre(vod.genreToList(vod.getGenre()))
                 .country(vod.getCountry())
                 .director(vod.getDirector())
