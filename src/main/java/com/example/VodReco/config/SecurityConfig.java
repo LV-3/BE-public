@@ -59,7 +59,7 @@ public class SecurityConfig {
                 )
 
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        .requestMatchers("/main", "/main/20200622/wish", "/signup/sign", "/signup/**", "/vods/**", "/login").permitAll()
+                        .requestMatchers("/kafka", "/main", "/main/20200622/wish", "/signup/sign", "/signup/**", "/vods/**", "/login").permitAll()
                         .anyRequest().authenticated()
                 )
 

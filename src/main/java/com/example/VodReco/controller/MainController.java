@@ -134,7 +134,7 @@ public class MainController {  //메인페이지
 
     @GetMapping("/main/click-gen") //같은 endpoint에 여러 개 매핑은 불가능. url 여러 개 써야 함(231104)
     public ToGenreModelDto sendGenreData() {
-        System.out.println(genreModelList);
+        System.out.println(genreModelList); //확인용. 추후 삭제
         List<EveryGenre> list = new ArrayList<>();
         for (String s : genreModelList) {
             EveryGenre everyGenre = EveryGenre.builder()
@@ -159,9 +159,9 @@ public class MainController {  //메인페이지
     // "genre_data":["content_id1", "content_id2", ... , "content_id10"],
     // "personal_data":["content_id1", "content_id2", ... , "content_id10"]}
     //프론트에 보낼 데이터 형식: 노션에 있음
-
     @PostMapping("/byFastAPI")
     public ToClient3rdDto getFromModel(@RequestBody FromModelDto fromModelDto) throws Exception {
+
 
         ToClient1stDto[] array1 = new ToClient1stDto[10];
         List<String> descriptionData = fromModelDto.getDescription_data();
@@ -174,17 +174,17 @@ public class MainController {  //메인페이지
 
         ToClient1stDto[] array3 = new ToClient1stDto[10];
         List<String> personalData = fromModelDto.getPersonal_data();
-        ToClient2ndDto personalDto = sendData(array2, personalData);
+        ToClient2ndDto personalDto = sendData(array3, personalData);
 
         return ToClient3rdDto.builder().description_data(descriptionDto)
                 .genre_data(genreDto).personal_data(personalDto).build();
 
     }
 
-    private ToClient2ndDto sendData(ToClient1stDto[] array, List<String> descriptionData) {
+    private ToClient2ndDto sendData(ToClient1stDto[] array, List<String> data) {
         for (int i = 0; i < 10; i++) {
-            ToClient1stDto toClient1stDto = ToClient1stDto.builder().contentId(descriptionData.get(i))
-                    .posterurl(vodServiceImpl.getVodByContentId(descriptionData.get(i)).getPosterurl()).build();
+            ToClient1stDto toClient1stDto = ToClient1stDto.builder().contentId(data.get(i))
+                    .posterurl(vodServiceImpl.getVodByContentId(data.get(i)).getPosterurl()).build();
             array[i] = toClient1stDto;
         }
         return ToClient2ndDto.builder().vod1(array[0]).vod2(array[1]).vod3(array[2])
