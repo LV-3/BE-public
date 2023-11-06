@@ -8,5 +8,5 @@ public interface WishService {
     // 컬럼: email / vcode / wish(0or1)
     void saveWish(UserWish userWish);
 
-    WishResponseDto findUserWishByVcode(String vcode);
+    WishResponseDto findUserWishByContentId(String contentId);
 }

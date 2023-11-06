@@ -21,15 +21,15 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/hello")
-    public ResponseEntity<String> hello() {
-        return ResponseEntity.ok("hello");
-    }
-
-    @PostMapping("/test-redirect")
-    public void testRedirect(HttpServletResponse response) throws IOException {
-        response.sendRedirect("/api/user");
-    }
+//    @GetMapping("/hello")
+//    public ResponseEntity<String> hello() {
+//        return ResponseEntity.ok("hello");
+//    }
+//
+//    @PostMapping("/test-redirect")
+//    public void testRedirect(HttpServletResponse response) throws IOException {
+//        response.sendRedirect("/api/user");
+//    }
 
     //이메일 중복검사
     @PostMapping("/email-dcheck")
@@ -64,6 +64,7 @@ public class UserController {
     @PostMapping("/sign")
     //localhost:8080/signup으로 PostMapping으로 바꿀 방안 찾기
     public ResponseEntity<UserDto> signUp(@RequestBody UserDto userDto) {
+
         //UserDto 안에 있는 authority가 빈 채로 데이터 들어와도 에러 안 나나? (231030)
         //-> 안 남. 안 들어온 필드는 알아서 null로 처리하고 + 이 경우 authorityDtoSet은 service단에서 직접 만들어서 주입해줌
         //@RequestBody의 매핑은 Builder패턴 사용 시에는 필드 명에 정확히 따라가고 빌더 안 쓰면 아닌 것으로 생각됨

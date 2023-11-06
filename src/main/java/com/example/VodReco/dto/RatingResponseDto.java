@@ -7,30 +7,29 @@ import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
 
-@Entity
 @Getter
 public class RatingResponseDto {
     @Id
     @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false, unique = true)
-    private String vcode;
+    private String contentId;
     private Integer rating;
 
     public RatingResponseDto(){}
 
 
     @Builder
-    public RatingResponseDto(String email, String vcode, Integer rating) {
+    public RatingResponseDto(String email, String contentId, Integer rating) {
         this.email = email;
-        this.vcode = vcode;
+        this.contentId = contentId;
         this.rating = rating;
     }
 
     public UserRating toRatingEntity(RatingResponseDto ratingResponseDto) {
         return UserRating.builder()
                 .email(email)
-                .vcode(vcode)
+                .contentId(contentId)
                 .rating(rating)
                 .build();
     }

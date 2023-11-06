@@ -20,8 +20,8 @@ public class RatingServiceImpl implements RatingService{
     }
 
     @Override
-    public RatingResponseDto findUserRatingByVcode(String vcode) {
-        UserRating userRating = ratingRepository.findByVcode(vcode);
+    public RatingResponseDto findUserRatingByContentId(String contentId) {
+        UserRating userRating = ratingRepository.findByContentId(contentId);
         return userRating.toRatingResponseDto(userRating);
     }
 }

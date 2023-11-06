@@ -14,7 +14,7 @@ public class WishServiceImpl implements WishService {
         this.wishRepository = wishRepository;
     }
 
-    // 컬럼: email / vcode / wish(0or1)
+    // 컬럼: email / content_id / wish(0or1)
     @Override
     public void saveWish(UserWish userWish) {
         wishRepository.save(userWish);
@@ -24,8 +24,8 @@ public class WishServiceImpl implements WishService {
     //실제 서비스 구현 시 사용자가 찜 삭제하면 바로 데이터 delete되기 때문에 쓸 일 없음
     //추후 삭제
     @Override
-    public WishResponseDto findUserWishByVcode(String vcode){
-        UserWish userWish = wishRepository.findByVcode(vcode);
+    public WishResponseDto findUserWishByContentId(String contentId){
+        UserWish userWish = wishRepository.findByContentId(contentId);
         return userWish.toWishResponseDto(userWish);
     }
 }
