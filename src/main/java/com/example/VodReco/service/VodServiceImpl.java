@@ -1,7 +1,7 @@
 package com.example.VodReco.service;
 
 import com.example.VodReco.dto.VodDto;
-import com.example.VodReco.repository.VodRepository;
+import com.example.VodReco.mongoRepository.VodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,6 @@ public class VodServiceImpl implements VodService{
         return vodRepository.findAll().stream()
                 .map(VodtoVodDto::vodtoVodDto)
                 .collect(Collectors.toList());
-
     }
 
 
