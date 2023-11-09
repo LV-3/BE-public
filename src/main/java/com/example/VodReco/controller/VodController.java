@@ -1,6 +1,5 @@
 package com.example.VodReco.controller;
 
-import com.example.VodReco.domain.Vod;
 import com.example.VodReco.dto.*;
 import com.example.VodReco.jwt.TokenProvider;
 import com.example.VodReco.service.RatingServiceImpl;
@@ -56,10 +55,10 @@ public class VodController {
 
     //PathVariable 쓰면서 requestDto에 content_id 안 담아오는 경우 메인페이지에서도 dto를 쓰는데 여기서는 content_id를 받아올 수 없어서
     //requestDto 2개에 content_id 필드 추가함(231104)
-    public WishResponseDto wish(@PathVariable("content_id") String contentId, @RequestBody WishRequestDto wishRequestDto, ServletRequest servletRequest)
+    public WishResponseDto wish(@PathVariable("content_id") String contentId, @RequestBody WishRequestFromMyDto wishRequestFromMyDto, ServletRequest servletRequest)
             throws ServletException, IOException {
         WishResponseDto wishResponseDto = WishResponseDto.builder().email(tokenProvider.getEmailFromToken(servletRequest))
-                .contentId(contentId).wish(wishRequestDto.getWish()).build();
+                .contentId(contentId).wish(wishRequestFromMyDto.getWish()).build();
 //            확인
         System.out.println("찜 = " + wishResponseDto.getWish());
 
@@ -77,10 +76,10 @@ public class VodController {
 
     //token의 payload에서 현재 접속 중인 user의 email 추출해서 ratingResponseDto 내부 email필드에 주입
     //구현 성공(231031)
-    public RatingResponseDto rating(@PathVariable("content_id") String contentId, @RequestBody RatingRequestDto ratingRequestDto, ServletRequest servletRequest)
+    public RatingResponseDto rating(@PathVariable("content_id") String contentId, @RequestBody RatingRequestFromMyDto ratingRequestFromMyDto, ServletRequest servletRequest)
             throws ServletException, IOException {
         RatingResponseDto ratingResponseDto = RatingResponseDto.builder().email(tokenProvider.getEmailFromToken(servletRequest))
-                .contentId(contentId).rating(ratingRequestDto.getRating()).build();
+                .contentId(contentId).rating(ratingRequestFromMyDto.getRating()).comment(ratingRequestFromMyDto.getComment()).build();
 //            확인
         System.out.println("평점 = " + ratingResponseDto.getRating());
         ratingServiceImpl.saveRating(ratingResponseDto.toRatingEntity(ratingResponseDto));

@@ -50,11 +50,11 @@ public class MainController {  //메인페이지
      */
     @PostMapping("/main/{content_id}/wish")
 
-    public List<String> wish(@PathVariable("content_id") String contentId, @RequestBody WishRequestDto wishRequestDto, ServletRequest servletRequest)
+    public List<String> wish(@PathVariable("content_id") String contentId, @RequestBody WishRequestFromMainDto wishRequestFromMainDto, ServletRequest servletRequest)
             throws ServletException, IOException {
         //먼저 DB 업데이트
         WishResponseDto wishResponseDto = WishResponseDto.builder().email(tokenProvider.getEmailFromToken(servletRequest))
-                .contentId(contentId).wish(wishRequestDto.getWish()).build();
+                .contentId(contentId).wish(wishRequestFromMainDto.getWish()).build();
 //      확인
         System.out.println("찜 = " + wishResponseDto.getWish());
         wishServiceImpl.saveWish(wishResponseDto.toWishEntity(wishResponseDto));
@@ -64,14 +64,14 @@ public class MainController {  //메인페이지
         //모델이름, content_id 따로 담아놓기
         //모든 모델에서 들어오는 데이터 같이 담았다가 새로고침 눌리면 분류하는 것보다
         //이때 미리 나눠 담아두는 게 새로고침 후 로딩타임 줄일 수 있다 판단함(231104)
-        if (wishRequestDto.getModel().equals("descriptionModel")) {
+        if (wishRequestFromMainDto.getModel().equals("descriptionModel")) {
 //            RenameNeeded renameNeeded = RenameNeeded.builder().contentId(wishRequestDto.getContentId()).build();
-            descriptionModelList.add(wishRequestDto.getContentId());
-        } else if (wishRequestDto.getModel().equals("genreModel")) {
+            descriptionModelList.add(wishRequestFromMainDto.getContentId());
+        } else if (wishRequestFromMainDto.getModel().equals("genreModel")) {
 //            RenameNeeded renameNeeded = RenameNeeded.builder().contentId(wishRequestDto.getContentId()).build();
-            genreModelList.add(wishRequestDto.getContentId());
+            genreModelList.add(wishRequestFromMainDto.getContentId());
         } else {
-            personalModelList.add(wishRequestDto.getContentId());
+            personalModelList.add(wishRequestFromMainDto.getContentId());
         }
         //테스트용 리턴, 추후 void로 변경하고 삭제
         return descriptionModelList;
@@ -79,10 +79,10 @@ public class MainController {  //메인페이지
     }
 
     @PostMapping("/main/{content_id}/rating")
-    public List<String> rating(@PathVariable("content_id") String contentId, @RequestBody RatingRequestDto ratingRequestDto, ServletRequest servletRequest)
+    public List<String> rating(@PathVariable("content_id") String contentId, @RequestBody RatingRequestFromMainDto ratingRequestFromMainDto, ServletRequest servletRequest)
             throws ServletException, IOException {
         RatingResponseDto ratingResponseDto = RatingResponseDto.builder().email(tokenProvider.getEmailFromToken(servletRequest))
-                .contentId(contentId).rating(ratingRequestDto.getRating()).build();
+                .contentId(contentId).rating(ratingRequestFromMainDto.getRating()).build();
 //            확인
         System.out.println("평점 = " + ratingResponseDto.getRating());
         ratingServiceImpl.saveRating(ratingResponseDto.toRatingEntity(ratingResponseDto));
@@ -90,12 +90,12 @@ public class MainController {  //메인페이지
         System.out.println(this.ratingServiceImpl.findUserRatingByContentId(contentId));
 
         //모델이름, content_id 따로 담아놓기
-        if (ratingRequestDto.getModel().equals("descriptionModel")) {
-            descriptionModelList.add(ratingRequestDto.getContentId());
-        } else if (ratingRequestDto.getModel().equals("genreModel")) {
-            genreModelList.add(ratingRequestDto.getContentId());
+        if (ratingRequestFromMainDto.getModel().equals("descriptionModel")) {
+            descriptionModelList.add(ratingRequestFromMainDto.getContentId());
+        } else if (ratingRequestFromMainDto.getModel().equals("genreModel")) {
+            genreModelList.add(ratingRequestFromMainDto.getContentId());
         } else {
-            personalModelList.add(ratingRequestDto.getContentId());
+            personalModelList.add(ratingRequestFromMainDto.getContentId());
         }
 
         //테스트용 리턴, 추후 void로 변경하고 삭제

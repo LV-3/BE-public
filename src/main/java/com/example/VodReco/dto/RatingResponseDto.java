@@ -15,15 +15,17 @@ public class RatingResponseDto {
     @Column(nullable = false, unique = true)
     private String contentId;
     private Integer rating;
+    private String comment;
 
     public RatingResponseDto(){}
 
 
     @Builder
-    public RatingResponseDto(String email, String contentId, Integer rating) {
+    public RatingResponseDto(String email, String contentId, Integer rating, String comment) {
         this.email = email;
         this.contentId = contentId;
         this.rating = rating;
+        this.comment = comment;
     }
 
     public UserRating toRatingEntity(RatingResponseDto ratingResponseDto) {
@@ -31,6 +33,7 @@ public class RatingResponseDto {
                 .email(email)
                 .contentId(contentId)
                 .rating(rating)
+                .comment(comment)
                 .build();
     }
 
