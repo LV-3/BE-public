@@ -1,7 +1,6 @@
 package com.example.VodReco.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -13,7 +12,7 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 
-public class WishRequestDto {
+public class WishRequestFromMainDto {
     private String model;
     @JsonProperty("content_id")
     private String contentId;

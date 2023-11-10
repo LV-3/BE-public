@@ -8,9 +8,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RatingRequestDto {
-    private String model;
+public class RatingRequestFromMyDto {
     @JsonProperty("content_id")
     private String contentId;
     private Integer rating;
+    private String comment;
 }

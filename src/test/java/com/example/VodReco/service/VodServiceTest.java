@@ -2,7 +2,7 @@
 //
 //import com.example.VodReco.domain.Vod;
 //import com.example.VodReco.dto.VodDto;
-//import com.example.VodReco.repository.VodRepository;
+//import com.example.VodReco.mongoRepository.VodRepository;
 //import org.junit.jupiter.api.BeforeAll;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
