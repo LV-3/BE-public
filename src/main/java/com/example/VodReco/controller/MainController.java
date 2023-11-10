@@ -20,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/main")
 public class MainController {  //메인페이지
 
     // kafka 고려하지 않고 postman API 테스트용 메서드부터 구현하기
@@ -48,7 +49,7 @@ public class MainController {  //메인페이지
      *     wishRequestDto, ratingRequestDto에 담아서 model필드랑 content_id만 따로 담기
      *     일단 찜을 취소하면 "wish":0으로 받는다고 생각하기 -> 논의 필요. 그래도 찜을 취소한 건 제외하는 게(231104)
      */
-    @PostMapping("/main/{content_id}/wish")
+    @PostMapping("/{content_id}/wish")
 
     public List<String> wish(@PathVariable("content_id") String contentId, @RequestBody WishRequestFromMainDto wishRequestFromMainDto, ServletRequest servletRequest)
             throws ServletException, IOException {
@@ -78,7 +79,7 @@ public class MainController {  //메인페이지
 
     }
 
-    @PostMapping("/main/{content_id}/rating")
+    @PostMapping("/{content_id}/rating")
     public List<String> rating(@PathVariable("content_id") String contentId, @RequestBody RatingRequestFromMainDto ratingRequestFromMainDto, ServletRequest servletRequest)
             throws ServletException, IOException {
         RatingResponseDto ratingResponseDto = RatingResponseDto.builder().email(tokenProvider.getEmailFromToken(servletRequest))
@@ -115,7 +116,7 @@ public class MainController {  //메인페이지
     //									{"content_id":"value3","description":"value4"}] 이렇게 3개
 
 
-    @GetMapping("/main/click-desc")
+    @GetMapping("/click-desc")
     public ToDescriptionModelDto sendDescriptionData() {
         System.out.println(descriptionModelList); // 추후 삭제
         List<EveryDescription> list = new ArrayList<>();
@@ -132,7 +133,7 @@ public class MainController {  //메인페이지
     //"genre_data" : [{"content_id":"value1","genre":["genre1", "genre2", ...]},
     //									{"content_id":"value3","genre":["genre1", "genre2", ...]}]
 
-    @GetMapping("/main/click-gen") //같은 endpoint에 여러 개 매핑은 불가능. url 여러 개 써야 함(231104)
+    @GetMapping("/click-gen") //같은 endpoint에 여러 개 매핑은 불가능. url 여러 개 써야 함(231104)
     public ToGenreModelDto sendGenreData() {
         System.out.println(genreModelList); //확인용. 추후 삭제
         List<EveryGenre> list = new ArrayList<>();
