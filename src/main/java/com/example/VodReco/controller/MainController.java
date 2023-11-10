@@ -83,10 +83,13 @@ public class MainController {  //메인페이지
     public List<String> rating(@PathVariable("content_id") String contentId, @RequestBody RatingRequestFromMainDto ratingRequestFromMainDto, ServletRequest servletRequest)
             throws ServletException, IOException {
         RatingResponseDto ratingResponseDto = RatingResponseDto.builder().email(tokenProvider.getEmailFromToken(servletRequest))
-                .contentId(contentId).rating(ratingRequestFromMainDto.getRating()).build();
+                .contentId(contentId).rating(ratingRequestFromMainDto.getRating()).comment(ratingRequestFromMainDto.getComment()).build();
 //            확인
         System.out.println("평점 = " + ratingResponseDto.getRating());
+        System.out.println("댓글 = " + ratingResponseDto.getComment());
+
         ratingServiceImpl.saveRating(ratingResponseDto.toRatingEntity(ratingResponseDto));
+
 //        테스트
         System.out.println(this.ratingServiceImpl.findUserRatingByContentId(contentId));
 
