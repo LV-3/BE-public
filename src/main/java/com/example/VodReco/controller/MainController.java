@@ -6,12 +6,11 @@ import com.example.VodReco.dto.client.ToClient2ndDto;
 import com.example.VodReco.dto.client.ToClient3rdDto;
 import com.example.VodReco.dto.model.*;
 import com.example.VodReco.jwt.TokenProvider;
-import com.example.VodReco.service.RatingServiceImpl;
-import com.example.VodReco.service.VodServiceImpl;
-import com.example.VodReco.service.WishServiceImpl;
+import com.example.VodReco.service.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -20,11 +19,18 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+
+@Slf4j
+
+
 @RequestMapping("/main")
 public class MainController {  //메인페이지
 
     // kafka 고려하지 않고 postman API 테스트용 메서드부터 구현하기
     // 데이터 형식만 보는 용도
+
+    private final KafkaProducerService producerService;
+    private final KafkaConsumerService consumerService;
 
     private final TokenProvider tokenProvider;
     private final VodServiceImpl vodServiceImpl;
@@ -163,8 +169,19 @@ public class MainController {  //메인페이지
     // "genre_data":["content_id1", "content_id2", ... , "content_id10"],
     // "personal_data":["content_id1", "content_id2", ... , "content_id10"]}
     //프론트에 보낼 데이터 형식: 노션에 있음
-    @PostMapping("/byFastAPI")
-    public ToClient3rdDto getFromModel(@RequestBody FromModelDto fromModelDto) throws Exception {
+
+
+
+
+    //순서: 스프링 서버 재실행 -> Producer 파이썬 파일 실행 -> API 테스트
+    //새로고침 이벤트 한 번에 아래 method까지 병합해야 함 -> 방안 1. fastAPI에 데이터 3가지 그냥 묶어서 보낸다 2. API 3개로 분리하고 셋 중에 아무거나에 아래 메서드 연결한다(기준이?)
+    //fastAPI에 send하는 건 return으로 줄 필요 없고 중간에 보내버리면 됨(231110)
+    @GetMapping("/byFastAPI")
+    public ToClient3rdDto getFromModel() throws Exception {
+
+        FromModelDto fromModelDto = consumerService.getProcessedData();
+        System.out.println("컨트롤러 확인 = " + fromModelDto);
+
 
 
         ToClient1stDto[] array1 = new ToClient1stDto[10];
@@ -180,7 +197,9 @@ public class MainController {  //메인페이지
         List<String> personalData = fromModelDto.getPersonal_data();
         ToClient2ndDto personalDto = sendData(array3, personalData);
 
-        return ToClient3rdDto.builder().description_data(descriptionDto)
+//        return ToClient3rdDto.builder().description_data(descriptionDto)
+//                .genre_data(genreDto).personal_data(personalDto).build();
+       return ToClient3rdDto.builder().description_data(descriptionDto)
                 .genre_data(genreDto).personal_data(personalDto).build();
 
     }
@@ -194,6 +213,5 @@ public class MainController {  //메인페이지
         return ToClient2ndDto.builder().vod1(array[0]).vod2(array[1]).vod3(array[2])
                 .vod4(array[3]).vod5(array[4]).vod6(array[5]).vod7(array[6]).vod8(array[6]).vod9(array[8]).vod10(array[9]).build();
     }
-
 }
 

@@ -1,6 +1,7 @@
 package com.example.VodReco.config;
 
 import com.example.VodReco.dto.ChatMessage;
+import com.example.VodReco.dto.model.FromModelDto;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,17 +21,17 @@ public class KafkaConsumerConfig {
     @Value("localhost:9092")
     private String servers;
     @Bean
-    public ConsumerFactory<String, ChatMessage> consumerFactory() {
+    public ConsumerFactory<String, FromModelDto> consumerFactory() {
         Map<String, Object> config = new HashMap<>();
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, servers);
-        config.put(ConsumerConfig.GROUP_ID_CONFIG, "testgroupx");
+        config.put(ConsumerConfig.GROUP_ID_CONFIG, "adamsoft");
         return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), new
-                JsonDeserializer<>(ChatMessage.class));
+                JsonDeserializer<>(FromModelDto.class));
     }
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, ChatMessage>
+    public ConcurrentKafkaListenerContainerFactory<String, FromModelDto>
     kafkaListener() {
-        ConcurrentKafkaListenerContainerFactory<String, ChatMessage> factory = new
+        ConcurrentKafkaListenerContainerFactory<String, FromModelDto> factory = new
                 ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
