@@ -1,6 +1,7 @@
 package com.example.VodReco.config;
 
 import com.example.VodReco.dto.ChatMessage;
+import com.example.VodReco.dto.model.ToModelDto;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -20,7 +21,7 @@ public class KafkaProducerConfig {
     @Value("localhost:9092")
     private String servers;
     @Bean
-    public ProducerFactory<String, ChatMessage> producerFactory() {
+    public ProducerFactory<String, ToModelDto> producerFactory() {
         Map<String, Object> config = new HashMap<>();
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, servers);
         config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -28,7 +29,7 @@ public class KafkaProducerConfig {
         return new DefaultKafkaProducerFactory<>(config);
     }
     @Bean
-    public KafkaTemplate<String, ChatMessage> kafkaTemplate() {
+    public KafkaTemplate<String, ToModelDto> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 }

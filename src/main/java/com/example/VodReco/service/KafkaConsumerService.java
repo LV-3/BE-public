@@ -1,16 +1,16 @@
 package com.example.VodReco.service;
 
-import com.example.VodReco.dto.ChatMessage;
 import com.example.VodReco.dto.model.FromModelDto;
 import jakarta.persistence.criteria.From;
+import lombok.Getter;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
+@Getter
 @Service
 public class KafkaConsumerService {
     private FromModelDto processedData;
-    @KafkaListener(topics = "exam-topic", groupId = "adamsoft", containerFactory =
+    @KafkaListener(topics = "2nd-topic", groupId = "adamsoft", containerFactory =
             "kafkaListener")
     public void consume(FromModelDto fromModelDto) {
         System.out.println("확인 = " + fromModelDto);
@@ -20,9 +20,6 @@ public class KafkaConsumerService {
 
         this.processedData = processData(fromModelDto);
 
-    }
-    public FromModelDto getProcessedData(){
-        return processedData;
     }
 
     private FromModelDto processData(FromModelDto fromModelDto) {

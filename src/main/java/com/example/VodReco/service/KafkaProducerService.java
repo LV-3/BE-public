@@ -1,6 +1,6 @@
 package com.example.VodReco.service;
 
-import com.example.VodReco.dto.ChatMessage;
+import com.example.VodReco.dto.model.ToModelDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class KafkaProducerService {
     private static final String TOPIC = "exam-topic";
-    private final KafkaTemplate<String, ChatMessage> kafkaTemplate;
-    public void sendMessage(ChatMessage chatmessage) {
-        System.out.println("chatmessage = " + chatmessage.getContext());
-        kafkaTemplate.send(TOPIC, chatmessage);
+    private final KafkaTemplate<String, ToModelDto> kafkaTemplate;
+    public void sendMessage(ToModelDto toModelDto) {
+        System.out.println("modelName = " + toModelDto.getModelName());
+        kafkaTemplate.send(TOPIC, toModelDto);
     }
+
+
 }
