@@ -18,46 +18,17 @@ import java.util.stream.Collectors;
 public class UserDto {
 
     @NotNull
-    private String email;
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @NotNull
-    private String password;
-
-    @NotNull
-    private String nickname;
-
-    private String gender;
-    private String birthYear;
-
-    private List<String> selectedVods;
-
-    private Set<AuthorityDto> authorityDtoSet;
+    private String subsr;
 
     @Builder
-    public UserDto(String email, String password, String nickname, String gender, String birthYear, List<String> selectedVods, Set<AuthorityDto> authorityDtoSet) {
-        this.email = email;
-        this.password = password;
-        this.nickname = nickname;
-        this.gender = gender;
-        this.birthYear = birthYear;
-        this.selectedVods = selectedVods;
-        this.authorityDtoSet = authorityDtoSet;
+    public UserDto(String subsr) {
+        this.subsr = subsr;
     }
 
 
     public static UserDto from(User user) {
         if(user == null) return null;
 
-        return UserDto.builder()
-                .email(user.getEmail())
-                .nickname(user.getNickname())
-                .gender(user.getGender())
-                .birthYear(user.getBirthYear())
-                .selectedVods(user.getSelectedVods())
-                .authorityDtoSet(user.getAuthorities().stream()
-                        .map(authority -> AuthorityDto.builder().authorityName(authority.getAuthorityName()).build())
-                        .collect(Collectors.toSet()))
-                .build();
+        return UserDto.builder().subsr(user.getSubsr()).build();
     }
 }
