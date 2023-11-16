@@ -8,7 +8,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RatingRequestFromMyDto {
+public class RatingRequestDto {
+
+    private String subsr;
     @JsonProperty("content_id")
     private String contentId;
     private Integer rating;

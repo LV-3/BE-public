@@ -11,15 +11,15 @@ import java.util.List;
 
 
 @Getter
-@ToString //이거 없이도 VodDto 리턴값 멀쩡히 json으로 출력되는데??뭐임(231102)
+@ToString
 public class VodDto {
     @Id
     @Column(nullable = false)
     private String title;
     @Column(nullable = false, unique = true)
     private String contentId;
-
-    private List<String> genre;
+    private String genre;
+    private List<String> mood;
     private String country;
     private String director;
     private List<String> actor;
@@ -30,10 +30,11 @@ public class VodDto {
     }
 
     @Builder
-    public VodDto(String title, String contentId, List<String> actor, String country, List<String> genre, String director, String posterurl, String description) {
+    public VodDto(String title, String contentId, List<String> actor, String country, String genre, List<String> mood, String director, String posterurl, String description) {
         this.title = title;
         this.contentId = contentId;
         this.genre = genre;
+        this.mood = mood;
         this.country = country;
         this.director = director;
         this.actor = actor;
@@ -43,14 +44,16 @@ public class VodDto {
 
     //프로젝트 내에서 사용하던 VodDto를 Vod엔티티(=DB와 직접 연결되는 것)으로 변환할 때
     //actor를 List<String>에서 다시 String 하나로 join하는 메서드 생성(231102)
+
+    //actor는 구분자에 띄어쓰기 끼기
     public String joinListActor(List<String> actor) {
-        return String.join(",", actor);
+        return String.join(", ", actor);
     }
 
     //프로젝트 내에서 사용하던 VodDto를 Vod엔티티(=DB와 직접 연결되는 것)으로 변환할 때
     //genre를 List<String>에서 다시 String 하나로 join하는 메서드 생성(231102)
-    public String joinListGenre(List<String> genre) {
-        return String.join(",", genre);
+    public String joinListMood(List<String> mood) {
+        return String.join(",", mood);
     }
 
 
@@ -61,7 +64,8 @@ public class VodDto {
         return Vod.builder()
                 .title(vodDto.getTitle())
                 .contentId(vodDto.getContentId())
-                .genre(joinListGenre(vodDto.getGenre()))
+                .genre(vodDto.getGenre())
+                .mood(joinListMood(vodDto.getMood()))
                 .country(vodDto.getCountry())
                 .director(vodDto.getDirector())
                 .actor(joinListActor(vodDto.getActor()))

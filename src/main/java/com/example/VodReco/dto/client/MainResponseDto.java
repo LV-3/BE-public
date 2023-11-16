@@ -5,16 +5,18 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
+
 @Getter
 @RequiredArgsConstructor
 @ToString
-public class ToClient3rdDto {
-    private ToClient2ndDto description_data;
-    private ToClient2ndDto genre_data;
-    private ToClient2ndDto personal_data;
+public class MainResponseDto {
+    private List<ToClient1stDto> description_data;
+    private List<ToClient1stDto> genre_data;
+    private List<ToClient1stDto> personal_data;
 
     @Builder
-    public ToClient3rdDto(ToClient2ndDto description_data, ToClient2ndDto genre_data, ToClient2ndDto personal_data) {
+    public MainResponseDto(List<ToClient1stDto> description_data, List<ToClient1stDto> genre_data, List<ToClient1stDto> personal_data) {
         this.description_data = description_data;
         this.genre_data = genre_data;
         this.personal_data = personal_data;

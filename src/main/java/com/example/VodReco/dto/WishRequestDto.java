@@ -12,8 +12,8 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 
-public class WishRequestFromMainDto {
-    private String model;
+public class WishRequestDto {
+    private String subsr;
     @JsonProperty("content_id")
     private String contentId;
     private Integer wish;

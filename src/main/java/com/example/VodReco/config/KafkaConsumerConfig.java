@@ -1,6 +1,5 @@
 package com.example.VodReco.config;
 
-import com.example.VodReco.dto.ChatMessage;
 import com.example.VodReco.dto.model.FromModelDto;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -17,14 +16,13 @@ import java.util.Map;
 @EnableKafka
 @Configuration
 public class KafkaConsumerConfig {
-//    @Value("${spring.kafka.bootstrap-servers}")
-    @Value("localhost:9092")
+    @Value(value = "${spring.kafka.bootstrap-servers}")
     private String servers;
     @Bean
     public ConsumerFactory<String, FromModelDto> consumerFactory() {
         Map<String, Object> config = new HashMap<>();
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, servers);
-        config.put(ConsumerConfig.GROUP_ID_CONFIG, "adamsoft");
+        config.put(ConsumerConfig.GROUP_ID_CONFIG, "my-group");
         return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), new
                 JsonDeserializer<>(FromModelDto.class));
     }

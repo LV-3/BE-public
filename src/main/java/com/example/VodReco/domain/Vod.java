@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 //@NoArgsConstructor 기본 생성자 직접 작성
 public class Vod {
-    @Id
+//    @Id
 //    @Column(nullable = false)
     private String title;
 
@@ -30,7 +30,8 @@ public class Vod {
     private String contentId;
     //    @Column
 //    @Convert(converter = StringAttributeConverter.class)
-    private String genre; // 한 개의 String으로 받아서 "," 기준으로 split해서 Array로 만들고 -> List로 convert
+    private String genre;
+    private String mood;// 한 개의 String으로 받아서 "," 기준으로 split해서 Array로 만들고 -> List로 convert
     private String country;
     private String director;
     private String actor; //한 개의 String으로 받아서 "," 기준으로 split해서 Array로 만들고 -> List로 split
@@ -42,21 +43,22 @@ public class Vod {
 
     //DB로부터 꺼내온 actor(String)을 List<String>으로 변환하는 메서드 생성(231102)
     public List<String> actorToList(String actor) {
-        String[] splitedActor = actor.split(",");
+        String[] splitedActor = actor.split(", ");
         return Arrays.stream(splitedActor).toList();
     }
 
     //DB로부터 꺼내온 genre(String)를 List<String>으로 변환하는 메서드 생성(231102)
-    public List<String> genreToList(String genre) {
-        String[] splitedGenre = genre.split(",");
-        return Arrays.stream(splitedGenre).toList();
+    public List<String> moodToList(String mood) {
+        String[] splitedMood = mood.split(",");
+        return Arrays.stream(splitedMood).toList();
     }
 
     @Builder
-    public Vod(String title, String contentId, String actor, String country, String genre, String director, String posterurl, String description) {
+    public Vod(String title, String contentId, String actor, String country, String genre, String mood, String director, String posterurl, String description) {
         this.title = title;
         this.contentId = contentId;
         this.genre = genre;
+        this.mood = mood;
         this.country = country;
         this.director = director;
         this.actor = actor;
@@ -72,7 +74,8 @@ public class Vod {
         return VodDto.builder()
                 .title(vod.getTitle())
                 .contentId(vod.getContentId())
-                .genre(vod.genreToList(vod.getGenre()))
+                .genre(vod.getGenre())
+                .mood(vod.moodToList(vod.getMood()))
                 .country(vod.getCountry())
                 .director(vod.getDirector())
                 .actor(vod.actorToList(getActor()))
