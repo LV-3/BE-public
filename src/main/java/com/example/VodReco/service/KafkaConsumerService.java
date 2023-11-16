@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class KafkaConsumerService {
     private FromModelDto processedData;
-    @KafkaListener(topics = "2nd-topic", groupId = "adamsoft", containerFactory =
+    @KafkaListener(topics = "consuming-test", groupId = "my-group", containerFactory =
             "kafkaListener")
     public void consume(FromModelDto fromModelDto) {
         System.out.println("확인 = " + fromModelDto);

@@ -1,6 +1,5 @@
 package com.example.VodReco.config;
 
-import com.example.VodReco.dto.ChatMessage;
 import com.example.VodReco.dto.model.ToModelDto;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -16,9 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 @EnableKafka
 @Configuration
+
 public class KafkaProducerConfig {
-//    @Value("${spring.kafka.bootstrap-servers}")
-    @Value("localhost:9092")
+    @Value(value = "${spring.kafka.bootstrap-servers}")
     private String servers;
     @Bean
     public ProducerFactory<String, ToModelDto> producerFactory() {
