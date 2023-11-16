@@ -1,7 +1,9 @@
 package com.example.VodReco.service;
 
+import com.example.VodReco.domain.Vod;
 import com.example.VodReco.dto.VodDto;
 import com.example.VodReco.mongoRepository.VodRepository;
+import com.example.VodReco.repository.VodMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class VodServiceImpl implements VodService{
+public class VodServiceImpl implements VodService {
     private final VodRepository vodRepository;
 
     @Autowired
@@ -23,7 +25,7 @@ public class VodServiceImpl implements VodService{
 
     //테스트 코드 작성 포기함(231101)
     @Override
-    public List<VodDto> getAllVods(){
+    public List<VodDto> getAllVods() {
         return vodRepository.findAll().stream()
                 .map(VodtoVodDto::vodtoVodDto)
                 .collect(Collectors.toList());
@@ -32,9 +34,9 @@ public class VodServiceImpl implements VodService{
 
     //모든 posterUrl 조회
     @Override
-    public List<String> getAllPosterUrls(){
+    public List<String> getAllPosterUrls() {
         List<String> posterUrls = new ArrayList<>();
-        for (VodDto vodDto: getAllVods()){
+        for (VodDto vodDto : getAllVods()) {
             String posterUrl = vodDto.getPosterurl();
             posterUrls.add(posterUrl);
         }
@@ -54,6 +56,18 @@ public class VodServiceImpl implements VodService{
 
 //        Vod vod = new Vod();
 //        return vod.toVodDto(vodRepository.findByVcode(vcode));
+    }
 
+
+    //모든 장르 리스트
+    @Override
+    public List<VodMapping> sendGenreList() {
+        return vodRepository.findAllBy();
+    }
+
+    //장르별 VodDto 리스트
+    @Override
+    public List<Vod> sendVodsByGenre(String genre) {
+        return vodRepository.findAllByGenre(genre);
     }
 }
