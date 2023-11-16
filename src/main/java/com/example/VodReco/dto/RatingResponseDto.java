@@ -11,7 +11,7 @@ import lombok.Getter;
 public class RatingResponseDto {
     @Id
     @Column(nullable = false, unique = true)
-    private String email;
+    private String subsr;
     @Column(nullable = false, unique = true)
     private String contentId;
     private Integer rating;
@@ -21,8 +21,8 @@ public class RatingResponseDto {
 
 
     @Builder
-    public RatingResponseDto(String email, String contentId, Integer rating, String comment) {
-        this.email = email;
+    public RatingResponseDto(String subsr, String contentId, Integer rating, String comment) {
+        this.subsr = subsr;
         this.contentId = contentId;
         this.rating = rating;
         this.comment = comment;
@@ -30,7 +30,7 @@ public class RatingResponseDto {
 
     public UserRating toRatingEntity(RatingResponseDto ratingResponseDto) {
         return UserRating.builder()
-                .email(email)
+                .subsr(subsr)
                 .contentId(contentId)
                 .rating(rating)
                 .comment(comment)
