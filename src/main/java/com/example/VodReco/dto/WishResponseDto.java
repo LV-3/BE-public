@@ -13,7 +13,7 @@ import lombok.ToString;
 public class WishResponseDto {
     @Id
     @Column(nullable = false, unique = true)
-    private String email;
+    private String subsr;
     @Column(nullable = false, unique = true)
     private String contentId;
     private Integer wish;
@@ -22,8 +22,8 @@ public class WishResponseDto {
 
     //이건 받아오기만 하는 건데 builder가 필요할까 다시 고려하기
     @Builder
-    public WishResponseDto(String email, String contentId, Integer wish) {
-        this.email = email;
+    public WishResponseDto(String subsr, String contentId, Integer wish) {
+        this.subsr = subsr;
         this.contentId = contentId;
         this.wish = wish;
     }
@@ -31,7 +31,7 @@ public class WishResponseDto {
 
     public UserWish toWishEntity(WishResponseDto wishResponseDto) {
         return UserWish.builder()
-                .email(email)
+                .subsr(subsr)
                 .contentId(contentId)
                 .wish(wish)
                 .build();
