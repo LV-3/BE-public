@@ -20,9 +20,9 @@ public class KafkaProducerService {
     private static final String TOPIC = "producing-test";
 
     @Autowired
-    private final KafkaTemplate<String, ToModelDto> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public void sendMessage(ToModelDto toModelDto) {
-        kafkaTemplate.send(TOPIC, toModelDto);
+    public void sendMessage(String message) {
+        kafkaTemplate.send(TOPIC, message);
     }
 }
