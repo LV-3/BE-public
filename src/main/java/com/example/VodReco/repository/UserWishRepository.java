@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface WishRepository extends JpaRepository<UserWish, Integer> {
-    UserWish findByContentId(String contentId);
+public interface UserWishRepository extends JpaRepository<UserWish, Integer> {
+    UserWish findBySubsrAndContentId(String contentId, String subsr);
 }

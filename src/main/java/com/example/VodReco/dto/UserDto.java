@@ -25,7 +25,6 @@ public class UserDto {
         this.subsr = subsr;
     }
 
-
     public static UserDto from(User user) {
         if(user == null) return null;
 
