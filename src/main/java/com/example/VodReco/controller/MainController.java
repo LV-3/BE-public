@@ -1,5 +1,6 @@
 package com.example.VodReco.controller;
 
+import com.example.VodReco.dto.VodDto;
 import com.example.VodReco.dto.client.ToClient1stDto;
 import com.example.VodReco.dto.client.ToClient2ndDto;
 import com.example.VodReco.dto.client.MainResponseDto;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -32,22 +34,48 @@ public class MainController {
     private final ToModelDto toModelDto; // bean등록함(231112)
 
 
+
 //새로고침 눌리면 사용하던 모든 전역변수 List clearAll 필수(231116)
 
     //2. 새로고침 클릭 이후 대기하던 데이터를 형식 맞춰 모델에 보내는 메서드 3개(231104)
 
     //3. 새로고침 클릭 이후 모델로부터 데이터 받아서 -> 형식 맞추고 -> 프론트에 보내는 메서드(231104)
 
+//    @GetMapping("")
+//    public void showInitialRecommendation() {
+//        String message = "jjae kafka 2nd test";
+//        producerService.sendMessage(message);
+//    }
+
+//    @GetMapping("/jjae-test")
+//    public String testforkafka(){
+//        return consumerService.getMessageFromModel();
+//    }
+
+
     @GetMapping("")
-    public void showInitialRecommendation() {
-        String message = "jjae kafka 2nd test";
-        producerService.sendMessage(message);
+    public void getAllRecommendations(@RequestBody FromModelDto fromModelDto){
+        List<String> genreData = fromModelDto.getGenre_data();
+        List<String> descriptionData = fromModelDto.getDescription_data();
+
     }
 
-    @GetMapping("/jjae-test")
-    public String testforkafka(){
-        return consumerService.getMessageFromModel();
+    @GetMapping("/reload1")
+    public void send1stModelReco() {
     }
+
+    @GetMapping("/reload2")
+    public void send2ndModelReco() {
+    }
+    @GetMapping("/reload3")
+    public void send3rdModelReco() {
+    }
+
+    @GetMapping("/mood")
+    public List<VodDto> sendVodsByMood(@RequestBody String mood) {
+
+    }
+
 
 
 //    @GetMapping("/rereco")

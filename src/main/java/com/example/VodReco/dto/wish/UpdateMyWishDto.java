@@ -9,7 +9,7 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class UpdateMyWishResponseDto {
+public class UpdateMyWishDto {
     @Id
     @Column(nullable = false, unique = true)
     private String subsr;
@@ -17,16 +17,16 @@ public class UpdateMyWishResponseDto {
     private String contentId;
     private Integer wish;
 
-    public UpdateMyWishResponseDto(){}
+    public UpdateMyWishDto(){}
 
     @Builder
-    public UpdateMyWishResponseDto(String subsr, String contentId, Integer wish) {
+    public UpdateMyWishDto(String subsr, String contentId, Integer wish) {
         this.subsr = subsr;
         this.contentId = contentId;
         this.wish = wish;
     }
 
-    public UserWish toWishEntity(UpdateMyWishResponseDto updateMyWishResponseDto) {
+    public UserWish toWishEntity(UpdateMyWishDto updateMyWishDto) {
         return UserWish.builder()
                 .subsr(subsr)
                 .contentId(contentId)

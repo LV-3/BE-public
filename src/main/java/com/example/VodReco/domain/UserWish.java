@@ -1,6 +1,7 @@
 package com.example.VodReco.domain;
 
-import com.example.VodReco.dto.wish.UpdateMyWishResponseDto;
+import com.example.VodReco.dto.wish.UpdateMyWishDto;
+import com.example.VodReco.dto.wish.ViewMyWishResponseDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,10 +32,16 @@ public class UserWish {
 
     }
 
-    public UpdateMyWishResponseDto toWishResponseDto(UserWish userWish) {
-        return UpdateMyWishResponseDto.builder()
+    public UpdateMyWishDto toUpdateMyWishResponseDto(UserWish userWish) {
+        return UpdateMyWishDto.builder()
                 .subsr(subsr)
                 .contentId(contentId)
+                .wish(wish)
+                .build();
+    }
+
+    public ViewMyWishResponseDto toViewMyWishResponseDto(UserWish userWish) {
+        return ViewMyWishResponseDto.builder()
                 .wish(wish)
                 .build();
     }

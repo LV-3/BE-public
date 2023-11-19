@@ -8,11 +8,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RatingRequestDto {
+public class UpdateMyRatingRequestDto {
 
     private String subsr;
     @JsonProperty("content_id")
     private String contentId;
     private Integer rating;
-    private String comment;
+    private String review;
+    private String rating_date;
 }

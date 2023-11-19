@@ -1,11 +1,9 @@
 package com.example.VodReco.service.vodDetailPage.viewMyWish;
 
-import com.example.VodReco.dto.wish.UpdateMyWishResponseDto;
+import com.example.VodReco.dto.wish.ViewMyWishResponseDto;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface UserWishViewMyWishService {
-
-    UpdateMyWishResponseDto findMyWish(String subsr, String contentId);
-
+    public ViewMyWishResponseDto findMyWish(String subsr, String contentId);
 }
