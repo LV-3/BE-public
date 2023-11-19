@@ -1,4 +1,4 @@
-package com.example.VodReco.dto;
+package com.example.VodReco.dto.login;
 
 
 import jakarta.validation.constraints.NotNull;

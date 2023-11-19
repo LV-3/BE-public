@@ -1,13 +1,13 @@
-package com.example.VodReco.service;
+package com.example.VodReco.service.login;
 
-import com.example.VodReco.dto.LoginDto;
+import com.example.VodReco.dto.login.LoginDto;
 import com.example.VodReco.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserLoginServiceImpl implements UserService{
+public class UserLoginServiceImpl implements UserLoginService {
     private UserRepository userRepository;
     @Override
     public String ValidateUser(LoginDto loginDto) {

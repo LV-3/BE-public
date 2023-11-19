@@ -1,7 +1,7 @@
-package com.example.VodReco.service;
+package com.example.VodReco.service.rating;
 
 import com.example.VodReco.domain.UserRating;
-import com.example.VodReco.dto.RatingResponseDto;
+import com.example.VodReco.dto.rating.RatingResponseDto;
 
 public interface RatingService {
 

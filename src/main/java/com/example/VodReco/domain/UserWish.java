@@ -1,6 +1,6 @@
 package com.example.VodReco.domain;
 
-import com.example.VodReco.dto.WishResponseDto;
+import com.example.VodReco.dto.wish.UpdateMyWishResponseDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,8 +31,8 @@ public class UserWish {
 
     }
 
-    public WishResponseDto toWishResponseDto(UserWish userWish) {
-        return WishResponseDto.builder()
+    public UpdateMyWishResponseDto toWishResponseDto(UserWish userWish) {
+        return UpdateMyWishResponseDto.builder()
                 .subsr(subsr)
                 .contentId(contentId)
                 .wish(wish)

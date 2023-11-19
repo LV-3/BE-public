@@ -1,4 +1,4 @@
-package com.example.VodReco.dto;
+package com.example.VodReco.dto.viewGenres;
 
 import lombok.Builder;
 import lombok.Getter;

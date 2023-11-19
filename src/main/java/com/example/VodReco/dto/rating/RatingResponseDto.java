@@ -1,8 +1,7 @@
-package com.example.VodReco.dto;
+package com.example.VodReco.dto.rating;
 
 import com.example.VodReco.domain.UserRating;
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;

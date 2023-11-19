@@ -5,7 +5,7 @@ import com.example.VodReco.dto.VodDto;
 import org.springframework.stereotype.Service;
 
 @Service
-//public -> dafault로 변경(Entity를 직접 인풋으로 받는 거라 범위 줄임)
+public//public -> dafault로 변경(Entity를 직접 인풋으로 받는 거라 범위 줄임)
 class VodtoVodDto {
     //static으로 만들어서 VodtoVodDto의 인스턴스 vodtoVodDto 만들지 않고
     //그냥 VodtoVodDto.vodtoVodDto 쓸 수 있게 변경

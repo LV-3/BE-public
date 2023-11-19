@@ -1,6 +1,6 @@
 package com.example.VodReco.domain;
 
-import com.example.VodReco.dto.RatingResponseDto;
+import com.example.VodReco.dto.rating.RatingResponseDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
