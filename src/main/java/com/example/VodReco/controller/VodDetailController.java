@@ -8,7 +8,6 @@ import com.example.VodReco.dto.vodDetail.VodDetailResponseDto;
 import com.example.VodReco.dto.wish.UpdateMyWishRequestDto;
 import com.example.VodReco.dto.wish.UpdateMyWishDto;
 import com.example.VodReco.dto.wish.ViewMyWishResponseDto;
-import com.example.VodReco.service.VodServiceImpl;
 import com.example.VodReco.service.vodDetailPage.updateMyRating.UserRatingUpdateMyRatingServiceImpl;
 import com.example.VodReco.service.vodDetailPage.updateMyWish.UserWishUpdateMyWishServiceImpl;
 import com.example.VodReco.service.vodDetailPage.viewDetailInfo.VodViewDetailInfoServiceImpl;
@@ -31,7 +30,6 @@ import java.util.Optional;
 @RequestMapping("/detail")
 @Tag(name = "Vod detail", description = "Vod API detail") //swagger 어노테이션(231110)
 public class VodDetailController {
-    private final VodServiceImpl vodServiceImpl;
     private final VodViewDetailInfoServiceImpl vodViewDetailInfoService;
     private final UserWishViewMyWishServiceImpl userWishViewMyWishService;
     private final UserWishUpdateMyWishServiceImpl userWishUpdateMyWishService;
@@ -40,8 +38,7 @@ public class VodDetailController {
 
 
     @Autowired
-    public VodDetailController(VodServiceImpl vodServiceImpl, VodViewDetailInfoServiceImpl vodViewDetailInfoService, UserWishViewMyWishServiceImpl userWishViewMyWishService, UserWishUpdateMyWishServiceImpl userWishUpdateMyWishService, UserRatingViewEveryRatingServiceImpl userRatingViewEveryRatingService, UserRatingUpdateMyRatingServiceImpl userRatingUpdateMyRatingService) {
-        this.vodServiceImpl = vodServiceImpl;
+    public VodDetailController(VodViewDetailInfoServiceImpl vodViewDetailInfoService, UserWishViewMyWishServiceImpl userWishViewMyWishService, UserWishUpdateMyWishServiceImpl userWishUpdateMyWishService, UserRatingViewEveryRatingServiceImpl userRatingViewEveryRatingService, UserRatingUpdateMyRatingServiceImpl userRatingUpdateMyRatingService) {
         this.vodViewDetailInfoService = vodViewDetailInfoService;
         this.userWishViewMyWishService = userWishViewMyWishService;
         this.userWishUpdateMyWishService = userWishUpdateMyWishService;

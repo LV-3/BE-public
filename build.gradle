@@ -28,7 +28,6 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 
 
-	implementation 'org.springframework.kafka:spring-kafka'
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
@@ -40,14 +39,18 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
 
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
 
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 
+	implementation 'com.github.derjust:spring-data-dynamodb:5.1.0'
+
+	implementation platform('com.amazonaws:aws-java-sdk-bom:1.12.529')
+	implementation 'com.amazonaws:aws-java-sdk-dynamodb'
+
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 }
 
 	tasks.named('test') {

@@ -1,18 +1,12 @@
 package com.example.VodReco.controller;
 
-import com.example.VodReco.dto.VodDto;
-import com.example.VodReco.dto.client.ToClient1stDto;
-import com.example.VodReco.dto.client.ToClient2ndDto;
-import com.example.VodReco.dto.client.MainResponseDto;
+import com.example.VodReco.dto.UserDto;
 import com.example.VodReco.dto.model.*;
-import com.example.VodReco.service.*;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -20,19 +14,12 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/main")
 public class MainController {
-    private final KafkaProducerService producerService;
-    private final KafkaConsumerService consumerService;
-
-    private final VodServiceImpl vodServiceImpl;
 
     private final List<EveryDescription> descriptionList = new ArrayList<>();
-    private final List<EveryGenre> genreList = new ArrayList<>();
+    private final List<EveryMood> genreList = new ArrayList<>();
 
     //테스트용(231112)
     private final List<String> personalList = new ArrayList<String>();
-
-    private final ToModelDto toModelDto; // bean등록함(231112)
-
 
 
 //새로고침 눌리면 사용하던 모든 전역변수 List clearAll 필수(231116)
@@ -54,10 +41,9 @@ public class MainController {
 
 
     @GetMapping("")
-    public void getAllRecommendations(@RequestBody FromModelDto fromModelDto){
-        List<String> genreData = fromModelDto.getGenre_data();
-        List<String> descriptionData = fromModelDto.getDescription_data();
-
+    public void getAllRecoFromModel (@RequestBody UserDto userDto){
+        userInfoRepository.findBySubsr(userDto.getSubsr());
+        //도메인명(이용할 테이블 이름) 정해져야 진행 가능(231121)
     }
 
     @GetMapping("/reload1")
@@ -71,10 +57,10 @@ public class MainController {
     public void send3rdModelReco() {
     }
 
-    @GetMapping("/mood")
-    public List<VodDto> sendVodsByMood(@RequestBody String mood) {
-
-    }
+//    @GetMapping("/mood")
+//    public List<VodDto> sendEachMoodVods(@RequestBody String mood) {
+//
+//    }
 
 
 
