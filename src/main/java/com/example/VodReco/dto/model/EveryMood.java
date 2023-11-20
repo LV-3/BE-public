@@ -8,13 +8,13 @@ import java.util.List;
 
 @Getter
 @RequiredArgsConstructor
-public class EveryGenre {
+public class EveryMood {
     private String content_id;
-    private List<String> genre;
+    private List<String> mood;
 
     @Builder
-    public EveryGenre(String content_id, List<String> genre) {
+    public EveryMood(String content_id, List<String> mood) {
         this.content_id = content_id;
-        this.genre = genre;
+        this.mood = mood;
     }
 }

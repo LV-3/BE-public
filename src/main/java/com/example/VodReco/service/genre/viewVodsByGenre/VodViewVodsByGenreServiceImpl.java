@@ -1,7 +1,7 @@
 package com.example.VodReco.service.genre.viewVodsByGenre;
 
 import com.example.VodReco.domain.Vod;
-import com.example.VodReco.mongoRepository.VodRepository;
+import com.example.VodReco.dynamoRepository.VodRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
