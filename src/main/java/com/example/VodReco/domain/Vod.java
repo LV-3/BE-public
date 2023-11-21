@@ -100,7 +100,6 @@ import java.util.List;
 @DynamoDBTable(tableName = "dynamo_vods")
 //@NoArgsConstructor 기본 생성자 직접 작성
 public class Vod {
-    @Id
     @DynamoDBHashKey
     private String contentId;
     @DynamoDBAttribute

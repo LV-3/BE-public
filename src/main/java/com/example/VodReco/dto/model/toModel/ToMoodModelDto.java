@@ -1,23 +1,22 @@
-package com.example.VodReco.dto.model;
+package com.example.VodReco.dto.model.toModel;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
 @Getter
-@NoArgsConstructor
 @Component
 @Setter
-public class ToDescriptionModelDto {
+@RequiredArgsConstructor
+public class ToMoodModelDto {
     private String modelName;
-    private List<EveryDescription> responseData;
+    private List<EveryMood> responseData;
 
     @Builder
-    public ToDescriptionModelDto(String modelName, List<EveryDescription> responseData) {
+    public ToMoodModelDto(String modelName, List<EveryMood> responseData) {
         this.modelName = modelName;
         this.responseData = responseData;
     }

@@ -70,6 +70,7 @@ public class VodDetailController {
                                 @Parameter(name = "content_id", description = "컨텐츠 고유id", example = "20200622", required = true)
                                 String contentId,
                                 @RequestBody UserDto userDto) {
+        //GET요청인데 왜 당연히 body로 받고 있었지?? 지금껏 미친코드를 짜고있었다(231121)
         ViewMyWishResponseDto viewMyWishResponseDto = userWishViewMyWishService.findMyWish(userDto.getSubsr(), contentId);
 //            콘솔 확인
         System.out.println("콘솔 확인용 = " + viewMyWishResponseDto);
