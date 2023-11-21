@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserLoginController {
     private final UserLoginServiceImpl userLoginService;
 
-    @GetMapping("/login")
+    @GetMapping("/login/{subsr}")
     public String login(@RequestBody LoginDto loginDto) {
         return userLoginService.ValidateUser(loginDto);
     }
