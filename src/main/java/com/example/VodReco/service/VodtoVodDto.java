@@ -1,4 +1,4 @@
-package com.example.VodReco.util;
+package com.example.VodReco.service;
 
 import com.example.VodReco.domain.Vod;
 import com.example.VodReco.dto.VodDto;
