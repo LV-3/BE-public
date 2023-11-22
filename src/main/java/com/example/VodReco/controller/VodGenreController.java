@@ -1,7 +1,7 @@
 package com.example.VodReco.controller;
 
 import com.example.VodReco.domain.Vod;
-import com.example.VodReco.mongoRepository.VodMapping;
+import com.example.VodReco.service.VodMapping;
 import com.example.VodReco.service.genre.viewGenres.VodViewGenresServiceImpl;
 import com.example.VodReco.service.genre.viewVodsByGenre.VodViewVodsByGenreService;
 import lombok.RequiredArgsConstructor;

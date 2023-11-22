@@ -17,13 +17,19 @@ public class UpdateMyWishDto {
     private String contentId;
     private Integer wish;
 
+    //조회 속도 개선을 위해 추가(231122)
+    private String title;
+    private String posterurl;
+
     public UpdateMyWishDto(){}
 
     @Builder
-    public UpdateMyWishDto(String subsr, String contentId, Integer wish) {
+    public UpdateMyWishDto(String subsr, String contentId, Integer wish, String title, String posterurl) {
         this.subsr = subsr;
         this.contentId = contentId;
         this.wish = wish;
+        this.title = title;
+        this.posterurl = posterurl;
     }
 
     public UserWish toWishEntity(UpdateMyWishDto updateMyWishDto) {
@@ -31,6 +37,8 @@ public class UpdateMyWishDto {
                 .subsr(subsr)
                 .contentId(contentId)
                 .wish(wish)
+                .title(title)
+                .posterurl(posterurl)
                 .build();
     }
 }

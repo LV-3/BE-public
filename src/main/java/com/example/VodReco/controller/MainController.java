@@ -1,6 +1,7 @@
 package com.example.VodReco.controller;
 
 import com.example.VodReco.dto.UserDto;
+import com.example.VodReco.dto.client.MainResponseDto;
 import com.example.VodReco.dto.model.toModel.EveryDescription;
 import com.example.VodReco.dto.model.toModel.EveryMood;
 import lombok.RequiredArgsConstructor;
@@ -41,23 +42,22 @@ public class MainController {
 //    }
 
 
-    @GetMapping("")
+    @PostMapping("")
     public void getAllRecoFromModel (@RequestBody UserDto userDto){
-//        userInfoRepository.findBySubsr(userDto.getSubsr());
-        //도메인명(이용할 테이블 이름) 정해져야 진행 가능(231121)
-
+        MainResponseDto mainResponseDto = new MainResponseDto();
 
     }
 
-    @GetMapping("/reload1")
-    public void send1stModelReco() {
+    @PostMapping("/reload1")
+    public void send1stModelReco(@RequestBody UserDto userDto) {
+
     }
 
-    @GetMapping("/reload2")
-    public void send2ndModelReco() {
+    @PostMapping("/reload2")
+    public void send2ndModelReco(@RequestBody UserDto userDto) {
     }
-    @GetMapping("/reload3")
-    public void send3rdModelReco() {
+    @PostMapping("/reload3")
+    public void send3rdModelReco(@RequestBody UserDto userDto) {
     }
 
 //    @GetMapping("/mood")

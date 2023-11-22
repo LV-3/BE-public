@@ -1,6 +1,6 @@
 package com.example.VodReco.service.genre.viewGenres;
 
-import com.example.VodReco.mongoRepository.VodMapping;
+import com.example.VodReco.service.VodMapping;
 import com.example.VodReco.mongoRepository.VodRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
