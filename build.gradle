@@ -45,12 +45,9 @@ dependencies {
 
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 
-	implementation 'com.github.derjust:spring-data-dynamodb:5.1.0'
-
-	implementation platform('com.amazonaws:aws-java-sdk-bom:1.12.529')
-	implementation 'com.amazonaws:aws-java-sdk-dynamodb'
-
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 }
 
 	tasks.named('test') {

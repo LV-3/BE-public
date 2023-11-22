@@ -6,7 +6,6 @@ import com.example.VodReco.repository.UserWishRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @RequiredArgsConstructor
 public class UserWishViewMyWishServiceImpl implements UserWishViewMyWishService {

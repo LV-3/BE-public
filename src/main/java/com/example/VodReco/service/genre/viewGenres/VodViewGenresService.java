@@ -1,6 +1,6 @@
 package com.example.VodReco.service.genre.viewGenres;
 
-import com.example.VodReco.dynamoRepository.VodMapping;
+import com.example.VodReco.service.VodMapping;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

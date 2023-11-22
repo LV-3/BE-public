@@ -1,6 +1,6 @@
 //package com.example.VodReco.config;
 //
-//import com.example.VodReco.dto.model.ToModelDto;
+//import com.example.VodReco.dto.model.sendToModel.ToModelDto;
 //import org.springframework.kafka.support.serializer.JsonSerializer;
 //import org.apache.kafka.clients.producer.ProducerConfig;
 //import org.apache.kafka.common.serialization.StringSerializer;

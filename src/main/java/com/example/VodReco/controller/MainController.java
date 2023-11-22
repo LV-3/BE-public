@@ -1,7 +1,9 @@
 package com.example.VodReco.controller;
 
 import com.example.VodReco.dto.UserDto;
-import com.example.VodReco.dto.model.*;
+import com.example.VodReco.dto.client.MainResponseDto;
+import com.example.VodReco.dto.model.toModel.EveryDescription;
+import com.example.VodReco.dto.model.toModel.EveryMood;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -40,21 +42,22 @@ public class MainController {
 //    }
 
 
-    @GetMapping("")
+    @PostMapping("")
     public void getAllRecoFromModel (@RequestBody UserDto userDto){
-        userInfoRepository.findBySubsr(userDto.getSubsr());
-        //도메인명(이용할 테이블 이름) 정해져야 진행 가능(231121)
+        MainResponseDto mainResponseDto = new MainResponseDto();
+
     }
 
-    @GetMapping("/reload1")
-    public void send1stModelReco() {
+    @PostMapping("/reload1")
+    public void send1stModelReco(@RequestBody UserDto userDto) {
+
     }
 
-    @GetMapping("/reload2")
-    public void send2ndModelReco() {
+    @PostMapping("/reload2")
+    public void send2ndModelReco(@RequestBody UserDto userDto) {
     }
-    @GetMapping("/reload3")
-    public void send3rdModelReco() {
+    @PostMapping("/reload3")
+    public void send3rdModelReco(@RequestBody UserDto userDto) {
     }
 
 //    @GetMapping("/mood")
@@ -69,8 +72,7 @@ public class MainController {
 //
 //        //Topic에 데이터 전송
 //        // personal모델 추후 작성 필요(231112)
-//
-//        producerService.sendMessage(  ~ );
+
 //
 //        //테스트를 위해 일시적 주석처리함
 ////        descriptionList.clear(); //다음 턴을 위해 리스트 비우기(231112)
