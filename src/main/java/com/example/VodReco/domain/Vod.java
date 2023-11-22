@@ -16,15 +16,20 @@ public class Vod {
     @Id
     @Field(name = "content_id") // 이거 붙여줘야 mongoDB의 content_id와 스프링부트 내의 contentId가 연결됨 (231109)
     private String contentId;
+    @Field(name = "preprocessed")
     private String title;
 //    @Convert(converter = StringAttributeConverter.class)
+    @Field(name = "genre_of_ct_cl")
     private String genre;
+    @Field(name = "ct_cl")
+    private String category;
     private String mood;// 한 개의 String으로 받아서 "," 기준으로 split해서 Array로 만들고 -> List로 convert
     private String country;
     private String director;
     private String actor; //한 개의 String으로 받아서 "," 기준으로 split해서 Array로 만들고 -> List로 split
     private String posterurl;
     private String description;
+
 
     public Vod(){
     }
