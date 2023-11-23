@@ -6,18 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Document(collection = "genre")
-
-public class AllGenres {
+public class Genre {
     @Id
     private String genre;
-    @jakarta.persistence.Id
-    private Long id;
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
 }

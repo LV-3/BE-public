@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public//public -> dafault로 변경(Entity를 직접 인풋으로 받는 거라 범위 줄임) -> default면 같은 패키지 내부 아닌가? 불가(231123)
-class VodtoVodDto {
+class VodtoVodDtoWrapper {
     private final StringToListWrapper stringToListWrapper;
 
     //static으로 만들어서 VodtoVodDto의 인스턴스 vodtoVodDto 만들지 않고

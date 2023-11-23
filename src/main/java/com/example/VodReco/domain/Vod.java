@@ -1,7 +1,7 @@
 package com.example.VodReco.domain;
 
 import com.example.VodReco.dto.VodDto;
-import com.example.VodReco.util.StringToListConverter;
+import com.example.VodReco.util.StringToListWrapper;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
@@ -13,13 +13,12 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class Vod {
 
 
-//    주의: jpa의 @Id가 아님
+    //    주의: jpa의 @Id가 아님
     @Id
     @Field(name = "content_id") // 이거 붙여줘야 mongoDB의 content_id와 스프링부트 내의 contentId가 연결됨 (231109)
     private String contentId;
     @Field(name = "preprocessed")
     private String title;
-//    @Convert(converter = StringAttributeConverter.class)
     @Field(name = "ct_cl")
     private String category;
     @Field(name = "genre_of_ct_cl")
@@ -70,7 +69,7 @@ public class Vod {
         this.description = description;
         this.actors = actors;
         this.posterurl = posterurl;
-        this.grade= grade;
+        this.grade = grade;
         this.country = country;
 
         this.release_year = release_year;
@@ -80,29 +79,29 @@ public class Vod {
         this.gpt_subjects = gpt_subjects;
     }
 
-    public VodDto toVodDto(Vod vod) {
-        if (vod == null) {
-            return null;
-        }
-        return VodDto.builder()
-                .contentId(vod.getContentId())
-                .title(vod.getTitle())
-                .category(vod.getCategory())
-                .genre(vod.getGenre())
-                .disp_rtm(vod.getDisp_rtm())
-
-                .description(vod.getDescription())
-                .actors(StringToListConverter.stringToList(vod.getActors()))
-                .posterurl(vod.getPosterurl())
-                .grade(vod.getGrade())
-                .country(vod.getCountry())
-
-                .release_year(vod.getRelease_year())
-                .director(StringToListConverter.stringToList(vod.getDirector()))
-                .mood(StringToListConverter.stringToList(vod.getMood()))
-                .gpt_genres(StringToListConverter.stringToList(vod.getGpt_genres()))
-                .gpt_subjects(StringToListConverter.stringToList(vod.getGpt_subjects()))
-
-                .build();
-    }
+//    public VodDto toVodDto(Vod vod) {
+//        final StringToListWrapper stringToListWrapper;
+//        if (vod == null) {
+//            return null;
+//        }
+//        return VodDto.builder()
+//                .contentId(vod.getContentId())
+//                .title(vod.getTitle())
+//                .category(vod.getCategory())
+//                .genre(vod.getGenre())
+//                .disp_rtm(vod.getDisp_rtm())
+//
+//                .description(vod.getDescription())
+//                .actors(StringToListWrapper.stringToList(vod.getActors()))
+//                .posterurl(vod.getPosterurl())
+//                .grade(vod.getGrade())
+//                .country(vod.getCountry())
+//
+//                .release_year(vod.getRelease_year())
+//                .director(StringToListWrapper.stringToList(vod.getDirector()))
+//                .mood(StringToListWrapper.stringToList(vod.getMood()))
+//                .gpt_genres(StringToListWrapper.stringToList(vod.getGpt_genres()))
+//                .gpt_subjects(StringToListWrapper.stringToList(vod.getGpt_subjects()))
+//
+//                .build();
 }

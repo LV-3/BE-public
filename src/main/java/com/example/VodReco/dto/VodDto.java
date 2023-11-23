@@ -1,13 +1,13 @@
 package com.example.VodReco.dto;
 
 import com.example.VodReco.domain.Vod;
-import com.example.VodReco.util.ListToStringConverter;
-import jakarta.persistence.Column;
+import com.example.VodReco.util.ListToStringWrapper;
+import com.example.VodReco.util.StringToListWrapper;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 
@@ -43,8 +43,8 @@ public class VodDto {
 
     @Builder
     public VodDto(String contentId, String title, String category, String genre, String disp_rtm,
-               String description, List<String> actors, String posterurl, String grade, String country,
-               String release_year, List<String> director, List<String> mood, List<String> gpt_genres, List<String> gpt_subjects) {
+                  String description, List<String> actors, String posterurl, String grade, String country,
+                  String release_year, List<String> director, List<String> mood, List<String> gpt_genres, List<String> gpt_subjects) {
 
         this.contentId = contentId;
         this.title = title;
@@ -66,31 +66,30 @@ public class VodDto {
     }
 
 
-
-    public Vod toVodEntity(VodDto vodDto) {
-        if (vodDto == null) {
-            return null;
-        }
-        return Vod.builder()
-                .title(vodDto.getTitle())
-                .contentId(vodDto.getContentId())
-                .category(vodDto.getCategory())
-                .genre(vodDto.getGenre())
-                .disp_rtm(vodDto.getDisp_rtm())
-
-                .description(vodDto.getDescription())
-                .actors(ListToStringConverter.listToString(vodDto.getActors()))
-                .posterurl(vodDto.getPosterurl())
-                .grade(vodDto.getGrade())
-                .country(vodDto.getCountry())
-
-                .release_year(vodDto.getRelease_year())
-                .director(ListToStringConverter.listToString(vodDto.getDirector()))
-                .mood(ListToStringConverter.listToString(vodDto.getMood()))
-                .gpt_genres(ListToStringConverter.listToString(vodDto.getGpt_genres()))
-                .gpt_subjects(ListToStringConverter.listToString(vodDto.getGpt_subjects()))
-
-                .build();
+//    public Vod toVodEntity(VodDto vodDto) {
+//        if (vodDto == null) {
+//            return null;
+//        }
+//        return Vod.builder()
+//                .title(vodDto.getTitle())
+//                .contentId(vodDto.getContentId())
+//                .category(vodDto.getCategory())
+//                .genre(vodDto.getGenre())
+//                .disp_rtm(vodDto.getDisp_rtm())
+//
+//                .description(vodDto.getDescription())
+//                .actors(listToStringWrapper.listToString(vodDto.getActors()))
+//                .posterurl(vodDto.getPosterurl())
+//                .grade(vodDto.getGrade())
+//                .country(vodDto.getCountry())
+//
+//                .release_year(vodDto.getRelease_year())
+//                .director(ListToStringWrapper.listToString(vodDto.getDirector()))
+//                .mood(ListToStringWrapper.listToString(vodDto.getMood()))
+//                .gpt_genres(ListToStringWrapper.listToString(vodDto.getGpt_genres()))
+//                .gpt_subjects(ListToStringWrapper.listToString(vodDto.getGpt_subjects()))
+//
+//                .build();
     }
 
 }

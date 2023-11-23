@@ -11,7 +11,7 @@ public class ListToStringWrapper {
     //List<String>에서 다시 String 하나로 join하는 메서드 생성(231123)
     //static으로 선언해서 인스턴스 생성하지 않아도 바로 사용 가능
     //구분자는 (, )
-    public String listToString(List<String> list) {
+    String listToString(List<String> list) {
         return String.join(", ", list);
     }
 
