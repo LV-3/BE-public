@@ -7,7 +7,6 @@ import com.example.VodReco.mongoRepository.UserWatchRepository;
 import com.example.VodReco.mongoRepository.VodRepository;
 import com.example.VodReco.service.VodtoVodDto;
 import lombok.RequiredArgsConstructor;
-import org.hamcrest.core.Every;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class VodGetRecoServiceImpl {
     private final UserWatchRepository userWatchRepository;
     private final VodRepository vodRepository;
 
-    public List<String> getRecoFromModel(String subsr) {
+    public void getRecoFromModel(String subsr) {
         List<?> toModelList = new ArrayList<>();
         List<EveryDescription> descriptionResponseList = new ArrayList<>();
         List<EveryMood> moodResponseList = new ArrayList<>();
@@ -41,4 +40,5 @@ public class VodGetRecoServiceImpl {
 //        ToModelDto toModelDto = ToModelDto.builder().build();
 //    }
 
+    }
 }
