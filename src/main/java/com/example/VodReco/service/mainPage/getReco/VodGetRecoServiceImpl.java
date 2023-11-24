@@ -25,6 +25,7 @@ public class VodGetRecoServiceImpl implements VodGetRecoService{
         List<?> toModelList = new ArrayList<>();
         List<EveryDescription> descriptionResponseList = new ArrayList<>();
         List<EveryMood> moodResponseList = new ArrayList<>();
+        //확인 요망(231124)
         for (Vod v : userWatchRepository.findBySubsr(subsr)) {
             VodDto vodDto = vodtoVodDtoWrapper.toVodDto(v);
             String contentId = vodDto.getContentId();
