@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ViewMyWatchListDto {
     private String subsr;
-    private String contentId;
+    private String content_id;
     private String title;
     private Integer user_preference;
     private String posterurl;
@@ -16,7 +16,7 @@ public class ViewMyWatchListDto {
     @Builder
     public ViewMyWatchListDto(String subsr, String contentId, String title, Integer user_preference, String posterurl) {
         this.subsr = subsr;
-        this.contentId = contentId;
+        this.content_id = contentId;
         this.title = title;
         this.user_preference = user_preference;
         this.posterurl = posterurl;

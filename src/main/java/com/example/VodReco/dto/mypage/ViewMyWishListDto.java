@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ViewMyWishListDto {
     private String subsr;
-    private String contentId;
+    private String content_id;
     private String title;
     private Integer wish;
     private String posterurl;
@@ -16,7 +16,7 @@ public class ViewMyWishListDto {
     @Builder
     public ViewMyWishListDto(String subsr,String contentId, String title, Integer wish, String posterurl) {
         this.subsr = subsr;
-        this.contentId = contentId;
+        this.content_id = contentId;
         this.title = title;
         this.wish = wish;
         this.posterurl = posterurl;

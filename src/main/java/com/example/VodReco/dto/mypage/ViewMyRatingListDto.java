@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ViewMyRatingListDto {
     private String subsr;
-    private String contentId;
+    private String content_id;
     private String title;
     private String posterurl;
     private Integer rating;
@@ -19,7 +19,7 @@ public class ViewMyRatingListDto {
     @Builder
     public ViewMyRatingListDto(String subsr,String contentId, String title,String posterurl, Integer rating, String rating_date, String review) {
         this.subsr = subsr;
-        this.contentId = contentId;
+        this.content_id = contentId;
         this.title =title;
         this.posterurl = posterurl;
         this.rating = rating;
