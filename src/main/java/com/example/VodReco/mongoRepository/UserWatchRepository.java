@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface UserWatchRepository extends MongoRepository<UserWatch, String> {
     List<Vod> findBySubsr(String subsr);
+
+    List<UserWatch> findAllBySubsr(String subsr);
 }

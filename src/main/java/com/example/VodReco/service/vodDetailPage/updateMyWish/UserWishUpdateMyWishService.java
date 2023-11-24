@@ -1,10 +1,11 @@
 package com.example.VodReco.service.vodDetailPage.updateMyWish;
 
-import com.example.VodReco.domain.UserWish;
 import com.example.VodReco.dto.wish.UpdateMyWishDto;
+import com.example.VodReco.dto.wish.UpdateMyWishRequestDto;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface UserWishUpdateMyWishService {
-    void saveWish(UpdateMyWishDto updateMyWishDto);
+    // 컬럼: id / subsr / content_id / wish(0or1) / title / posterurl
+    void saveWish(UpdateMyWishRequestDto updateMyWishRequestDto, String contentId);
 }

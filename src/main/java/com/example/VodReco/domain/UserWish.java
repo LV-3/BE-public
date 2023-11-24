@@ -5,15 +5,19 @@ import com.example.VodReco.dto.wish.ViewMyWishResponseDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Entity
 @Table(name = "user_wish")
 public class UserWish {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, unique = true)
-    private int id;
+    //Id를 content_id + subsr로 만드는 방안 고려하기(231123)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private int id;
+    @Column(nullable = false, unique = true, name = "unique_id")
+//    @ColumnDefault("defaultId")
+    private String uniqueId;
     @Column(nullable = false) //unique = true) // unique = true) wish, rating은 email 겹쳐도 됨. 사용자가 여러 개의 vod에 대한 평가 내림(231104)
     private String subsr;
 //    @Column(nullable = false)//, unique = true)
@@ -25,7 +29,8 @@ public class UserWish {
     private String posterurl;
 
     @Builder
-    public UserWish(String subsr, String contentId, Integer wish, String title, String posterurl) {
+    public UserWish(String uniqueId, String subsr, String contentId, Integer wish, String title, String posterurl) {
+        this.uniqueId = uniqueId;
         this.subsr = subsr;
         this.contentId = contentId;
         this.wish = wish;
@@ -39,6 +44,7 @@ public class UserWish {
 
     public UpdateMyWishDto toUpdateMyWishResponseDto(UserWish userWish) {
         return UpdateMyWishDto.builder()
+                .uniqueId(uniqueId)
                 .subsr(subsr)
                 .contentId(contentId)
                 .wish(wish)

@@ -1,9 +1,8 @@
 package com.example.VodReco.controller;
 
-import com.example.VodReco.domain.Vod;
-import com.example.VodReco.service.VodMapping;
-import com.example.VodReco.service.genre.viewGenres.VodViewGenresServiceImpl;
-import com.example.VodReco.service.genre.viewVodsByGenre.VodViewVodsByGenreService;
+import com.example.VodReco.dto.genre.BasicInfoOfVodDto;
+//import com.example.VodReco.service.genre.viewGenres.GenreViewGenresServiceImpl;
+import com.example.VodReco.service.genre.viewVodsByGenre.VodViewVodsByGenreServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,20 +10,21 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/vods")
+@RequestMapping("/genres")
 public class VodGenreController {
-    private final VodViewGenresServiceImpl vodViewGenresService;
-    private final VodViewVodsByGenreService vodViewVodsByGenreService;
+//    private final GenreViewGenresServiceImpl genreViewGenresService;
+    private final VodViewVodsByGenreServiceImpl vodViewVodsByGenreService;
 
-    @GetMapping("")
-    public List<VodMapping> sendGenreList(String genre) {
-        return vodViewGenresService.viewGenreList();
-    }
+//    //장르 목록 보기
+//    @GetMapping("")
+//    public List<String> sendGenreList(String genre) {
+//        return genreViewGenresService.viewGenreList();
+//    }
 
-    @GetMapping("/{genre}") //VodDto로 변환 메서드 추가 필요(231116)
-    //content_id, poster, title만 추출해서 보낼 수 있게 service레이어 수정하기(231121)
-
-    public List<Vod> sendGenreVodList(@PathVariable String genre) {
+    //장르별 Vod 목록 보기
+    //테스트 완료(231124)
+    @GetMapping("/{genre}")
+    public List<BasicInfoOfVodDto> sendGenreVodList(@PathVariable String genre) {
         return vodViewVodsByGenreService.viewVodsByGenre(genre);
     }
 }

@@ -1,9 +1,12 @@
 package com.example.VodReco.controller;
 
 import com.example.VodReco.dto.UserDto;
+import com.example.VodReco.dto.VodDto;
 import com.example.VodReco.dto.client.MainResponseDto;
+import com.example.VodReco.dto.genre.BasicInfoOfVodDto;
 import com.example.VodReco.dto.model.toModel.EveryDescription;
 import com.example.VodReco.dto.model.toModel.EveryMood;
+import com.example.VodReco.service.mainPage.viewVodsByMood.VodviewVodsByMoodServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +25,8 @@ public class MainController {
 
     //테스트용(231112)
     private final List<String> personalList = new ArrayList<String>();
+
+    private final VodviewVodsByMoodServiceImpl vodviewVodsByMoodService;
 
 
 //새로고침 눌리면 사용하던 모든 전역변수 List clearAll 필수(231116)
@@ -60,10 +65,10 @@ public class MainController {
     public void send3rdModelReco(@RequestBody UserDto userDto) {
     }
 
-//    @GetMapping("/mood")
-//    public List<VodDto> sendEachMoodVods(@RequestBody String mood) {
-//
-//    }
+    @GetMapping("/{mood}")
+    public List<BasicInfoOfVodDto> sendEachMoodVods(@PathVariable String mood) {
+        return vodviewVodsByMoodService.sendEachMoodVods(mood);
+    }
 
 
 
