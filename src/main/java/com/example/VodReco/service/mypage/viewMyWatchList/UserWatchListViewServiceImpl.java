@@ -23,7 +23,6 @@ public class UserWatchListViewServiceImpl implements UserWatchListViewService{
         if(myWatchList.isEmpty()){
             return Optional.empty();
         }
-
         for (UserWatch w : myWatchList) {
             ViewMyWatchListDto viewMyWatchListDto = ViewMyWatchListDto.builder()
                     .subsr(w.getSubsr())

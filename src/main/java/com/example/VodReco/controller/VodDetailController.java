@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -107,20 +108,20 @@ public class VodDetailController {
         userWishUpdateMyWishService.saveWish(updateMyWishRequestDto, contentId);
     }
 
-    @PutMapping(value = "/{content_id}/wish")
-    @Operation(summary = "vod별 찜 변경", description = "상세페이지에서 wish 최초 매기기 또는 기존 wish 변경")
-    public void modifyMyWish(@PathVariable("content_id")
-                                 @Schema(description = "content_id", example = "20200622")
-                                 String contentId,
-                             @Parameter(name = "content_id", description = "컨텐츠 고유id", example = "20200622", required = true)
-                                 @RequestBody UpdateMyWishRequestDto updateMyWishRequestDto) {
-//        UpdateMyWishDto updateMyWishDto = UpdateMyWishDto.builder().subsr(updateMyWishRequestDto.getSubsr())
-//                .contentId(contentId).wish(updateMyWishRequestDto.getWish())
-//                .title(build();
-//            확인
-//        System.out.println("콘솔 확인용 = " + updateMyWishDto);
-        userWishUpdateMyWishService.saveWish(updateMyWishRequestDto, contentId);
-    }
+//    @PutMapping(value = "/{content_id}/wish")
+//    @Operation(summary = "vod별 찜 변경", description = "상세페이지에서 wish 최초 매기기 또는 기존 wish 변경")
+//    public void modifyMyWish(@PathVariable("content_id")
+//                                 @Schema(description = "content_id", example = "20200622")
+//                                 String contentId,
+//                             @Parameter(name = "content_id", description = "컨텐츠 고유id", example = "20200622", required = true)
+//                                 @RequestBody UpdateMyWishRequestDto updateMyWishRequestDto) {
+////        UpdateMyWishDto updateMyWishDto = UpdateMyWishDto.builder().subsr(updateMyWishRequestDto.getSubsr())
+////                .contentId(contentId).wish(updateMyWishRequestDto.getWish())
+////                .title(build();
+////            확인
+////        System.out.println("콘솔 확인용 = " + updateMyWishDto);
+//        userWishUpdateMyWishService.saveWish(updateMyWishRequestDto, contentId);
+//    }
 
 
     //    rating 변경 // 이거 update가 안 되고 그대로 쌓이는 에러 (231123)
@@ -137,11 +138,11 @@ public class VodDetailController {
     }
 
 
-
+    @Transactional
     @DeleteMapping(value = "/{content_id}/rating")
     @Operation(summary = "vod별 평점 삭제", description = "상세페이지에서 rating, review 변경")
-    public void deleteMyRating(@PathVariable("content_id") String contentId, @RequestBody UpdateMyRatingRequestDto updateMyRatingRequestDto) {
-        userRatingUpdateMyRatingService.deleteRating(contentId, updateMyRatingRequestDto);
+    public void deleteMyRating(@PathVariable("content_id") String contentId, @RequestBody UserDto userDto) {
+        userRatingUpdateMyRatingService.deleteRating(contentId, userDto.getSubsr());
     }
 
 }

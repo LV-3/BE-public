@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Document(collection = "genre")
-public class Genre {
+public class Genres {
     @Id
     private String genre;
 }

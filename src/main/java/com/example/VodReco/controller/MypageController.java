@@ -10,12 +10,14 @@ import com.example.VodReco.service.mypage.viewMyWishList.UserWishListViewService
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/mypage")
 public class MypageController {
     private final UserRatingListViewServiceImpl userRatingListViewService;
     private final UserWishListViewServiceImpl userWishListViewService;
