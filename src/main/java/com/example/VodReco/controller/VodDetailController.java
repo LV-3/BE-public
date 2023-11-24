@@ -130,6 +130,11 @@ public class VodDetailController {
     public void saveMyFirstRating(@PathVariable("content_id") String contentId, @RequestBody UpdateMyRatingRequestDto updateMyRatingRequestDto) {
         userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
     }
+    @PutMapping(value = "/{content_id}/rating")
+    @Operation(summary = "vod별 평점 매기기", description = "상세페이지에서 rating, review 최초 매기기 또는 기존 rating, review 변경")
+    public void updateMyRating(@PathVariable("content_id") String contentId, @RequestBody UpdateMyRatingRequestDto updateMyRatingRequestDto) {
+        userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
+    }
 
 
 
