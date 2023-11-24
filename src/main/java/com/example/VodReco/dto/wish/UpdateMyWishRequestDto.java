@@ -14,8 +14,8 @@ import lombok.Setter;
 
 public class UpdateMyWishRequestDto {
     private String subsr;
-    @JsonProperty("content_id")
-    private String contentId;
+//    @JsonProperty("content_id")
+//    private String contentId;
     private Integer wish;
 
 }

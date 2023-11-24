@@ -11,6 +11,7 @@ import lombok.ToString;
 @ToString
 public class UpdateMyRatingDto {
     @Id
+    private String uniqueId;
     @Column(nullable = false, unique = true)
     private String subsr;
     @Column(nullable = false, unique = true)
@@ -27,7 +28,8 @@ public class UpdateMyRatingDto {
 
 
     @Builder
-    public UpdateMyRatingDto(String subsr, String contentId, Integer rating, String review, String rating_date, String title, String posterurl) {
+    public UpdateMyRatingDto(String uniqueId, String subsr, String contentId, Integer rating, String review, String rating_date, String title, String posterurl) {
+        this.uniqueId = uniqueId;
         this.subsr = subsr;
         this.contentId = contentId;
         this.rating = rating;
@@ -39,7 +41,7 @@ public class UpdateMyRatingDto {
 
     public UserRating toUserRatingEntity(UpdateMyRatingDto updateMyRatingDto) {
         return UserRating.builder()
-
+                .uniqueId(uniqueId)
                 .subsr(subsr)
                 .contentId(contentId)
                 .rating(rating)

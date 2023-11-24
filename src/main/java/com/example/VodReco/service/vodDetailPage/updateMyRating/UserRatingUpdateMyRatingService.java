@@ -8,4 +8,7 @@ import org.springframework.stereotype.Service;
 public interface UserRatingUpdateMyRatingService {
 
     void saveRating(String contentId, UpdateMyRatingRequestDto updateMyRatingRequestDto);
+
+
+    void deleteRating(String contentId, UpdateMyRatingRequestDto updateMyRatingRequestDto);
 }

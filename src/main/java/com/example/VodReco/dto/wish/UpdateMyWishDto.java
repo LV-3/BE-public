@@ -11,6 +11,7 @@ import lombok.ToString;
 @ToString
 public class UpdateMyWishDto {
     @Id
+    private String uniqueId;
     @Column(nullable = false, unique = true)
     private String subsr;
     @Column(nullable = false, unique = true)
@@ -24,7 +25,8 @@ public class UpdateMyWishDto {
     public UpdateMyWishDto(){}
 
     @Builder
-    public UpdateMyWishDto(String subsr, String contentId, Integer wish, String title, String posterurl) {
+    public UpdateMyWishDto(String uniqueId, String subsr, String contentId, Integer wish, String title, String posterurl) {
+        this.uniqueId = uniqueId;
         this.subsr = subsr;
         this.contentId = contentId;
         this.wish = wish;
@@ -34,6 +36,7 @@ public class UpdateMyWishDto {
 
     public UserWish toWishEntity(UpdateMyWishDto updateMyWishDto) {
         return UserWish.builder()
+                .uniqueId(uniqueId)
                 .subsr(subsr)
                 .contentId(contentId)
                 .wish(wish)

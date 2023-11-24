@@ -15,7 +15,10 @@ public class UserRatingUpdateMyRatingServiceImpl implements UserRatingUpdateMyRa
 
     @Override
     public void saveRating(String contentId, UpdateMyRatingRequestDto updateMyRatingRequestDto) {
+        String uniqueId = updateMyRatingRequestDto.getSubsr() + contentId;
+        System.out.println("새로운 PK 생성 가능? = " + uniqueId);
         UpdateMyRatingDto updateMyRatingDto = UpdateMyRatingDto.builder()
+                .uniqueId(uniqueId)
                 .subsr(updateMyRatingRequestDto.getSubsr())
                 .contentId(contentId)
                 .rating(updateMyRatingRequestDto.getRating())
@@ -25,5 +28,23 @@ public class UserRatingUpdateMyRatingServiceImpl implements UserRatingUpdateMyRa
                 .posterurl(vodRepository.findByContentId(contentId).getPosterurl())
                 .build();
         userRatingRepository.save(updateMyRatingDto.toUserRatingEntity(updateMyRatingDto));
+    }
+
+    @Override
+    public void deleteRating(String contentId, UpdateMyRatingRequestDto updateMyRatingRequestDto) {
+        String uniqueId = updateMyRatingRequestDto.getSubsr() + contentId;
+        System.out.println("새로운 PK 생성 가능? = " + uniqueId);
+
+        UpdateMyRatingDto updateMyRatingDto = UpdateMyRatingDto.builder()
+                .uniqueId(uniqueId)
+                .subsr(updateMyRatingRequestDto.getSubsr())
+                .contentId(contentId)
+                .rating(updateMyRatingRequestDto.getRating())
+                .review(updateMyRatingRequestDto.getReview())
+                .rating_date(updateMyRatingRequestDto.getRating_date())
+                .title(vodRepository.findByContentId(contentId).getTitle())
+                .posterurl(vodRepository.findByContentId(contentId).getPosterurl())
+                .build();
+        userRatingRepository.delete(updateMyRatingDto.toUserRatingEntity(updateMyRatingDto));
     }
 }
