@@ -12,4 +12,6 @@ public interface UserRatingRepository extends JpaRepository<UserRating, Integer>
     List<UserRating> findAllByContentId(String contentId);
 
     List<UserRating> findAllBySubsr(String contentId);
+
+    void deleteByUniqueId(String uniqueId);
 }

@@ -10,5 +10,6 @@ public interface UserRatingUpdateMyRatingService {
     void saveRating(String contentId, UpdateMyRatingRequestDto updateMyRatingRequestDto);
 
 
-    void deleteRating(String contentId, UpdateMyRatingRequestDto updateMyRatingRequestDto);
+
+    void deleteRating(String contentId, String subsr);
 }
