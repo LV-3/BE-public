@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+//삭제 필요(231123)
+
 @Document
 @Getter
 @RequiredArgsConstructor

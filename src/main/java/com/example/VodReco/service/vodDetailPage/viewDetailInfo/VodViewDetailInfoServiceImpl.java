@@ -3,7 +3,7 @@ package com.example.VodReco.service.vodDetailPage.viewDetailInfo;
 import com.example.VodReco.dto.VodDto;
 import com.example.VodReco.dto.vodDetail.VodDetailResponseDto;
 import com.example.VodReco.mongoRepository.VodRepository;
-import com.example.VodReco.service.VodtoVodDto;
+import com.example.VodReco.util.VodtoVodDtoWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +11,33 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class VodViewDetailInfoServiceImpl implements VodViewDetailInfoService {
     private final VodRepository vodRepository;
+    private final VodtoVodDtoWrapper vodtoVodDtoWrapper;
+
 
 
     // content_id로 Vod 조회
     @Override
     public VodDetailResponseDto getVodByContentId(String contentId) {
-        VodDto vodDto = VodtoVodDto.vodtoVodDto(vodRepository.findByContentId(contentId));
-        return VodDetailResponseDto.builder().title(vodDto.getTitle()).contentId(vodDto.getContentId()).genre(vodDto.getGenre()).country(vodDto.getCountry()).actor(vodDto.getActor()).director(vodDto.getDirector()).posterurl(vodDto.getPosterurl()).description(vodDto.getDescription()).build();
+        //findByContentId 조회 불가능한 에러: @Id 제거하니 해결(231124)
+        VodDto vodDto = vodtoVodDtoWrapper.toVodDto(vodRepository.findByContentId(contentId));
+        return VodDetailResponseDto.builder()
+
+                .title(vodDto.getTitle())
+                .contentId(vodDto.getContentId())
+                .category(vodDto.getCategory())
+                .genre(vodDto.getGenre())
+                .country(vodDto.getCountry())
+
+                .actors(vodDto.getActors())
+                .director(vodDto.getDirector())
+                .posterurl(vodDto.getPosterurl())
+                .description(vodDto.getDescription())
+                .release_year(vodDto.getRelease_year())
+
+                .disp_rtm(vodDto.getDisp_rtm())
+                .grade(vodDto.getGrade())
+
+                .build();
 
 
     }

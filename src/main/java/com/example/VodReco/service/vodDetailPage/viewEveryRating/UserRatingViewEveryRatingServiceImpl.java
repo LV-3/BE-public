@@ -23,7 +23,7 @@ public class UserRatingViewEveryRatingServiceImpl implements UserRatingViewEvery
             return null;
         }
         for (UserRating r : ratingList) {
-            ViewEveryRatingResponseDto viewEveryRatingResponseDto = ViewEveryRatingResponseDto.builder().subsr(r.getSubsr()).rating_date(r.getRating_date()).rating(r.getRating()).review(r.getReview()).build();
+            ViewEveryRatingResponseDto viewEveryRatingResponseDto = ViewEveryRatingResponseDto.builder().subsr(r.getSubsr()).rating_date(r.getRating_date()).rating(r.getRating()).review(r.getReview()).title(r.getTitle()).posterurl(r.getPosterurl()).build();
             ratingResponseDtos.add(viewEveryRatingResponseDto);
         }
         return ratingResponseDtos;

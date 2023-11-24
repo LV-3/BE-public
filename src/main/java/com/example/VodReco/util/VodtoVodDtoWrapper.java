@@ -23,13 +23,13 @@ class VodtoVodDtoWrapper {
                 .disp_rtm(vod.getDisp_rtm())
 
                 .description(vod.getDescription())
-                .actors(stringToListWrapper.stringToList(vod.getActors()))
+                .actors(vod.getActors())
                 .posterurl(vod.getPosterurl())
                 .grade(vod.getGrade())
                 .country(vod.getCountry())
 
                 .release_year(vod.getRelease_year())
-                .director(stringToListWrapper.stringToList(vod.getDirector()))
+                .director(vod.getDirector())
                 .mood(stringToListWrapper.stringToList(vod.getMood()))
                 .gpt_genres(stringToListWrapper.stringToList(vod.getGpt_genres()))
                 .gpt_subjects(stringToListWrapper.stringToList(vod.getGpt_subjects()))

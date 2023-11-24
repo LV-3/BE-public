@@ -11,6 +11,8 @@ import lombok.Getter;
 @Table(name = "user_wish")
 public class UserWish {
     @Id
+    //Id를 content_id + subsr로 만드는 방안 고려하기(231123)
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, unique = true)
     private int id;

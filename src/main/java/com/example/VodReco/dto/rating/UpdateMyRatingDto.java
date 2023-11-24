@@ -39,6 +39,7 @@ public class UpdateMyRatingDto {
 
     public UserRating toUserRatingEntity(UpdateMyRatingDto updateMyRatingDto) {
         return UserRating.builder()
+
                 .subsr(subsr)
                 .contentId(contentId)
                 .rating(rating)
@@ -46,6 +47,7 @@ public class UpdateMyRatingDto {
                 .rating_date(rating_date)
                 .title(title)
                 .posterurl(posterurl)
+
                 .build();
     }
 

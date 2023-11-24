@@ -11,8 +11,6 @@ import lombok.Setter;
 public class UpdateMyRatingRequestDto {
 
     private String subsr;
-    @JsonProperty("content_id")
-    private String contentId;
     private Integer rating;
     private String review;
     private String rating_date;

@@ -11,7 +11,7 @@ public class UserWishUpdateMyWishServiceImpl implements UserWishUpdateMyWishServ
 
     private UserWishRepository userWishRepository;
 
-    // 컬럼: id / subsr / content_id / wish(0or1)
+    // 컬럼: id / subsr / content_id / wish(0or1) / title / posterurl
     @Override
     public void saveWish(UpdateMyWishDto updateMyWishDto) {
         userWishRepository.save(updateMyWishDto.toWishEntity(updateMyWishDto));

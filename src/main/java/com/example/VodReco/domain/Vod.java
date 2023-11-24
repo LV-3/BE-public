@@ -1,7 +1,5 @@
 package com.example.VodReco.domain;
 
-import com.example.VodReco.dto.VodDto;
-import com.example.VodReco.util.StringToListWrapper;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
@@ -12,25 +10,25 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Getter
 public class Vod {
 
-
     //    주의: jpa의 @Id가 아님
-    @Id
+//    @Id
     @Field(name = "content_id") // 이거 붙여줘야 mongoDB의 content_id와 스프링부트 내의 contentId가 연결됨 (231109)
     private String contentId;
+
+//   컬럼명 변경 필요(231124)
     @Field(name = "preprocessed")
     private String title;
+
     @Field(name = "ct_cl")
     private String category;
     @Field(name = "genre_of_ct_cl")
     private String genre;
     @Field
     private String disp_rtm;
-
-
     @Field(name = "SMRY")
     private String description;
     @Field(name = "ACTR_DISP")
-    private String actors; //한 개의 String으로 받아서 "," 기준으로 split해서 Array로 만들고 -> List로 convert
+    private String actors; //한 개의 String으로 받아서 ", " 기준으로 split해서 Array로 만들고 -> List로 convert
     @Field(name = "ImgUrl")
     private String posterurl;
     @Field
@@ -42,9 +40,9 @@ public class Vod {
     @Field
     private String release_year;
     @Field
-    private String director;// 한 개의 String으로 받아서 "," 기준으로 split해서 Array로 만들고 -> List로 convert
+    private String director;// 한 개의 String으로 받아서 ", " 기준으로 split해서 Array로 만들고 -> List로 convert
     @Field
-    private String mood;// 한 개의 String으로 받아서 "," 기준으로 split해서 Array로 만들고 -> List로 convert
+    private String mood;// 한 개의 String으로 받아서 ", " 기준으로 split해서 Array로 만들고 -> List로 convert
     @Field
     private String gpt_genres;
     @Field
