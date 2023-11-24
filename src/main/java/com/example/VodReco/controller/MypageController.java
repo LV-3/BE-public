@@ -28,6 +28,7 @@ public class MypageController {
         this.userWishListViewService = userWishListViewService;
         this.userWatchListViewService = userWatchListViewService;
     }
+    //gitgigigigiggigigigigigit
 
     @PostMapping("/rating")
     public List<ViewMyRatingListDto> findMyRatingList(@RequestBody UserDto userDto){
