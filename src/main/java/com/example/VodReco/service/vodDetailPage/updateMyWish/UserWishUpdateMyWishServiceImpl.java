@@ -5,22 +5,13 @@ import com.example.VodReco.dto.wish.UpdateMyWishRequestDto;
 import com.example.VodReco.mongoRepository.VodRepository;
 import com.example.VodReco.repository.UserWishRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class UserWishUpdateMyWishServiceImpl implements UserWishUpdateMyWishService{
-    private UserWishRepository userWishRepository;
-    private VodRepository vodRepository;
-
-    //final이 2개 이상일 땐 @Autowired 붙여서 생성자 필요로 하는 것으로 보임
-    //
-    @Autowired
-    public UserWishUpdateMyWishServiceImpl(UserWishRepository userWishRepository, VodRepository vodRepository) {
-        this.userWishRepository = userWishRepository;
-        this.vodRepository = vodRepository;
-    }
+    private final UserWishRepository userWishRepository;
+    private final VodRepository vodRepository;
 
 
     // 컬럼: id / subsr / content_id / wish(0or1) / title / posterurl

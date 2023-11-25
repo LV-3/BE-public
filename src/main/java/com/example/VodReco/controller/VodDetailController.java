@@ -8,6 +8,7 @@ import com.example.VodReco.dto.vodDetail.VodDetailResponseDto;
 import com.example.VodReco.dto.wish.UpdateMyWishRequestDto;
 import com.example.VodReco.dto.wish.UpdateMyWishDto;
 import com.example.VodReco.dto.wish.ViewMyWishResponseDto;
+import com.example.VodReco.service.vodDetailPage.deleteMyRating.UserRatingDeleteMyRatingService;
 import com.example.VodReco.service.vodDetailPage.updateMyRating.UserRatingUpdateMyRatingServiceImpl;
 import com.example.VodReco.service.vodDetailPage.updateMyWish.UserWishUpdateMyWishServiceImpl;
 import com.example.VodReco.service.vodDetailPage.viewDetailInfo.VodViewDetailInfoServiceImpl;
@@ -17,6 +18,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +29,10 @@ import java.util.Optional;
 
 //vod별 상세페이지
 
-@RestController // = @Controller + @ResponseBody 객체 리턴하면 json으로 만들어줌
+@RestController // = @Controller + @ResponseBody 객체 리턴하면 json으로 만들어주는 역할
 @RequestMapping("/detail")
+//@RequiredArgsConsgtructor 붙이면 모든 final필드 자동으로 Autowired붙은 생성자 만들어줌
+@RequiredArgsConstructor
 @Tag(name = "Vod detail", description = "Vod API detail") //swagger 어노테이션(231110)
 public class VodDetailController {
     private final VodViewDetailInfoServiceImpl vodViewDetailInfoService;
@@ -36,19 +40,8 @@ public class VodDetailController {
     private final UserWishUpdateMyWishServiceImpl userWishUpdateMyWishService;
     private final UserRatingViewEveryRatingServiceImpl userRatingViewEveryRatingService;
     private final UserRatingUpdateMyRatingServiceImpl userRatingUpdateMyRatingService;
+    private final UserRatingDeleteMyRatingService userRatingDeleteMyRatingService;
 
-
-    @Autowired
-    public VodDetailController(VodViewDetailInfoServiceImpl vodViewDetailInfoService, UserWishViewMyWishServiceImpl userWishViewMyWishService, UserWishUpdateMyWishServiceImpl userWishUpdateMyWishService, UserRatingViewEveryRatingServiceImpl userRatingViewEveryRatingService, UserRatingUpdateMyRatingServiceImpl userRatingUpdateMyRatingService) {
-        this.vodViewDetailInfoService = vodViewDetailInfoService;
-        this.userWishViewMyWishService = userWishViewMyWishService;
-        this.userWishUpdateMyWishService = userWishUpdateMyWishService;
-        this.userRatingViewEveryRatingService = userRatingViewEveryRatingService;
-        this.userRatingUpdateMyRatingService = userRatingUpdateMyRatingService;
-    }
-
-
-    //테스트 시 실제DB에 들어있는 content_id 가져올 것
 
     //상세페이지 열릴 때
 
@@ -95,7 +88,7 @@ public class VodDetailController {
 
 //    상세페이지에서 찜 or 평점 변경
 
-    //    4. wish 최초 등록
+    //  wish 최초 insert
     @PostMapping(value = "/{content_id}/wish")
     @Operation(summary = "vod별 찜 최초 등록", description = "상세페이지에서 wish 최초 매기기 또는 기존 wish 변경")
     public void saveMyFirstWish(@PathVariable("content_id")
@@ -124,25 +117,27 @@ public class VodDetailController {
 //    }
 
 
-    //    rating 변경 // 이거 update가 안 되고 그대로 쌓이는 에러 (231123)
+    // rating 최초 insert
     // rating 최초 insert(POST)와 변경(PUT), 삭제(DELETE) 분리 요망(231124)
     @PostMapping(value = "/{content_id}/rating")
     @Operation(summary = "vod별 평점 매기기", description = "상세페이지에서 rating, review 최초 매기기 또는 기존 rating, review 변경")
     public void saveMyFirstRating(@PathVariable("content_id") String contentId, @RequestBody UpdateMyRatingRequestDto updateMyRatingRequestDto) {
         userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
     }
+
+    //rating 변경
     @PutMapping(value = "/{content_id}/rating")
     @Operation(summary = "vod별 평점 매기기", description = "상세페이지에서 rating, review 최초 매기기 또는 기존 rating, review 변경")
     public void updateMyRating(@PathVariable("content_id") String contentId, @RequestBody UpdateMyRatingRequestDto updateMyRatingRequestDto) {
         userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
     }
 
-
+    //rating 삭제
     @Transactional
     @DeleteMapping(value = "/{content_id}/rating")
     @Operation(summary = "vod별 평점 삭제", description = "상세페이지에서 rating, review 변경")
     public void deleteMyRating(@PathVariable("content_id") String contentId, @RequestBody UserDto userDto) {
-        userRatingUpdateMyRatingService.deleteRating(contentId, userDto.getSubsr());
+        userRatingDeleteMyRatingService.deleteRating(contentId, userDto.getSubsr());
     }
 
 }
