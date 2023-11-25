@@ -1,17 +1,17 @@
 package com.example.VodReco.controller;
 
 import com.example.VodReco.dto.UserDto;
-import com.example.VodReco.dto.VodDto;
-import com.example.VodReco.dto.client.MainResponseDto;
+import com.example.VodReco.dto.client.InitialRecommendationDto;
 import com.example.VodReco.dto.genre.BasicInfoOfVodDto;
-import com.example.VodReco.dto.model.toModel.EveryDescription;
-import com.example.VodReco.dto.model.toModel.EveryMood;
 import com.example.VodReco.service.mainPage.viewVodsByMood.VodviewVodsByMoodServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,42 +20,41 @@ import java.util.List;
 @RequestMapping("/main")
 public class MainController {
 
-    private final List<EveryDescription> descriptionList = new ArrayList<>();
-    private final List<EveryMood> genreList = new ArrayList<>();
-
-    //테스트용(231112)
-    private final List<String> personalList = new ArrayList<String>();
-
     private final VodviewVodsByMoodServiceImpl vodviewVodsByMoodService;
-
 
 //새로고침 눌리면 사용하던 모든 전역변수 List clearAll 필수(231116)
 
-    //2. 새로고침 클릭 이후 대기하던 데이터를 형식 맞춰 모델에 보내는 메서드 3개(231104)
-
-    //3. 새로고침 클릭 이후 모델로부터 데이터 받아서 -> 형식 맞추고 -> 프론트에 보내는 메서드(231104)
-
-//    @GetMapping("")
-//    public void showInitialRecommendation() {
-//        String message = "jjae kafka 2nd test";
-//        producerService.sendMessage(message);
-//    }
-
-//    @GetMapping("/jjae-test")
-//    public String testforkafka(){
-//        return consumerService.getMessageFromModel();
-//    }
-
-
     @PostMapping("")
     public void getAllRecoFromModel (@RequestBody UserDto userDto){
-        MainResponseDto mainResponseDto = new MainResponseDto();
+        InitialRecommendationDto initialRecommendationDto = new InitialRecommendationDto();
+        WebClient webClient = WebClient.builder()
+                //포트 확인하고 수정
+                .baseUrl("http://fastapi_server_url)")
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .build();
+
+        //FastAPI에 보낼 데이터 생성
+//        String requestDataObject = new YourDataObject("value1", "value2");
+        //post방식 요청으로 FastAPI에 데이터 전송
+        Mono<String> response = webClient.post()
+                //요청을 보낼 FastAPI의 endpoint
+                .uri("/endpoint_of_FastAPI_modification_needed")
+                //객체를 JSON으로 serialize해서 body에 넣어 보냄
+                .body(Mono.just(requestDataObject), YourDataObject.class)
+                .retrieve()
+                .bodyToMono(String.class);
+
+        //비동기 처리
+        response.subscribe(
+                result -> System.out.println("비동기 응답: " + result),
+                error -> System.err.println("에러 발생: " + error),
+                () -> System.out.println("완료")
+        );
 
     }
 
     @PostMapping("/reload1")
     public void send1stModelReco(@RequestBody UserDto userDto) {
-
     }
 
     @PostMapping("/reload2")
@@ -72,17 +71,6 @@ public class MainController {
 
 
 
-//    @GetMapping("/rereco")
-//    public MainResponseDto getFromModel(){
-//
-//        //Topic에 데이터 전송
-//        // personal모델 추후 작성 필요(231112)
-
-//
-//        //테스트를 위해 일시적 주석처리함
-////        descriptionList.clear(); //다음 턴을 위해 리스트 비우기(231112)
-////        genreList.clear();
-//
 //        //이하 consumer에서 가져온 데이터 처리해서 프론트로 보내는 코드(231112)
 ////        초기에 Topic에 데이터 없으면 NPE(231112) -> exception 처리 필요, setPollTimeout(1000)? 기본은 5000ms
 //

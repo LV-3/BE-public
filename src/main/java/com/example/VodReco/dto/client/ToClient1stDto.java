@@ -9,13 +9,13 @@ import java.util.List;
 @Getter
 @RequiredArgsConstructor
 public class ToClient1stDto {
-    private String contentId;
+    private String content_id;
     private String posterurl;
     private List<String> mood;
 
     @Builder
     public ToClient1stDto(String contentId, String posterurl, List<String> mood) {
-        this.contentId = contentId;
+        this.content_id = contentId;
         this.posterurl = posterurl;
         this.mood = mood;
     }
