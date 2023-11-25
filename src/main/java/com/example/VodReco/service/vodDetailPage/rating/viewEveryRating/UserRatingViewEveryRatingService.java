@@ -1,4 +1,4 @@
-package com.example.VodReco.service.vodDetailPage.rating.viewEveryRating;
+package com.example.VodReco.service.vodDetailPage.viewEveryRating;
 
 import com.example.VodReco.dto.rating.ViewEveryRatingResponseDto;
 import org.springframework.stereotype.Service;

@@ -5,6 +5,7 @@ import com.example.VodReco.dto.VodDto;
 import com.example.VodReco.dto.genre.BasicInfoOfVodDto;
 import com.example.VodReco.mongoRepository.VodRepository;
 import com.example.VodReco.util.VodtoVodDtoWrapper;
+import jakarta.persistence.Basic;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +14,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class VodviewVodsByMoodServiceImpl implements VodviewVodsMyMoodService{
+public class VodviewVodsByMoodServiceImpl{
 
     private final VodRepository vodRepository;
     private final VodtoVodDtoWrapper vodtoVodDtoWrapper;
 
-    @Override
     public List<BasicInfoOfVodDto> sendEachMoodVods(String mood) {
         List<Vod> byMoodContaining = vodRepository.findByMoodContaining(mood);
         List<BasicInfoOfVodDto> list = new ArrayList<>();

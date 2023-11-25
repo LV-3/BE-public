@@ -41,11 +41,11 @@ public class Vod {
     private String release_year;
     @Field
     private String director;// 한 개의 String으로 받아서 ", " 기준으로 split해서 Array로 만들고 -> List로 convert
-    @Field
+    @Field(name = "template_A")
     private String mood;// 한 개의 String으로 받아서 ", " 기준으로 split해서 Array로 만들고 -> List로 convert
-    @Field
+    @Field(name = "template_B")
     private String gpt_genres;
-    @Field
+    @Field(name = "template_C")
     private String gpt_subjects;
 
 
