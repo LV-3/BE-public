@@ -2,24 +2,21 @@ package com.example.VodReco.controller;
 
 import com.example.VodReco.dto.UserDto;
 import com.example.VodReco.dto.rating.UpdateMyRatingRequestDto;
-import com.example.VodReco.dto.rating.UpdateMyRatingDto;
 import com.example.VodReco.dto.rating.ViewEveryRatingResponseDto;
 import com.example.VodReco.dto.vodDetail.VodDetailResponseDto;
 import com.example.VodReco.dto.wish.UpdateMyWishRequestDto;
-import com.example.VodReco.dto.wish.UpdateMyWishDto;
 import com.example.VodReco.dto.wish.ViewMyWishResponseDto;
-import com.example.VodReco.service.vodDetailPage.deleteMyRating.UserRatingDeleteMyRatingService;
-import com.example.VodReco.service.vodDetailPage.updateMyRating.UserRatingUpdateMyRatingServiceImpl;
-import com.example.VodReco.service.vodDetailPage.updateMyWish.UserWishUpdateMyWishServiceImpl;
+import com.example.VodReco.service.vodDetailPage.rating.deleteMyRating.UserRatingDeleteMyRatingServiceImpl;
+import com.example.VodReco.service.vodDetailPage.rating.updateMyRating.UserRatingUpdateMyRatingServiceImpl;
+import com.example.VodReco.service.vodDetailPage.rating.viewEveryRating.UserRatingViewEveryRatingServiceImpl;
 import com.example.VodReco.service.vodDetailPage.viewDetailInfo.VodViewDetailInfoServiceImpl;
-import com.example.VodReco.service.vodDetailPage.viewEveryRating.UserRatingViewEveryRatingServiceImpl;
-import com.example.VodReco.service.vodDetailPage.viewMyWish.UserWishViewMyWishServiceImpl;
+import com.example.VodReco.service.vodDetailPage.wish.updateMyWish.UserWishUpdateMyWishServiceImpl;
+import com.example.VodReco.service.vodDetailPage.wish.viewMyWish.UserWishViewMyWishServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +37,7 @@ public class VodDetailController {
     private final UserWishUpdateMyWishServiceImpl userWishUpdateMyWishService;
     private final UserRatingViewEveryRatingServiceImpl userRatingViewEveryRatingService;
     private final UserRatingUpdateMyRatingServiceImpl userRatingUpdateMyRatingService;
-    private final UserRatingDeleteMyRatingService userRatingDeleteMyRatingService;
+    private final UserRatingDeleteMyRatingServiceImpl userRatingDeleteMyRatingService;
 
 
     //상세페이지 열릴 때

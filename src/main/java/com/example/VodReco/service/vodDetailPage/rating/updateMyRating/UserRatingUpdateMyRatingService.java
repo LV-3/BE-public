@@ -1,4 +1,4 @@
-package com.example.VodReco.service.vodDetailPage.updateMyRating;
+package com.example.VodReco.service.vodDetailPage.rating.updateMyRating;
 
 import com.example.VodReco.dto.rating.UpdateMyRatingRequestDto;
 import org.springframework.stereotype.Service;
