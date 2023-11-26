@@ -1,7 +1,8 @@
-package com.example.VodReco.util;
+package com.example.VodReco.util.Vod;
 
 import com.example.VodReco.domain.Vod;
 import com.example.VodReco.dto.VodDto;
+import com.example.VodReco.util.StringToListWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,10 +12,10 @@ public//public -> dafault로 변경(Entity를 직접 인풋으로 받는 거라 
 class VodtoVodDtoWrapper {
     private final StringToListWrapper stringToListWrapper;
 
-    //static으로 만들어서 VodtoVodDto의 인스턴스 vodtoVodDto 만들지 않고
-    //그냥 VodtoVodDto.vodtoVodDto 쓸 수 있게 변경
-    //오로지 이 메서드만 쓸 수 있으면 되는 클래스라 인스턴스 필요없음
-    public VodDto toVodDto(Vod vod) {
+    public VodDto toVodDto(Vod vod){
+        return VodtoVodDto(vod);
+    }
+    private VodDto VodtoVodDto(Vod vod) {
         return VodDto.builder()
                 .contentId(vod.getContentId())
                 .title(vod.getTitle())

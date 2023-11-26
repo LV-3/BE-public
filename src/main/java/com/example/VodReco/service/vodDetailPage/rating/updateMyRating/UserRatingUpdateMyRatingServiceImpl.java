@@ -1,4 +1,4 @@
-package com.example.VodReco.service.vodDetailPage.updateMyRating;
+package com.example.VodReco.service.vodDetailPage.rating.updateMyRating;
 
 import com.example.VodReco.dto.rating.UpdateMyRatingDto;
 import com.example.VodReco.dto.rating.UpdateMyRatingRequestDto;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserRatingUpdateMyRatingServiceImpl implements UserRatingUpdateMyRatingService{
+public class UserRatingUpdateMyRatingServiceImpl implements UserRatingUpdateMyRatingService {
     private final UserRatingRepository userRatingRepository;
     private final VodRepository vodRepository;
 
@@ -30,21 +30,4 @@ public class UserRatingUpdateMyRatingServiceImpl implements UserRatingUpdateMyRa
         userRatingRepository.save(updateMyRatingDto.toUserRatingEntity(updateMyRatingDto));
     }
 
-    @Override
-    public void deleteRating(String contentId, String subsr) {
-        String uniqueId = subsr + contentId;
-        System.out.println("새로운 PK 생성 가능? = " + uniqueId);
-
-//        UpdateMyRatingDto updateMyRatingDto = UpdateMyRatingDto.builder()
-//                .uniqueId(uniqueId)
-//                .subsr(updateMyRatingRequestDto.getSubsr())
-//                .contentId(contentId)
-//                .rating(updateMyRatingRequestDto.getRating())
-//                .review(updateMyRatingRequestDto.getReview())
-//                .rating_date(updateMyRatingRequestDto.getRating_date())
-//                .title(vodRepository.findByContentId(contentId).getTitle())
-//                .posterurl(vodRepository.findByContentId(contentId).getPosterurl())
-//                .build();
-        userRatingRepository.deleteByUniqueId(uniqueId);
-    }
 }

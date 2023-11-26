@@ -5,7 +5,7 @@ import com.example.VodReco.domain.ForGenreView;
 import com.example.VodReco.dto.genre.BasicInfoOfVodDto;
 import com.example.VodReco.mongoRepository.ForGenreViewRepository;
 import com.example.VodReco.mongoRepository.VodRepository;
-import com.example.VodReco.util.VodtoVodDtoWrapper;
+import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

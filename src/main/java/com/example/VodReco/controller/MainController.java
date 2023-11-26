@@ -3,13 +3,25 @@ package com.example.VodReco.controller;
 import com.example.VodReco.dto.UserDto;
 import com.example.VodReco.dto.VodDto;
 import com.example.VodReco.dto.client.MainResponseDto;
+import com.example.VodReco.dto.client.ToClient1stDto;
 import com.example.VodReco.dto.genre.BasicInfoOfVodDto;
-import com.example.VodReco.dto.model.toModel.EveryDescription;
-import com.example.VodReco.dto.model.toModel.EveryMood;
+import com.example.VodReco.dto.model.fromModel.DescriptionModelDataDto;
+import com.example.VodReco.dto.model.fromModel.MoodModelDataDto;
+import com.example.VodReco.dto.model.fromModel.PersonalModelDataDto;
+import com.example.VodReco.dto.model.toModel.ToModelDto;
+import com.example.VodReco.mongoRepository.VodRepository;
+import com.example.VodReco.service.mainPage.getReco.VodGetRecoServiceImpl;
 import com.example.VodReco.service.mainPage.viewVodsByMood.VodviewVodsByMoodServiceImpl;
+import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,50 +31,138 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/main")
 public class MainController {
-
-    private final List<EveryDescription> descriptionList = new ArrayList<>();
-    private final List<EveryMood> genreList = new ArrayList<>();
-
-    //테스트용(231112)
-    private final List<String> personalList = new ArrayList<String>();
-
     private final VodviewVodsByMoodServiceImpl vodviewVodsByMoodService;
+    private final VodGetRecoServiceImpl vodGetRecoService;
 
+    private final DescriptionModelDataDto descriptionModelDataDto;
+    private final MoodModelDataDto moodModelDataDto;
+    private final PersonalModelDataDto personalModelDataDto;
 
-//새로고침 눌리면 사용하던 모든 전역변수 List clearAll 필수(231116)
+    //테스트 완료 후 Service로 대부분의 로직 밀어넣으면서 삭제하기(231126)
+    private final VodRepository vodRepository;
+    private final VodtoVodDtoWrapper vodtoVodDtoWrapper;
 
-    //2. 새로고침 클릭 이후 대기하던 데이터를 형식 맞춰 모델에 보내는 메서드 3개(231104)
+    //새로고침 눌리면 사용하던 모든 전역변수 List clearAll 필수(231126)
 
-    //3. 새로고침 클릭 이후 모델로부터 데이터 받아서 -> 형식 맞추고 -> 프론트에 보내는 메서드(231104)
-
-//    @GetMapping("")
-//    public void showInitialRecommendation() {
-//        String message = "jjae kafka 2nd test";
-//        producerService.sendMessage(message);
-//    }
-
-//    @GetMapping("/jjae-test")
-//    public String testforkafka(){
-//        return consumerService.getMessageFromModel();
-//    }
+    private final List<String> descriptionDataList;
+    private final List<String> moodDataList;
+    private final List<String> personalDataList;
 
 
     @PostMapping("")
-    public void getAllRecoFromModel (@RequestBody UserDto userDto){
-        MainResponseDto mainResponseDto = new MainResponseDto();
+    public MainResponseDto getAllRecoFromModel(@RequestBody UserDto userDto) {
+        ToModelDto toModelDto = vodGetRecoService.setDataFromModel(userDto.getSubsr());
+        WebClient webClient = WebClient.builder()
+                .baseUrl("http://205호_ip:8000")
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .build();
 
+        Mono<String> response = webClient.post()
+                .uri("http://205호_ip:8000/prcs_models") // 205호 ip로 수정
+                .body(Mono.just(toModelDto), ToModelDto.class)
+                .retrieve()
+                .bodyToMono(String.class);
+
+        response.subscribe(
+                result -> {
+                    System.out.println("비동기 응답: " + result);
+//                    parse(result);
+
+                },
+                error -> {
+                    System.err.println("에러 발생: " + error);
+                },
+                () -> System.out.println("완료됨")
+        );
+
+        //FastAPI 통합 테스트용
+        //descriptionModelDataDto, moodModelDataDto, personalModelDataDto는 스프링 빈에 등록했기 때문에 { } 밖에서도 사용 가능할 것으로 예상됨
+
+//        for (int i = 0; i < 3; i++) {
+//            descriptionDataList.add((String) descriptionModelDataDto.getDescriptonData().get(i));
+//            moodDataList.add((String) moodModelDataDto.getMoodData().get(i));
+//            personalDataList.add((String) personalModelDataDto.getPersonalData().get(i));
+//        }
+
+
+        //테스트를 위해 descriptionDataList에 데이터 세팅하는 메서드 호출
+        forTest();
+        //다만 { } 안에서만 적용되는 것으로 보임, descriptionDataList/mood../personal..List 내부 데이터를 계속 쓰려면 스프링 빈에 등록해야 하는데
+        // 인스턴스가 싱글톤으로 생성돼서 다른 사용자들과 공유될 수 있단 이슈 발생(231126)
+        //
+        System.out.println("줄거리 데이터 리스트 = " + descriptionDataList);
+        System.out.println("무드 데이터 리스트 = " + moodDataList);
+        System.out.println("퍼스널 데이터 리스트 = " + personalDataList);
+
+        return MainResponseDto.builder().description_data(reloadDescriptionModel())
+                .genre_data(reloadMoodModel())
+                .personal_data(reloadPersonalModel())
+                .build();
     }
 
-    @PostMapping("/reload1")
-    public void send1stModelReco(@RequestBody UserDto userDto) {
+    public void forTest() {
+        descriptionDataList.add("2222");
+        descriptionDataList.add("3333");
+        descriptionDataList.add("4444");
+        moodDataList.add("2222");
+        moodDataList.add("55555");
+        moodDataList.add("66666");
+        personalDataList.add("55555");
+        personalDataList.add("4444");
+        personalDataList.add("66666");
+    }
 
+    public void parse(String recoResult) {
+        JSONObject jsonObject = new JSONObject(recoResult);
+        JSONArray descriptionData = jsonObject.getJSONArray("description_data");
+        JSONArray moodData = jsonObject.getJSONArray("mood_data");
+        JSONArray personalData = jsonObject.getJSONArray("personal_data");
+        DescriptionModelDataDto descriptionModelDataDto = DescriptionModelDataDto.builder().descriptonData(descriptionData).build();
+        MoodModelDataDto moodDataDto = MoodModelDataDto.builder().moodData(moodData).build();
+        PersonalModelDataDto personalDataDto = PersonalModelDataDto.builder().personalData(personalData).build();
+    }
+
+
+    //최초 접속이 아닌 새로고침 시에는 subsr 필요 없음. 수정 요망(231126)
+    @PostMapping("/reload1")
+    public List<ToClient1stDto> reloadDescriptionModel() {
+//    public List<ToClient1stDto> reloadDescriptionModel() {
+        //이 descriptionDataList가 안 들어와서 IndexOutOfBoundsException 터짐(231126)
+        System.out.println("줄거리 인덱스 확인 = " + descriptionDataList);
+        return getToClient1stDtos(descriptionDataList);
     }
 
     @PostMapping("/reload2")
-    public void send2ndModelReco(@RequestBody UserDto userDto) {
+    public List<ToClient1stDto> reloadMoodModel() {
+        System.out.println("무드 인덱스 확인 = " + moodDataList);
+        return getToClient1stDtos(moodDataList);
     }
+
     @PostMapping("/reload3")
-    public void send3rdModelReco(@RequestBody UserDto userDto) {
+    public List<ToClient1stDto> reloadPersonalModel() {
+        System.out.println("퍼스널 인덱스 확인 = " + personalDataList);
+        return getToClient1stDtos(personalDataList);
+    }
+
+    private List<ToClient1stDto> getToClient1stDtos(List<String> DataList) {
+        List<ToClient1stDto> list = new ArrayList<>();
+        List<String> firstSeven = DataList.stream()
+                .limit(1) // 7로 수정하기(231126)
+                .toList();
+        DataList.subList(0, 1).clear();
+        for (int j = 0; j < 1; j++) {
+            String contentId = firstSeven.get(j);
+            list.add(buildToClient1stDto(contentId));
+        }
+        return list;
+    }
+
+    //별도 테이블 만들면 이 메서드 수정(231126)
+    public ToClient1stDto buildToClient1stDto(String contentId) {
+        VodDto vodDto = vodtoVodDtoWrapper.toVodDto(vodRepository.findByContentId(contentId));
+        return ToClient1stDto.builder().contentId(contentId).posterurl(vodDto.getPosterurl()).title(vodDto.getTitle())
+                .mood(vodDto.getMood()).gpt_genres(vodDto.getGpt_genres()).gpt_subjects(vodDto.getGpt_subjects())
+                .build();
     }
 
     @GetMapping("/{mood}")
@@ -70,51 +170,4 @@ public class MainController {
         return vodviewVodsByMoodService.sendEachMoodVods(mood);
     }
 
-
-
-//    @GetMapping("/rereco")
-//    public MainResponseDto getFromModel(){
-//
-//        //Topic에 데이터 전송
-//        // personal모델 추후 작성 필요(231112)
-
-//
-//        //테스트를 위해 일시적 주석처리함
-////        descriptionList.clear(); //다음 턴을 위해 리스트 비우기(231112)
-////        genreList.clear();
-//
-//        //이하 consumer에서 가져온 데이터 처리해서 프론트로 보내는 코드(231112)
-////        초기에 Topic에 데이터 없으면 NPE(231112) -> exception 처리 필요, setPollTimeout(1000)? 기본은 5000ms
-//
-//        FromModelDto fromModelDto = consumerService.getProcessedData();
-//        System.out.println("컨트롤러 확인 = " + fromModelDto);
-//
-//
-//        ToClient1stDto[] array1 = new ToClient1stDto[10];
-//        List<String> descriptionData = fromModelDto.getDescription_data();
-//        ToClient2ndDto descriptionDto = sendData(array1, descriptionData);
-//
-//        ToClient1stDto[] array2 = new ToClient1stDto[10];
-//        List<String> genreData = fromModelDto.getGenre_data();
-//        ToClient2ndDto genreDto = sendData(array2, genreData);
-//
-//        ToClient1stDto[] array3 = new ToClient1stDto[10];
-//        List<String> personalData = fromModelDto.getPersonal_data();
-//        ToClient2ndDto personalDto = sendData(array3, personalData);
-//
-//        return MainResponseDto.builder().description_data(descriptionDto)
-//                .genre_data(genreDto).personal_data(personalDto).build();
-//
-//    }
-//
-//    private ToClient2ndDto sendData(ToClient1stDto[] array, List<String> data) {
-//        for (int i = 0; i < 10; i++) {
-//            ToClient1stDto toClient1stDto = ToClient1stDto.builder().contentId(data.get(i))
-//                    .posterurl(vodServiceImpl.getVodByContentId(data.get(i)).getPosterurl()).build();
-//            array[i] = toClient1stDto;
-//        }
-//        return ToClient2ndDto.builder().vod1(array[0]).vod2(array[1]).vod3(array[2])
-//                .vod4(array[3]).vod5(array[4]).vod6(array[5]).vod7(array[6]).vod8(array[6]).vod9(array[8]).vod10(array[9]).build();
-//    }
 }
-
