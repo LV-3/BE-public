@@ -5,5 +5,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface VodGetRecoService {
-    ToModelDto getRecoFromModel(String subsr);
+
+    ToModelDto setDataFromModel(String subsr);
 }

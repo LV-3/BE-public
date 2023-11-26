@@ -51,14 +51,14 @@ public class MainController {
 
     @PostMapping("")
     public MainResponseDto getAllRecoFromModel(@RequestBody UserDto userDto) {
-        ToModelDto toModelDto = vodGetRecoService.getRecoFromModel(userDto.getSubsr());
+        ToModelDto toModelDto = vodGetRecoService.setDataFromModel(userDto.getSubsr());
         WebClient webClient = WebClient.builder()
-                .baseUrl("http://localhost:8000")
+                .baseUrl("http://205호_ip:8000")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
 
         Mono<String> response = webClient.post()
-                .uri("http://localhost:8000/prcs_models")
+                .uri("http://205호_ip:8000/prcs_models") // 205호 ip로 수정
                 .body(Mono.just(toModelDto), ToModelDto.class)
                 .retrieve()
                 .bodyToMono(String.class);
@@ -67,21 +67,29 @@ public class MainController {
                 result -> {
                     System.out.println("비동기 응답: " + result);
 //                    parse(result);
-//                    for (int i = 0; i < 3; i++) {
-//                        descriptionDataList.add((String) descriptionModelDataDto.getDescriptonData().get(i));
-//                        moodDataList.add((String) moodModelDataDto.getMoodData().get(i));
-//                        personalDataList.add((String) personalModelDataDto.getPersonalData().get(i));
-//                    }
+
                 },
                 error -> {
                     System.err.println("에러 발생: " + error);
                 },
-                () -> System.out.println("완료됨"));
+                () -> System.out.println("완료됨")
+        );
 
-        forTest();
+        //FastAPI 통합 테스트용
+        //descriptionModelDataDto, moodModelDataDto, personalModelDataDto는 스프링 빈에 등록했기 때문에 { } 밖에서도 사용 가능할 것으로 예상됨
+
+//        for (int i = 0; i < 3; i++) {
+//            descriptionDataList.add((String) descriptionModelDataDto.getDescriptonData().get(i));
+//            moodDataList.add((String) moodModelDataDto.getMoodData().get(i));
+//            personalDataList.add((String) personalModelDataDto.getPersonalData().get(i));
+//        }
+
+
         //테스트를 위해 descriptionDataList에 데이터 세팅하는 메서드 호출
+        forTest();
         //다만 { } 안에서만 적용되는 것으로 보임, descriptionDataList/mood../personal..List 내부 데이터를 계속 쓰려면 스프링 빈에 등록해야 하는데
         // 인스턴스가 싱글톤으로 생성돼서 다른 사용자들과 공유될 수 있단 이슈 발생(231126)
+        //
         System.out.println("줄거리 데이터 리스트 = " + descriptionDataList);
         System.out.println("무드 데이터 리스트 = " + moodDataList);
         System.out.println("퍼스널 데이터 리스트 = " + personalDataList);

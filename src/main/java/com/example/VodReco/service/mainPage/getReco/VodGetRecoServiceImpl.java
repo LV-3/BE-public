@@ -2,8 +2,6 @@ package com.example.VodReco.service.mainPage.getReco;
 
 import com.example.VodReco.domain.PersonalWatch;
 import com.example.VodReco.domain.UserWatch;
-import com.example.VodReco.domain.Vod;
-import com.example.VodReco.dto.VodDto;
 import com.example.VodReco.dto.model.toModel.*;
 import com.example.VodReco.mongoRepository.PersonalWatchRepository;
 import com.example.VodReco.mongoRepository.UserWatchRepository;
@@ -27,7 +25,7 @@ public class VodGetRecoServiceImpl implements VodGetRecoService{
     private final VodRepository vodRepository;
 
     @Override
-    public ToModelDto getRecoFromModel(String subsr) {
+    public ToModelDto setDataFromModel(String subsr) {
         List<EveryDescriptionDto> descriptionResponseList = new ArrayList<>();
         List<EveryMoodDto> moodResponseList = new ArrayList<>();
         List<EveryPersonalDto> personalResponseList = new ArrayList<>();
