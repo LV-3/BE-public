@@ -1,11 +1,13 @@
 package com.example.VodReco.service.mainPage.getReco;
 
-import com.example.VodReco.domain.Vod;
-import com.example.VodReco.dto.VodDto;
+import com.example.VodReco.domain.ForDeepFM;
+import com.example.VodReco.domain.UserWatch;
 import com.example.VodReco.dto.model.toModel.*;
+import com.example.VodReco.mongoRepository.ForDeepFMRepository;
 import com.example.VodReco.mongoRepository.UserWatchRepository;
 import com.example.VodReco.mongoRepository.VodRepository;
-import com.example.VodReco.util.VodtoVodDtoWrapper;
+import com.example.VodReco.util.ForDeepFM.ToForDeepFMDtoWrapper;
+import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,31 +19,38 @@ import java.util.List;
 public class VodGetRecoServiceImpl implements VodGetRecoService{
 
     private final UserWatchRepository userWatchRepository;
-    private final VodRepository vodRepository;
     private final VodtoVodDtoWrapper vodtoVodDtoWrapper;
+    private final ForDeepFMRepository forDeepFMRepository;
+    private final ToForDeepFMDtoWrapper toForDeepFMDtoWrapper;
+    private final VodRepository vodRepository;
 
     @Override
-    public void getRecoFromModel(String subsr) {
-        List<?> toModelList = new ArrayList<>();
-        List<EveryDescription> descriptionResponseList = new ArrayList<>();
-        List<EveryMood> moodResponseList = new ArrayList<>();
-        //확인 요망(231124)
-        for (Vod v : userWatchRepository.findBySubsr(subsr)) {
-            VodDto vodDto = vodtoVodDtoWrapper.toVodDto(v);
-            String contentId = vodDto.getContentId();
-            EveryDescription everyDescription = EveryDescription.builder().content_id(contentId).description(vodDto.getDescription()).build();
-            EveryMood everyMood = EveryMood.builder().content_id(contentId).mood(vodDto.getMood()).build();
-            descriptionResponseList.add(everyDescription);
-            moodResponseList.add(everyMood);
-        }
-        ToDescriptionModelDto toDescriptionModelDto = ToDescriptionModelDto.builder().modelName("description_data").responseData(descriptionResponseList).build();
-        ToMoodModelDto toMoodModelDto = ToMoodModelDto.builder().modelName("mood_data").responseData(moodResponseList).build();
+    public ToModelDto setDataFromModel(String subsr) {
+        List<EveryDescriptionDto> descriptionResponseList = new ArrayList<>();
+        List<EveryMoodDto> moodResponseList = new ArrayList<>();
+        List<EveryPersonalDto> personalResponseList = new ArrayList<>();
 
-        //List안에 자료형 다른 객체 못 들어감, 수정 필요(231122)
-//        toModelList.add(toDescriptionModelDto);
-//        toModelList.add(toMoodModelDto);
-//        ToModelDto toModelDto = ToModelDto.builder().build();
-//    }
+        //mood는 null들어올 경우 파싱 불가 에러(231127)
+        for (UserWatch v : userWatchRepository.findBySubsr(subsr)) {
+            String contentId = v.getContentId();
+            EveryDescriptionDto everyDescriptionDto = EveryDescriptionDto.builder().content_id(contentId).description(vodtoVodDtoWrapper.toVodDto(vodRepository.findByContentId(contentId)).getDescription()).build();
+            EveryMoodDto everyMoodDto = EveryMoodDto.builder().content_id(contentId).mood(String.valueOf(vodtoVodDtoWrapper.toVodDto(vodRepository.findByContentId(contentId)).getMood())).build();
+            descriptionResponseList.add(everyDescriptionDto);
+            moodResponseList.add(everyMoodDto);
+        }
+        for(ForDeepFM f : forDeepFMRepository.findBySubsr(subsr)){
+            ForDeepFMDto forDeepFMDto = toForDeepFMDtoWrapper.toForDeepFMDto(f);
+            EveryPersonalDto everyPersonalDto = EveryPersonalDto.builder().subsr(subsr).content_id(forDeepFMDto.getContentId()).ct_cl(forDeepFMDto.getCategory())
+                    .genre_of_ct_cl(forDeepFMDto.getGenre()).template_A(forDeepFMDto.getMood()).template_B(forDeepFMDto.getGpt_genres()).template_C(forDeepFMDto.getGpt_subjects())
+                    .liked(forDeepFMDto.getLiked())
+                    .build();
+            personalResponseList.add(everyPersonalDto);
+        }
+        return ToModelDto.builder()
+                .description_data(descriptionResponseList)
+                .mood_data(moodResponseList)
+                .personal_data(personalResponseList)
+                .build();
 
     }
 }

@@ -12,7 +12,15 @@ public class ListToStringWrapper {
     //static으로 선언해서 인스턴스 생성하지 않아도 바로 사용 가능
     //구분자는 (, )
     public String listToString(List<String> list) {
-        return String.join(", ", list);
+        return convertListToString(list);
+    }
+
+    private String convertListToString(List<String> list)  {
+        if (list == null) {
+            return null;
+        }else {
+            return String.join(", ", list);
+        }
     }
 
 }

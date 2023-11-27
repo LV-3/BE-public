@@ -17,6 +17,7 @@ public class GenreViewGenresServiceImpl implements GenreViewGenresService {
     @Override
     public List<String> viewGenreList() {
         List<String> list = new ArrayList<>();
+//        System.out.println(genreRepository.findAll());
         for (Genres g : genreRepository.findAll()) {
             String genre = g.getGenre();
             list.add(genre);

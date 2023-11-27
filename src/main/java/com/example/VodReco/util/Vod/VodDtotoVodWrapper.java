@@ -1,8 +1,9 @@
-package com.example.VodReco.util;
+package com.example.VodReco.util.Vod;
 
 
 import com.example.VodReco.domain.Vod;
 import com.example.VodReco.dto.VodDto;
+import com.example.VodReco.util.ListToStringWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +15,12 @@ import org.springframework.stereotype.Component;
 public class VodDtotoVodWrapper {
     private final ListToStringWrapper listToStringWrapper;
 
-    public Vod toVod(VodDto vodDto) {
+    public Vod toVod(VodDto vodDto){
+        return VodDtotoVod(vodDto);
+    }
+
+    //접근 제어자 private로 좁히기 위해 다른 method로 감싸기(231126)
+    private Vod VodDtotoVod(VodDto vodDto) {
         return Vod.builder()
                 .title(vodDto.getTitle())
                 .contentId(vodDto.getContentId())

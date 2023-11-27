@@ -20,9 +20,17 @@ public class StringToListWrapper {
 
     //static으로 선언하는 방식의 대안으로 클래스 자체를 스프링 빈에 등록한 것
     // -> 내부 메서드는 private으로 만들기. static 메서드가 무조건 public인 약점 보완
+
     public List<String> stringToList(String str) {
-        String[] splitedStr = str.split(", ");
-        return Arrays.stream(splitedStr).toList();
+        return convertStringToList(str);
+    }
+    private List<String> convertStringToList(String str){
+        if (str == null) {
+            return null;
+        }else {
+            String[] splitedStr = str.split(", ");
+            return Arrays.stream(splitedStr).toList();
+        }
     }
 
 }

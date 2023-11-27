@@ -26,7 +26,6 @@ public class VodGenreController {
     }
 
     //장르별 Vod 목록 보기
-    //테스트 완료(231124)
     @GetMapping("/{genre}")
     public List<BasicInfoOfVodDto> sendGenreVodList(@PathVariable String genre) {
         return vodViewVodsByGenreService.viewVodsByGenre(genre);

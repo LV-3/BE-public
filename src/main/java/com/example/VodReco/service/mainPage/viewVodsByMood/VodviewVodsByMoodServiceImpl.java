@@ -4,8 +4,7 @@ import com.example.VodReco.domain.Vod;
 import com.example.VodReco.dto.VodDto;
 import com.example.VodReco.dto.genre.BasicInfoOfVodDto;
 import com.example.VodReco.mongoRepository.VodRepository;
-import com.example.VodReco.util.VodtoVodDtoWrapper;
-import jakarta.persistence.Basic;
+import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

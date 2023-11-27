@@ -3,7 +3,7 @@ package com.example.VodReco.service.vodDetailPage.viewDetailInfo;
 import com.example.VodReco.dto.VodDto;
 import com.example.VodReco.dto.vodDetail.VodDetailResponseDto;
 import com.example.VodReco.mongoRepository.VodRepository;
-import com.example.VodReco.util.VodtoVodDtoWrapper;
+import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
