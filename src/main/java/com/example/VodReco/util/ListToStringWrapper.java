@@ -16,7 +16,11 @@ public class ListToStringWrapper {
     }
 
     private String convertListToString(List<String> list)  {
-        return String.join(", ", list);
+        if (list == null) {
+            return null;
+        }else {
+            return String.join(", ", list);
+        }
     }
 
 }

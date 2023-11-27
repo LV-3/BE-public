@@ -25,8 +25,12 @@ public class StringToListWrapper {
         return convertStringToList(str);
     }
     private List<String> convertStringToList(String str){
-        String[] splitedStr = str.split(", ");
-        return Arrays.stream(splitedStr).toList();
+        if (str == null) {
+            return null;
+        }else {
+            String[] splitedStr = str.split(", ");
+            return Arrays.stream(splitedStr).toList();
+        }
     }
 
 }

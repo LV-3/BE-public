@@ -51,14 +51,17 @@ public class MainController {
 
     @PostMapping("")
     public MainResponseDto getAllRecoFromModel(@RequestBody UserDto userDto) {
+        long nTime= System.nanoTime();
+//        System.out.println(nTime);
         ToModelDto toModelDto = vodGetRecoService.setDataFromModel(userDto.getSubsr());
         WebClient webClient = WebClient.builder()
-                .baseUrl("http://205호_ip:8000")
+                .baseUrl("http://1.223.55.43:8000")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
 
         Mono<String> response = webClient.post()
-                .uri("http://205호_ip:8000/prcs_models") // 205호 ip로 수정
+                .uri("/items")
+//                .uri("/prcs_models")
                 .body(Mono.just(toModelDto), ToModelDto.class)
                 .retrieve()
                 .bodyToMono(String.class);
@@ -66,10 +69,10 @@ public class MainController {
         response.subscribe(
                 result -> {
                     System.out.println("비동기 응답: " + result);
-//                    parse(result);
-
+                    parse(result);
                 },
                 error -> {
+                    System.out.println(toModelDto);
                     System.err.println("에러 발생: " + error);
                 },
                 () -> System.out.println("완료됨")
@@ -78,37 +81,45 @@ public class MainController {
         //FastAPI 통합 테스트용
         //descriptionModelDataDto, moodModelDataDto, personalModelDataDto는 스프링 빈에 등록했기 때문에 { } 밖에서도 사용 가능할 것으로 예상됨
 
-//        for (int i = 0; i < 3; i++) {
-//            descriptionDataList.add((String) descriptionModelDataDto.getDescriptonData().get(i));
-//            moodDataList.add((String) moodModelDataDto.getMoodData().get(i));
-//            personalDataList.add((String) personalModelDataDto.getPersonalData().get(i));
-//        }
+        for (int i = 0; i < 21; i++) {
+            descriptionDataList.add((String) descriptionModelDataDto.getDescriptonData().get(i));
+            moodDataList.add((String) moodModelDataDto.getMoodData().get(i));
+            personalDataList.add((String) personalModelDataDto.getPersonalData().get(i));
+        }
 
 
-        //테스트를 위해 descriptionDataList에 데이터 세팅하는 메서드 호출
-        forTest();
+        //FastAPI 배제한 API 테스트를 위해 descriptionDataList, mood...List, personal..List 에 직접 데이터 세팅하는 메서드 호출
+
+//        forTest();
+
         //다만 { } 안에서만 적용되는 것으로 보임, descriptionDataList/mood../personal..List 내부 데이터를 계속 쓰려면 스프링 빈에 등록해야 하는데
         // 인스턴스가 싱글톤으로 생성돼서 다른 사용자들과 공유될 수 있단 이슈 발생(231126)
-        //
-        System.out.println("줄거리 데이터 리스트 = " + descriptionDataList);
-        System.out.println("무드 데이터 리스트 = " + moodDataList);
-        System.out.println("퍼스널 데이터 리스트 = " + personalDataList);
+
+        System.out.println("줄거리 content_id 리스트 = " + descriptionDataList);
+        System.out.println("무드 content_id 리스트 = " + moodDataList);
+        System.out.println("퍼스널 content_id 리스트 = " + personalDataList);
+
+
+        long nTime2 = System.nanoTime();
+        System.out.println("성능 테스트용 = " + (nTime2 - nTime) + "ns");
 
         return MainResponseDto.builder().description_data(reloadDescriptionModel())
                 .genre_data(reloadMoodModel())
                 .personal_data(reloadPersonalModel())
                 .build();
+
     }
 
+    //통합테스트 시 주석처리
     public void forTest() {
-        descriptionDataList.add("2222");
-        descriptionDataList.add("3333");
-        descriptionDataList.add("4444");
-        moodDataList.add("2222");
+        descriptionDataList.add("22222");
+        descriptionDataList.add("33333");
+        descriptionDataList.add("44444");
+        moodDataList.add("22222");
         moodDataList.add("55555");
         moodDataList.add("66666");
         personalDataList.add("55555");
-        personalDataList.add("4444");
+        personalDataList.add("44444");
         personalDataList.add("66666");
     }
 
@@ -147,10 +158,10 @@ public class MainController {
     private List<ToClient1stDto> getToClient1stDtos(List<String> DataList) {
         List<ToClient1stDto> list = new ArrayList<>();
         List<String> firstSeven = DataList.stream()
-                .limit(1) // 7로 수정하기(231126)
+                .limit(7) // 7로 수정하기(231126)
                 .toList();
-        DataList.subList(0, 1).clear();
-        for (int j = 0; j < 1; j++) {
+        DataList.subList(0, 7).clear();
+        for (int j = 0; j < 7; j++) {
             String contentId = firstSeven.get(j);
             list.add(buildToClient1stDto(contentId));
         }

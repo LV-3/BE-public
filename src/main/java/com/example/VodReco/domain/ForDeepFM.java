@@ -5,9 +5,11 @@ import lombok.Getter;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-@Document(collection = "personal_watch")
+//추후 user_08, user_09 통합된 Document로 매핑하는 엔티티(231127)
+
+@Document(collection = "for_deepFM")
 @Getter
-public class PersonalWatch {
+public class ForDeepFM {
     private String subsr;
     @Field(name = "content_id")
     private String contentId;
@@ -25,7 +27,7 @@ public class PersonalWatch {
     private Integer liked;
 
     @Builder
-    public PersonalWatch(String subsr, String contentId, String category, String genre, String mood, String gpt_genres, String gpt_subjects, Integer liked) {
+    public ForDeepFM(String subsr, String contentId, String category, String genre, String mood, String gpt_genres, String gpt_subjects, Integer liked) {
         this.subsr = subsr;
         this.contentId = contentId;
         this.category = category;

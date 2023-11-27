@@ -15,11 +15,8 @@ public class Vod {
 //    @Id
     @Field(name = "content_id") // 이거 붙여줘야 mongoDB의 content_id와 스프링부트 내의 contentId가 연결됨 (231109)
     private String contentId;
-
-    //   컬럼명 변경 필요(231124)
-    @Field(name = "preprocessed")
+    //컬럼명 title로 확정(231127)
     private String title;
-
     @Field(name = "ct_cl")
     private String category;
     @Field(name = "genre_of_ct_cl")
@@ -36,7 +33,6 @@ public class Vod {
     private String grade;
     @Field
     private String country;
-
 
     @Field
     private String release_year;

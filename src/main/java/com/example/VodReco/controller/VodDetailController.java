@@ -117,14 +117,14 @@ public class VodDetailController {
     // rating 최초 insert
     // rating 최초 insert(POST)와 변경(PUT), 삭제(DELETE) 분리 요망(231124)
     @PostMapping(value = "/{content_id}/rating")
-    @Operation(summary = "vod별 평점 매기기", description = "상세페이지에서 rating, review 최초 매기기 또는 기존 rating, review 변경")
+    @Operation(summary = "vod별 평점 매기기", description = "상세페이지에서 rating, review 최초 등록")
     public void saveMyFirstRating(@PathVariable("content_id") String contentId, @RequestBody UpdateMyRatingRequestDto updateMyRatingRequestDto) {
         userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
     }
 
     //rating 변경
     @PutMapping(value = "/{content_id}/rating")
-    @Operation(summary = "vod별 평점 매기기", description = "상세페이지에서 rating, review 최초 매기기 또는 기존 rating, review 변경")
+    @Operation(summary = "vod별 평점 매기기", description = "상세페이지에서 기존 rating, review 변경")
     public void updateMyRating(@PathVariable("content_id") String contentId, @RequestBody UpdateMyRatingRequestDto updateMyRatingRequestDto) {
         userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
     }
@@ -132,9 +132,11 @@ public class VodDetailController {
     //rating 삭제
     @Transactional
     @DeleteMapping(value = "/{content_id}/rating")
-    @Operation(summary = "vod별 평점 삭제", description = "상세페이지에서 rating, review 변경")
+    @Operation(summary = "vod별 평점 삭제", description = "상세페이지에서 rating, review 삭제")
+
     public void deleteMyRating(@PathVariable("content_id") String contentId, @RequestBody UserDto userDto) {
         userRatingDeleteMyRatingService.deleteRating(contentId, userDto.getSubsr());
+        System.out.println("삭제된 rating 정보 = " + contentId);
     }
 
 }

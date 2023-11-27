@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @RequiredArgsConstructor
-public class PersonalWatchDto {
+public class ForDeepFMDto {
     private String subsr;
     private String contentId;
     private String category;
@@ -19,7 +19,7 @@ public class PersonalWatchDto {
     private Integer liked;
 
     @Builder
-    public PersonalWatchDto(String subsr, String contentId, String category, String genre, List<String> mood, List<String> gpt_genres, List<String> gpt_subjects, Integer liked) {
+    public ForDeepFMDto(String subsr, String contentId, String category, String genre, List<String> mood, List<String> gpt_genres, List<String> gpt_subjects, Integer liked) {
         this.subsr = subsr;
         this.contentId = contentId;
         this.category = category;
