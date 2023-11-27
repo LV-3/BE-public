@@ -1,7 +1,9 @@
 package com.example.VodReco.service.mypage.viewMyWishList;
 
 import com.example.VodReco.domain.UserWish;
+import com.example.VodReco.domain.UserWishView;
 import com.example.VodReco.dto.mypage.ViewMyWishListDto;
+import com.example.VodReco.mongoRepository.UserWishViewRepository;
 import com.example.VodReco.repository.UserWishRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,16 +17,17 @@ import java.util.Optional;
 public class UserWishListViewServiceImpl implements UserWishListViewService{
 
     private final UserWishRepository userWishRepository;
+    private final UserWishViewRepository userWishViewRepository;
     @Override
     public Optional<List<ViewMyWishListDto>> findMyWishList(String subsr) {
         List<ViewMyWishListDto> myWishListDtos = new ArrayList<>();
-        List<UserWish> myWishList = userWishRepository.findAllBySubsr(subsr);
+        List<UserWishView> myWishList = userWishViewRepository.findAllBySubsr(subsr);
 
         if (myWishList.isEmpty()) {
             return Optional.empty();
         }
 
-        for (UserWish w : myWishList){
+        for (UserWishView w : myWishList){
             ViewMyWishListDto viewMyWishListDto = ViewMyWishListDto.builder()
                     .subsr(w.getSubsr())
                     .contentId(w.getContentId())

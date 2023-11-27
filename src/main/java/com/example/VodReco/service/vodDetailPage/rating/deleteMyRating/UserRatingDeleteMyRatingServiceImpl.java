@@ -12,7 +12,6 @@ public class UserRatingDeleteMyRatingServiceImpl implements UserRatingDeleteMyRa
     @Override
     public void deleteRating(String contentId, String subsr) {
         String uniqueId = subsr + contentId;
-        System.out.println("새로운 PK 생성 가능? = " + uniqueId);
         userRatingRepository.deleteByUniqueId(uniqueId);
     }
 }
