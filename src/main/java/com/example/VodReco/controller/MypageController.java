@@ -28,34 +28,32 @@ public class MypageController {
         this.userWishListViewService = userWishListViewService;
         this.userWatchListViewService = userWatchListViewService;
     }
-
+    // [jjae] - 코드 변경 : rating, wish, replay -> 모두 리턴 타입 변경 + 메소드형식(?) 변경
     @PostMapping("/rating")
-    public List<ViewMyRatingListDto> findMyRatingList(@RequestBody UserDto userDto){
+    public ResponseEntity<List<ViewMyRatingListDto>> findMyRatingList(@RequestBody UserDto userDto){
         Optional<List<ViewMyRatingListDto>> myRatingListDtos = userRatingListViewService.findMyRatingList(userDto.getSubsr());
 //        if (!myRatingListDtos.isPresent() || myRatingListDtos.get().isEmpty()) {
 //            return ResponseEntity.noContent().build();
 //        }
-//        return ResponseEntity.ok(myRatingListDtos.get());
-        return myRatingListDtos.get();
+        return ResponseEntity.ok(myRatingListDtos.get());
     }
 
     @PostMapping("/wish")
-    public List<ViewMyWishListDto> findMyWishList(@RequestBody UserDto userDto){
+    public ResponseEntity<List<ViewMyWishListDto>> findMyWishList(@RequestBody UserDto userDto){
         Optional<List<ViewMyWishListDto>> myWishListDtos = userWishListViewService.findMyWishList(userDto.getSubsr());
 //        if (!myWishListDtos.isPresent() || myWishListDtos.get().isEmpty()) {
 //            return ResponseEntity.noContent().build();
 //        }
-//        return ResponseEntity.ok(myWishListDtos.get());
-        return myWishListDtos.get();
+        return ResponseEntity.ok(myWishListDtos.get());
     }
 
     @PostMapping("/replay")
-    public Optional<List<ViewMyWatchListDto>> findMyWatchList(@RequestBody UserDto userDto){
+    public ResponseEntity<Optional<List<ViewMyWatchListDto>>> findMyWatchList(@RequestBody UserDto userDto){
         Optional<List<ViewMyWatchListDto>> myWatchListDtos = userWatchListViewService.findMyWatchList(userDto.getSubsr());
 //        if (!myWatchListDtos.isPresent() || myWatchListDtos.get().isEmpty()) {
 //            return ResponseEntity.noContent().build();
 //        }
-        return myWatchListDtos;
+        return ResponseEntity.ok(myWatchListDtos);
     }
 
 }
