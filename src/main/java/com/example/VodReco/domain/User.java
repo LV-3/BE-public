@@ -13,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 //@ToString // 필요성 생기면 활성화(231102)
 public class User {
-    @Id
+//    @Id
     @Column(name = "subsr", nullable = false)
     private String subsr;
 

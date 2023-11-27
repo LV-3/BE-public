@@ -52,8 +52,7 @@ public class MainController {
     @PostMapping("")
     public MainResponseDto getAllRecoFromModel(@RequestBody UserDto userDto) {
         long nTime= System.nanoTime();
-//        System.out.println(nTime);
-        ToModelDto toModelDto = vodGetRecoService.setDataFromModel(userDto.getSubsr());
+        ToModelDto toModelDto = vodGetRecoService.setDataForModel(userDto.getSubsr());
         WebClient webClient = WebClient.builder()
                 .baseUrl("http://1.223.55.43:8000")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)

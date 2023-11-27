@@ -20,7 +20,7 @@ public class UserWishViewMyWishServiceImpl implements UserWishViewMyWishService 
         UserWish userWish = userWishRepository.findBySubsrAndContentId(subsr, contentId);
         //dto로 받기. 수정 요망(231124)
 
-        if (userWish == null) {
+        if (userWish.getWish() == 0) {
             return null;
         }
         return userWish.toViewMyWishResponseDto(userWish);
