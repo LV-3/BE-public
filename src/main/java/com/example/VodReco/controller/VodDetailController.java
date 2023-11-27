@@ -89,10 +89,10 @@ public class VodDetailController {
 
     @GetMapping(value = "/{content_id}/rating")
     @Operation(summary = "vod별 전체 rating 조회", description = "상세페이지 열릴 때 해당 vod에 대한 전체 사용자의 rating 조회")
-    public Optional<List<ViewEveryRatingResponseDto>> findEveryRating(@PathVariable("content_id")
-                                                                          @Schema(description = "content_id", example = "22222") String contentId) {
+//    public Optional<List<ViewEveryRatingResponseDto>> findEveryRating(@PathVariable("content_id")
+//                                                                          @Schema(description = "content_id", example = "22222") String contentId) {
     public ResponseEntity<Optional<List<ViewEveryRatingResponseDto>>> findEveryRating(@PathVariable("content_id")
-                                                                          @Schema(description = "content_id", example = "20200622") String contentId) {
+                                                                          @Schema(description = "content_id", example = "22222") String contentId) {
         System.out.println("콘솔 확인용 = " + Optional.ofNullable(userRatingViewEveryRatingService.findEveryUserRating(contentId)));
         //return Optional.ofNullable(userRatingViewEveryRatingService.findEveryUserRating(contentId));
         Optional<List<ViewEveryRatingResponseDto>> ratings = Optional.ofNullable(userRatingViewEveryRatingService.findEveryUserRating(contentId));
@@ -109,10 +109,10 @@ public class VodDetailController {
     //  wish 최초 insert
     @PostMapping(value = "/{content_id}/wish")
     @Operation(summary = "vod별 찜 최초 등록", description = "상세페이지에서 wish 최초 매기기 또는 기존 wish 변경")
-    public void saveMyFirstWish(@PathVariable("content_id")
-                                    @Schema(description = "content_id", example = "22222")
+//    public void saveMyFirstWish(@PathVariable("content_id")
+//                                    @Schema(description = "content_id", example = "22222")
     public ResponseEntity<Void> saveMyFirstWish(@PathVariable("content_id")
-                                    @Schema(description = "content_id", example = "20200622")
+                                    @Schema(description = "content_id", example = "22222")
                                     String contentId,
                                 @Parameter(name = "content_id", description = "컨텐츠 고유id", example = "22222", required = true)
                                     @RequestBody UpdateMyWishRequestDto updateMyWishRequestDto) {
