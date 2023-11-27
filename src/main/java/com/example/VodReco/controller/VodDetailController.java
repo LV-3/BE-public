@@ -71,8 +71,6 @@ public class VodDetailController {
                                   String contentId,
                                              @RequestBody UserDto userDto) {
         ViewMyWishResponseDto viewMyWishResponseDto = userWishViewMyWishService.findMyWish(userDto.getSubsr(), contentId);
-//            콘솔 확인
-        System.out.println("콘솔 확인용 = " + viewMyWishResponseDto);
 //        if (viewMyWishResponseDto == null) {
 //            return null;
 //        }
@@ -93,7 +91,6 @@ public class VodDetailController {
 //                                                                          @Schema(description = "content_id", example = "22222") String contentId) {
     public ResponseEntity<Optional<List<ViewEveryRatingResponseDto>>> findEveryRating(@PathVariable("content_id")
                                                                           @Schema(description = "content_id", example = "22222") String contentId) {
-        System.out.println("콘솔 확인용 = " + Optional.ofNullable(userRatingViewEveryRatingService.findEveryUserRating(contentId)));
         //return Optional.ofNullable(userRatingViewEveryRatingService.findEveryUserRating(contentId));
         Optional<List<ViewEveryRatingResponseDto>> ratings = Optional.ofNullable(userRatingViewEveryRatingService.findEveryUserRating(contentId));
         //[jjae] - 변경코드
@@ -116,8 +113,6 @@ public class VodDetailController {
                                     String contentId,
                                 @Parameter(name = "content_id", description = "컨텐츠 고유id", example = "22222", required = true)
                                     @RequestBody UpdateMyWishRequestDto updateMyWishRequestDto) {
-//            확인
-//        System.out.println("콘솔 확인용 = " + updateMyWishDto);
         userWishUpdateMyWishService.saveWish(updateMyWishRequestDto, contentId);
         //[jjae] - 변경코드
         return ResponseEntity.ok().build();
