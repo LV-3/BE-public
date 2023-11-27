@@ -15,9 +15,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class VodViewVodsByGenreServiceImpl implements VodViewVodsByGenreService{
-    private final VodRepository vodRepository;
     private final ForGenreViewRepository forGenreViewRepository;
-    private final VodtoVodDtoWrapper vodtoVodDtoWrapper;
 
     //장르별 Dto 리스트
     @Override

@@ -3,11 +3,13 @@ package com.example.VodReco.dto.model.toModel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
 @Getter
 @RequiredArgsConstructor
+@ToString
 public class ToModelDto {
     private List<EveryDescriptionDto> description_data;
     private List<EveryMoodDto> mood_data;

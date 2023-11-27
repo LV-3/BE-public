@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-//삭제 필요(231123)
+//필드 총 5개
 
 @Document(collection = "user_watch")
 @Getter
