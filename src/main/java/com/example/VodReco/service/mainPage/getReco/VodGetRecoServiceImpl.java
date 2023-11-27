@@ -7,6 +7,7 @@ import com.example.VodReco.mongoRepository.ForDeepFMRepository;
 import com.example.VodReco.mongoRepository.UserWatchRepository;
 import com.example.VodReco.mongoRepository.VodRepository;
 import com.example.VodReco.util.ForDeepFM.ToForDeepFMDtoWrapper;
+import com.example.VodReco.util.StringToListWrapper;
 import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,18 +24,22 @@ public class VodGetRecoServiceImpl implements VodGetRecoService{
     private final ForDeepFMRepository forDeepFMRepository;
     private final ToForDeepFMDtoWrapper toForDeepFMDtoWrapper;
     private final VodRepository vodRepository;
+    private final StringToListWrapper stringToListWrapper;
 
     @Override
-    public ToModelDto setDataFromModel(String subsr) {
+    public ToModelDto setDataForModel(String subsr) {
         List<EveryDescriptionDto> descriptionResponseList = new ArrayList<>();
         List<EveryMoodDto> moodResponseList = new ArrayList<>();
         List<EveryPersonalDto> personalResponseList = new ArrayList<>();
 
-        //mood는 null들어올 경우 파싱 불가 에러(231127)
+        //mood는 null들어올 경우 NPE(231127)
         for (UserWatch v : userWatchRepository.findBySubsr(subsr)) {
             String contentId = v.getContentId();
             EveryDescriptionDto everyDescriptionDto = EveryDescriptionDto.builder().content_id(contentId).description(vodtoVodDtoWrapper.toVodDto(vodRepository.findByContentId(contentId)).getDescription()).build();
-            EveryMoodDto everyMoodDto = EveryMoodDto.builder().content_id(contentId).mood(String.valueOf(vodtoVodDtoWrapper.toVodDto(vodRepository.findByContentId(contentId)).getMood())).build();
+            EveryMoodDto everyMoodDto = EveryMoodDto.builder().content_id(contentId).mood(stringToListWrapper.stringToList(vodRepository.findByContentId(contentId).getMood())).build();
+            System.out.println("콘솔에서 자료형 확인 = " + stringToListWrapper.stringToList(vodRepository.findByContentId(contentId).getMood()));
+            System.out.println("vod의 mood 필드 자료형 확인 = " + vodRepository.findByContentId(contentId).getMood()); // 이게 애초에 List네 이유불명(?) (231127)
+            //해결: 그냥 데이터 담당자가 잘못 주신 거였음
             descriptionResponseList.add(everyDescriptionDto);
             moodResponseList.add(everyMoodDto);
         }
