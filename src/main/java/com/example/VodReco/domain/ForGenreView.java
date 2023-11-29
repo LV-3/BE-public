@@ -11,7 +11,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document(collection = "for_genre_view")
 @Getter
 public class ForGenreView {
-    @Id
     @Field(name = "content_id")
     private String contentId;
     private String genre;
