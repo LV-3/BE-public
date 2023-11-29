@@ -5,6 +5,8 @@ import com.example.VodReco.mongoRepository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserLoginServiceImpl implements UserLoginService {
@@ -12,8 +14,9 @@ public class UserLoginServiceImpl implements UserLoginService {
     @Override
     public String ValidateUser(LoginDto loginDto) {
         String subsr = loginDto.getSubsr();
-        if (userRepository.findBySubsr(subsr) == null) {
-            return null;
+        //userRepository.findBySubsr(subsr)의 리턴타입은 List. ==null이 아닌 .isEmpty() 사용해야 함(231128)
+        if (userRepository.findBySubsr(subsr).isEmpty()) {
+            return "Login Failed";
         }else {
             return loginDto.getSubsr();
         }

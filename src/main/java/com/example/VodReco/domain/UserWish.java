@@ -5,16 +5,16 @@ import com.example.VodReco.dto.wish.ViewMyWishResponseDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Entity
+@NoArgsConstructor
 @Table(name = "user_wish")
 public class UserWish {
     @Id
     //Id를 content_id + subsr로 만드는 방안 고려하기(231123)
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private int id;
     @Column(nullable = false, unique = true, name = "unique_id")
 //    @ColumnDefault("defaultId")
     private String uniqueId;
@@ -38,9 +38,6 @@ public class UserWish {
         this.posterurl = posterurl;
     }
 
-    public UserWish() {
-
-    }
 
     public UpdateMyWishDto toUpdateMyWishResponseDto(UserWish userWish) {
         return UpdateMyWishDto.builder()

@@ -16,7 +16,6 @@ public class UserRatingUpdateMyRatingServiceImpl implements UserRatingUpdateMyRa
     @Override
     public void saveRating(String contentId, UpdateMyRatingRequestDto updateMyRatingRequestDto) {
         String uniqueId = updateMyRatingRequestDto.getSubsr() + contentId;
-        System.out.println("새로운 PK 생성 가능? = " + uniqueId);
         UpdateMyRatingDto updateMyRatingDto = UpdateMyRatingDto.builder()
                 .uniqueId(uniqueId)
                 .subsr(updateMyRatingRequestDto.getSubsr())
