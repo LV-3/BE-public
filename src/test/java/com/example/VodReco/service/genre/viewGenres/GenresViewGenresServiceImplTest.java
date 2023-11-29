@@ -14,7 +14,7 @@ class GenresViewGenresServiceImplTest {
     @Test
     void viewGenreList() {
 //        given
-        List<Genres> allGenres = genreRepository.findAllGenres();;
+        List<Genres> allGenres = genreRepository.findAllGenres();
 //        when
 //        then
         assertEquals(allGenres.size(), 2);

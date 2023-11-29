@@ -37,6 +37,7 @@ jobs:
       - run: echo "${{ secrets.KAFKA_SERVER }}" >> ./src/main/resources/application.yml
       - run: cat ./src/main/resources/application.yml
 
+      - run : ./gradlew clean build --exclude-task test
 
       - name: Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
