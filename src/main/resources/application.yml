@@ -1,0 +1,60 @@
+spring:
+  jpa:
+    hibernate:
+      show-sql: true
+      ddl-auto: update
+#      create ?? ?? ??
+
+    properties:
+      hibernate:
+        format_sql: true
+
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://${mysql:lv3-mysqldb-ansoo.ccxmcbwnnwze.us-east-1.rds.amazonaws.com}:3306/TestDB?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+
+  data:
+    mongodb:
+
+      uri: ${MONGODB_URI}
+
+
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVER}
+    consumer:
+      group.id: my-group
+      auto.offset.reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      # 리더에 메세지가 전송되고 replica가 다 적용된 후에 돌려 받는 형식의 옵션
+      acks: all
+      retries: 3
+      compression.type: snappy
+      linger.ms: 1
+      batch.num.messages: 1000
+      queue.buffering.max.messages: 10000
+      queue.buffering.max.ms: 10
+      message.send.max.retries: 2
+      retry.backoff.ms: 100
+      message.timeout.ms: 10000
+      request.timeout.ms: 20000
+      delivery.report.only.error: true
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+
+#jwt:
+#  header: Authorization
+#  #HS512 ????? ??? ??? ??? 512bit, ? 64byte ??? secret key? ???? ??.
+#  #echo 'silvernine-tech-spring-boot-jwt-tutorial-secret-silvernine-tech-spring-boot-jwt-tutorial-secret'|base64
+#  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+#  token-validity-in-seconds: 86400
+
+logging:
+  level:
+    com.example.VodReco : DEBUG
