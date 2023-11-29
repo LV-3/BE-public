@@ -1,4 +1,4 @@
-package com.example.VodReco.service.vodDetailPage.rating.deleteMyRating;
+package com.example.VodReco.service.vodDetailPage.update.deleteMyRating;
 
 import org.springframework.stereotype.Service;
 

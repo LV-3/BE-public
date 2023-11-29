@@ -1,4 +1,4 @@
-package com.example.VodReco.service.vodDetailPage.rating.updateMyRating;
+package com.example.VodReco.service.vodDetailPage.update.updateMyRating;
 
 import com.example.VodReco.dto.rating.UpdateMyRatingDto;
 import com.example.VodReco.dto.rating.UpdateMyRatingRequestDto;

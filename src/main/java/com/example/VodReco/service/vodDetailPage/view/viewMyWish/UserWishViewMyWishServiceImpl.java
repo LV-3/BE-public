@@ -1,4 +1,4 @@
-package com.example.VodReco.service.vodDetailPage.wish.viewMyWish;
+package com.example.VodReco.service.vodDetailPage.view.viewMyWish;
 
 import com.example.VodReco.domain.UserWishView;
 import com.example.VodReco.dto.wish.ViewMyWishResponseDto;
