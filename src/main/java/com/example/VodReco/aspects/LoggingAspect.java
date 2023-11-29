@@ -1,7 +1,7 @@
 package com.example.VodReco.aspects;
 
 import com.example.VodReco.domain.LogEntity;
-import com.example.VodReco.service.logging.LoggingService;
+import com.example.VodReco.service.logging.LoggingServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -20,10 +20,10 @@ import java.util.Arrays;
 @Component
 public class LoggingAspect {
 
-    private final LoggingService loggingService;
+    private final LoggingServiceImpl loggingService;
 
     @Autowired
-    public LoggingAspect(LoggingService loggingService) {
+    public LoggingAspect(LoggingServiceImpl loggingService) {
         this.loggingService = loggingService;
     }
 

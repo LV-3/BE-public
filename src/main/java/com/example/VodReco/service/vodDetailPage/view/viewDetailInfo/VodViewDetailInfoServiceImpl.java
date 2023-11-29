@@ -1,4 +1,4 @@
-package com.example.VodReco.service.vodDetailPage.viewDetailInfo;
+package com.example.VodReco.service.vodDetailPage.view.viewDetailInfo;
 
 import com.example.VodReco.dto.VodDto;
 import com.example.VodReco.dto.vodDetail.VodDetailResponseDto;
