@@ -29,13 +29,13 @@ jobs:
           distribution: 'temurin'
 
       - uses: actions/checkout@v3
-      - run: touch /src/main/resources/application.yml
-      - run: echo "${{ secrets.MYSQL_URL }}" >> /src/main/resources/application.yml
-      - run: echo "${{ secrets.MYSQL_USERNAME }}" >> /src/main/resources/application.yml
-      - run: echo "${{ secrets.MYSQL_PASSWORD }}" >> /src/main/resources/application.yml
-      - run: echo "${{ secrets.MONGODB_URI }}" >> /src/main/resources/application.yml
-      - run: echo "${{ secrets.KAFKA_SERVER }}" >> /src/main/resources/application.yml
-      - run: cat /src/main/resources/application.yml
+      - run: touch ./src/main/resources/application.yml
+      - run: echo "${{ secrets.MYSQL_URL }}" >> ./src/main/resources/application.yml
+      - run: echo "${{ secrets.MYSQL_USERNAME }}" >> ./src/main/resources/application.yml
+      - run: echo "${{ secrets.MYSQL_PASSWORD }}" >> ./src/main/resources/application.yml
+      - run: echo "${{ secrets.MONGODB_URI }}" >> ./src/main/resources/application.yml
+      - run: echo "${{ secrets.KAFKA_SERVER }}" >> ./src/main/resources/application.yml
+      - run: cat ./src/main/resources/application.yml
 
 
       - name: Build with Gradle
