@@ -109,17 +109,17 @@ public class MainController {
     }
 
     //통합테스트 시 주석처리
-    public void forTest() {
-        descriptionDataList.add("22222");
-        descriptionDataList.add("33333");
-        descriptionDataList.add("44444");
-        moodDataList.add("22222");
-        moodDataList.add("55555");
-        moodDataList.add("66666");
-        personalDataList.add("55555");
-        personalDataList.add("44444");
-        personalDataList.add("66666");
-    }
+//    public void forTest() {
+//        descriptionDataList.add("22222");
+//        descriptionDataList.add("33333");
+//        descriptionDataList.add("44444");
+//        moodDataList.add("22222");
+//        moodDataList.add("55555");
+//        moodDataList.add("66666");
+//        personalDataList.add("55555");
+//        personalDataList.add("44444");
+//        personalDataList.add("66666");
+//    }
 
     public void parse(String recoResult) {
         JSONObject jsonObject = new JSONObject(recoResult);
