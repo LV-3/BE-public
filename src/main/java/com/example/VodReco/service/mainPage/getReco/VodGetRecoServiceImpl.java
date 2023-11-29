@@ -38,8 +38,7 @@ public class VodGetRecoServiceImpl implements VodGetRecoService{
             EveryDescriptionDto everyDescriptionDto = EveryDescriptionDto.builder().content_id(contentId).description(vodtoVodDtoWrapper.toVodDto(vodRepository.findByContentId(contentId)).getDescription()).build();
             EveryMoodDto everyMoodDto = EveryMoodDto.builder().content_id(contentId).mood(stringToListWrapper.stringToList(vodRepository.findByContentId(contentId).getMood())).build();
             System.out.println("콘솔에서 자료형 확인 = " + stringToListWrapper.stringToList(vodRepository.findByContentId(contentId).getMood()));
-            System.out.println("vod의 mood 필드 자료형 확인 = " + vodRepository.findByContentId(contentId).getMood()); // 이게 애초에 List네 이유불명(?) (231127)
-            //해결: 그냥 데이터 담당자가 잘못 주신 거였음
+            System.out.println("vod의 mood 필드 자료형 확인 = " + vodRepository.findByContentId(contentId).getMood());
             descriptionResponseList.add(everyDescriptionDto);
             moodResponseList.add(everyMoodDto);
         }
@@ -49,6 +48,8 @@ public class VodGetRecoServiceImpl implements VodGetRecoService{
                     .genre_of_ct_cl(forDeepFMDto.getGenre()).template_A(forDeepFMDto.getMood()).template_B(forDeepFMDto.getGpt_genres()).template_C(forDeepFMDto.getGpt_subjects())
                     .liked(forDeepFMDto.getLiked())
                     .build();
+            System.out.println("template_B 자료형 확인 = " + forDeepFMDto.getGpt_genres());
+            System.out.println("everypersonalDto의 template_A 자료형 확인 = " + everyPersonalDto.getTemplate_A());
             personalResponseList.add(everyPersonalDto);
         }
         return ToModelDto.builder()

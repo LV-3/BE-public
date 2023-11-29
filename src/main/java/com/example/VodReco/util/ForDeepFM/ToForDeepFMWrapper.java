@@ -12,10 +12,10 @@ public class ToForDeepFMWrapper {
     private final ListToStringWrapper listToStringWrapper;
 
     public ForDeepFM toForDeepFM(ForDeepFMDto forDeepFMDto) {
-        return forDeepFMDtotoForDeepFM(forDeepFMDto);
+        return forDeepFMDtoToForDeepFM(forDeepFMDto);
     }
 
-    private ForDeepFM forDeepFMDtotoForDeepFM(ForDeepFMDto forDeepFMDto) {
+    private ForDeepFM forDeepFMDtoToForDeepFM(ForDeepFMDto forDeepFMDto) {
         return ForDeepFM.builder()
 
                 .subsr(forDeepFMDto.getSubsr())

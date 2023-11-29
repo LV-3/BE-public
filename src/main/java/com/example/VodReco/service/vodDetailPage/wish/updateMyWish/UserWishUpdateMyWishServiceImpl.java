@@ -21,6 +21,8 @@ public class UserWishUpdateMyWishServiceImpl implements UserWishUpdateMyWishServ
                 .contentId(contentId).wish(updateMyWishRequestDto.getWish()).title(vodRepository.findByContentId(contentId).getTitle()).
                 posterurl(vodRepository.findByContentId(contentId).getPosterurl()).build();
         userWishRepository.save(updateMyWishDto.toWishEntity(updateMyWishDto));
-
+        //[세연] kafka에 topic send, userWishViewRepository에 데이터 삽입 후
+        //if (userWishViewRepository.findBy() 해서 이 함수의 파라미터와 같으면
+        //그때 ResponseEntity.ok 띄우고 // 같지 않으면 에러 status 띄우기(231128)
     }
 }

@@ -66,7 +66,7 @@ public class VodDetailController {
     @PostMapping(value = "/{content_id}/mywish")
     @Operation(summary = "vod별 찜 조회", description = "상세페이지 열릴 때 해당 사용자의 wish 있는지 DB 조회")
     public ResponseEntity<Integer> findMyWish(@PathVariable("content_id")
-                                  @Schema(description = "content_id", example = "20200622")
+                                  @Schema(description = "content_id", example = "22222")
                                   @Parameter(name = "content_id", description = "컨텐츠 고유id", example = "20200622", required = true)
                                   String contentId,
                                              @RequestBody UserDto userDto) {
@@ -77,13 +77,13 @@ public class VodDetailController {
 //        return viewMyWishResponseDto.getWish();
         //[jjae] - 변경코드
         if (viewMyWishResponseDto == null) {
+            //[세연] 조회 결과 없으면 404에러(231128)
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(viewMyWishResponseDto.getWish());
     }
 
     //3. content_id에 해당하는 Vod에 대한 모든 사용자의 rating + review 조회
-    //테스트 완료(231124)
 
     @GetMapping(value = "/{content_id}/rating")
     @Operation(summary = "vod별 전체 rating 조회", description = "상세페이지 열릴 때 해당 vod에 대한 전체 사용자의 rating 조회")
@@ -95,6 +95,7 @@ public class VodDetailController {
         Optional<List<ViewEveryRatingResponseDto>> ratings = Optional.ofNullable(userRatingViewEveryRatingService.findEveryUserRating(contentId));
         //[jjae] - 변경코드
         if (ratings.isEmpty()) {
+            //[세연] 조회 결과 없으면 204(231128), wish조회 API와 status 통일 요망
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(ratings);
@@ -115,6 +116,7 @@ public class VodDetailController {
                                     @RequestBody UpdateMyWishRequestDto updateMyWishRequestDto) {
         userWishUpdateMyWishService.saveWish(updateMyWishRequestDto, contentId);
         //[jjae] - 변경코드
+        //[세연] save 실패한 경우의 리턴과 분리 요망(231128), 카프카 도입 후 재수정
         return ResponseEntity.ok().build();
     }
 
@@ -141,6 +143,7 @@ public class VodDetailController {
     public ResponseEntity<Void> saveMyFirstRating(@PathVariable("content_id") String contentId, @RequestBody UpdateMyRatingRequestDto updateMyRatingRequestDto) {
         userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
         //[jjae] - 변경코드
+        //[세연] 실패한 경우와 리턴 분리 요망. 카프카 도입 후 서비스 레이어로 로직 이동, 코드 재수정(231128)
         return ResponseEntity.ok().build();
     }
 
@@ -150,6 +153,7 @@ public class VodDetailController {
     public ResponseEntity<Void> updateMyRating(@PathVariable("content_id") String contentId, @RequestBody UpdateMyRatingRequestDto updateMyRatingRequestDto) {
         userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
         //[jjae] - 변경코드
+        //[세연] 실패한 경우와 리턴 분리 요망. 카프카 도입 후 서비스 레이어로 로직 이동, 코드 재수정(231128)
         return ResponseEntity.ok().build();
     }
 
@@ -162,6 +166,7 @@ public class VodDetailController {
         userRatingDeleteMyRatingService.deleteRating(contentId, userDto.getSubsr());
         System.out.println("삭제된 rating 정보 = " + contentId);
         //[jjae] - 변경코드
+        //[세연] 실패한 경우와 리턴 분리 요망. 카프카 도입 후 서비스 레이어로 로직 이동, 코드 재수정(231128)
         return ResponseEntity.ok().build();
     }
 

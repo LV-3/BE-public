@@ -54,7 +54,7 @@ public class MainController {
         long nTime= System.nanoTime();
         ToModelDto toModelDto = vodGetRecoService.setDataForModel(userDto.getSubsr());
         WebClient webClient = WebClient.builder()
-                .baseUrl("http://1.223.55.43:8000")
+                .baseUrl("http://1.220.201.108:8000")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
 
@@ -101,7 +101,6 @@ public class MainController {
 
         long nTime2 = System.nanoTime();
         System.out.println("성능 테스트용 = " + (nTime2 - nTime) + "ns");
-
         return MainResponseDto.builder().description_data(reloadDescriptionModel())
                 .genre_data(reloadMoodModel())
                 .personal_data(reloadPersonalModel())
@@ -125,6 +124,7 @@ public class MainController {
     public void parse(String recoResult) {
         JSONObject jsonObject = new JSONObject(recoResult);
         JSONArray descriptionData = jsonObject.getJSONArray("description_data");
+        System.out.println("descriptionData 확인 = " + descriptionData.toString());
         JSONArray moodData = jsonObject.getJSONArray("mood_data");
         JSONArray personalData = jsonObject.getJSONArray("personal_data");
         DescriptionModelDataDto descriptionModelDataDto = DescriptionModelDataDto.builder().descriptonData(descriptionData).build();
@@ -170,6 +170,7 @@ public class MainController {
     //별도 테이블 만들면 이 메서드 수정(231126)
     public ToClient1stDto buildToClient1stDto(String contentId) {
         VodDto vodDto = vodtoVodDtoWrapper.toVodDto(vodRepository.findByContentId(contentId));
+
         return ToClient1stDto.builder().contentId(contentId).posterurl(vodDto.getPosterurl()).title(vodDto.getTitle())
                 .mood(vodDto.getMood()).gpt_genres(vodDto.getGpt_genres()).gpt_subjects(vodDto.getGpt_subjects())
                 .build();

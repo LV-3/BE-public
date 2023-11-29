@@ -29,6 +29,8 @@ public class MypageController {
         this.userWatchListViewService = userWatchListViewService;
     }
     // [jjae] - 코드 변경 : rating, wish, replay -> 모두 리턴 타입 변경 + 메소드형식(?) 변경
+    //[세연] 실패한 경우와 리턴 분리 요망(231128)
+
     @PostMapping("/rating")
     public ResponseEntity<List<ViewMyRatingListDto>> findMyRatingList(@RequestBody UserDto userDto){
         Optional<List<ViewMyRatingListDto>> myRatingListDtos = userRatingListViewService.findMyRatingList(userDto.getSubsr());
