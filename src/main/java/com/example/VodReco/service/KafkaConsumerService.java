@@ -2,9 +2,6 @@ package com.example.VodReco.service;
 
 import com.example.VodReco.dto.CQRS.UpdatedWishDto;
 import lombok.Getter;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;

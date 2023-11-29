@@ -22,15 +22,19 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK 11
+      - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
+          java-version: '17'
           distribution: 'temurin'
 
       - uses: actions/checkout@v3
       - run: touch /src/main/resources/application.yml
-      - run: echo "${{ secrets.APPLICATION }}" > /src/main/resources/application.yml
+      - run: echo "${{ secrets.MYSQL_URL }}" >> /src/main/resources/application.yml
+      - run: echo "${{ secrets.MYSQL_USERNAME }}" >> /src/main/resources/application.yml
+      - run: echo "${{ secrets.MYSQL_PASSWORD }}" >> /src/main/resources/application.yml
+      - run: echo "${{ secrets.MONGODB_URI }}" >> /src/main/resources/application.yml
+      - run: echo "${{ secrets.KAFKA_SERVER }}" >> /src/main/resources/application.yml
       - run: cat /src/main/resources/application.yml
 
 
