@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.data.mongodb.util.BsonUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -53,14 +54,15 @@ public class MainController {
     public MainResponseDto getAllRecoFromModel(@RequestBody UserDto userDto) {
         long nTime= System.nanoTime();
         ToModelDto toModelDto = vodGetRecoService.setDataForModel(userDto.getSubsr());
+
         WebClient webClient = WebClient.builder()
                 .baseUrl("http://1.220.201.108:8000")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
 
         Mono<String> response = webClient.post()
-                .uri("/items")
-//                .uri("/prcs_models")
+//                .uri("/items")
+                .uri("/prcs_models")
                 .body(Mono.just(toModelDto), ToModelDto.class)
                 .retrieve()
                 .bodyToMono(String.class);
@@ -69,6 +71,11 @@ public class MainController {
                 result -> {
                     System.out.println("비동기 응답: " + result);
                     parse(result);
+                    for (int i = 0; i < 21; i++) {
+                        descriptionDataList.add((String) descriptionModelDataDto.getDescriptonData().get(i));
+                        moodDataList.add((String) moodModelDataDto.getMoodData().get(i));
+                        personalDataList.add((String) personalModelDataDto.getPersonalData().get(i));
+                    }
                 },
                 error -> {
                     System.out.println(toModelDto);
@@ -78,21 +85,18 @@ public class MainController {
         );
 
         //FastAPI 통합 테스트용
-        //descriptionModelDataDto, moodModelDataDto, personalModelDataDto는 스프링 빈에 등록했기 때문에 { } 밖에서도 사용 가능할 것으로 예상됨
+        //descriptionModelDataDto, moodModelDataDto, personalModelDataDto는 스프링 빈에 등록했기 때문에 { } 밖에서도 사용 가능할 것으로 예상됨 -> 비동기 처리라 안됨(231130)
 
-        for (int i = 0; i < 21; i++) {
-            descriptionDataList.add((String) descriptionModelDataDto.getDescriptonData().get(i));
-            moodDataList.add((String) moodModelDataDto.getMoodData().get(i));
-            personalDataList.add((String) personalModelDataDto.getPersonalData().get(i));
-        }
+//        for (int i = 0; i < 21; i++) {
+//            descriptionDataList.add((String) descriptionModelDataDto.getDescriptonData().get(i));
+//            moodDataList.add((String) moodModelDataDto.getMoodData().get(i));
+//            personalDataList.add((String) personalModelDataDto.getPersonalData().get(i));
+//        }
 
 
         //FastAPI 배제한 API 테스트를 위해 descriptionDataList, mood...List, personal..List 에 직접 데이터 세팅하는 메서드 호출
-
 //        forTest();
 
-        //다만 { } 안에서만 적용되는 것으로 보임, descriptionDataList/mood../personal..List 내부 데이터를 계속 쓰려면 스프링 빈에 등록해야 하는데
-        // 인스턴스가 싱글톤으로 생성돼서 다른 사용자들과 공유될 수 있단 이슈 발생(231126)
 
         System.out.println("줄거리 content_id 리스트 = " + descriptionDataList);
         System.out.println("무드 content_id 리스트 = " + moodDataList);
@@ -127,9 +131,12 @@ public class MainController {
         System.out.println("descriptionData 확인 = " + descriptionData.toString());
         JSONArray moodData = jsonObject.getJSONArray("mood_data");
         JSONArray personalData = jsonObject.getJSONArray("personal_data");
-        DescriptionModelDataDto descriptionModelDataDto = DescriptionModelDataDto.builder().descriptonData(descriptionData).build();
-        MoodModelDataDto moodDataDto = MoodModelDataDto.builder().moodData(moodData).build();
-        PersonalModelDataDto personalDataDto = PersonalModelDataDto.builder().personalData(personalData).build();
+//        DescriptionModelDataDto descriptionModelDataDto = DescriptionModelDataDto.builder().descriptonData(descriptionData).build();
+//        MoodModelDataDto moodDataDto = MoodModelDataDto.builder().moodData(moodData).build();
+//        PersonalModelDataDto personalDataDto = PersonalModelDataDto.builder().personalData(personalData).build();
+        descriptionModelDataDto.setDescriptonData(descriptionData);
+        moodModelDataDto.setMoodData(moodData);
+        personalModelDataDto.setPersonalData(personalData);
     }
 
 
