@@ -14,6 +14,7 @@ public class UserRatingView {
     private String uniqueId;
     // wish, rating은 subsr 겹쳐도 됨. 사용자가 여러 개의 vod에 대한 평가 내림(231104)
     private String subsr;
+    @Field(name = "content_id")
     private String contentId;
     private Integer rating;
 //    @Column(nullable = true) // review는 null 가능!
