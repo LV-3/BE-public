@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class UserRatingViewEveryRatingServiceImpl implements UserRatingViewEveryRatingService{
 
     private final UserRatingViewRepository userRatingViewRepository;

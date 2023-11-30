@@ -7,12 +7,14 @@ import com.example.VodReco.mongoRepository.VodRepository;
 import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class VodviewVodsByMoodServiceImpl{
 
     private final VodRepository vodRepository;

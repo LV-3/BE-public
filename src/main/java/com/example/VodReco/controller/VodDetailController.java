@@ -142,7 +142,7 @@ public class VodDetailController {
     }
 
     //rating 삭제
-    @Transactional
+//    @Transactional
     @DeleteMapping(value = "/{content_id}/rating")
     @Operation(summary = "vod별 평점 삭제", description = "상세페이지에서 rating, review 삭제")
 

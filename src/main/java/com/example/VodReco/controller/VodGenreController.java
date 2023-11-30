@@ -16,9 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/genres")
 public class VodGenreController {
-    @Autowired
     private final GenreViewGenresServiceImpl genreViewGenresService;
-    @Autowired
     private final VodViewVodsByGenreServiceImpl vodViewVodsByGenreService;
 
     //장르 목록 보기
