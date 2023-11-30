@@ -1,6 +1,7 @@
 package com.example.VodReco.dto.rating;
 
 import com.example.VodReco.domain.UserRating;
+import com.example.VodReco.domain.UserRatingView;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import lombok.Builder;
@@ -52,7 +53,19 @@ public class UpdateMyRatingDto {
 
                 .build();
     }
+    public UserRatingView toUserRatingViewEntity(UpdateMyRatingDto updateMyRatingDto) {
+        return UserRatingView.builder()
+                .uniqueId(uniqueId)
+                .subsr(subsr)
+                .contentId(contentId)
+                .rating(rating)
+                .review(review)
+                .rating_date(rating_date)
+                .title(title)
+                .posterurl(posterurl)
 
+                .build();
+    }
 
 }
 

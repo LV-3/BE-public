@@ -3,10 +3,12 @@ package com.example.VodReco.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Getter
 @NoArgsConstructor
+@Document(collection = "user_rating_view")
 public class UserRatingView {
     @Field(name = "unique_id")
     private String uniqueId;
