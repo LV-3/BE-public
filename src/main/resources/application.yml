@@ -12,19 +12,18 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://${mysql:lv3-mysqldb-ansoo.ccxmcbwnnwze.us-east-1.rds.amazonaws.com}:3306/TestDB?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    url: ${MYSQL_URL}
-    username: ${MYSQL_USERNAME}
-    password: ${MYSQL_PASSWORD}
+    url: ${secrets.MYSQL_URL}
+    username: ${secrets.MYSQL_USERNAME}
+    password: ${secrets.MYSQL_PASSWORD}
 
   data:
     mongodb:
 
-      uri: ${MONGODB_URI}
+      uri: ${secrets.MONGODB_URI}
 
 
   kafka:
-    bootstrap-servers: ${KAFKA_SERVER}
+    bootstrap-servers: ${secrets.KAFKA_SERVER}
     consumer:
       group.id: my-group
       auto.offset.reset: earliest
@@ -48,12 +47,6 @@ spring:
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
 
-#jwt:
-#  header: Authorization
-#  #HS512 ????? ??? ??? ??? 512bit, ? 64byte ??? secret key? ???? ??.
-#  #echo 'silvernine-tech-spring-boot-jwt-tutorial-secret-silvernine-tech-spring-boot-jwt-tutorial-secret'|base64
-#  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
-#  token-validity-in-seconds: 86400
 
 logging:
   level:

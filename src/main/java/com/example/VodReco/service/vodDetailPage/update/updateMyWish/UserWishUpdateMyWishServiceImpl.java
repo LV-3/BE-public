@@ -33,6 +33,7 @@ public class UserWishUpdateMyWishServiceImpl implements UserWishUpdateMyWishServ
         kafkaProducerService.sendWish(wishUpdate);
 //        변경된 데이터 소비
         UpdatedWishDto updatedWish = kafkaConsumerService.getUpdatedWish();
+        System.out.println("컨슈머 테스트 = " + updatedWish);
         //조회용 DB에 소비한 데이터 저장
 //        //TODO: task가 delete인지, update인지, insert인지 구분해서 save나 deleteBy하는 메서드 별도 클래스로 분리 요망(231129)
         userWishViewRepository.save(UpdatedWishDto.toUserWishViewEntity(updatedWish));

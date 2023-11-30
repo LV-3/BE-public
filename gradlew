@@ -246,3 +246,5 @@ eval "set -- $(
     )" '"$@"'
 
 exec "$JAVACMD" "$@"
+
+chmod +x /home/runner/work/BE/BE/gradlew
