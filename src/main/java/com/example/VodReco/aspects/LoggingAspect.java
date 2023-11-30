@@ -34,7 +34,7 @@ public class LoggingAspect {
         String requestURL = request.getRequestURL().toString();
         String methodName = joinPoint.getSignature().toShortString();
         String args = Arrays.toString(joinPoint.getArgs());
-        LogEntity log = new LogEntity(ipAddress, requestURL, methodName, args, false, LocalDateTime.now());
+        LogEntity log = new LogEntity("Before", ipAddress, requestURL, methodName, args, false, LocalDateTime.now());
 
         loggingService.saveLog(log);
         loggingService.saveLogConsole(log);
@@ -49,7 +49,7 @@ public class LoggingAspect {
         String methodName = joinPoint.getSignature().toShortString();
         String args = Arrays.toString(joinPoint.getArgs());
         boolean isSuccess = isSuccess(result);
-        LogEntity log = new LogEntity(ipAddress, requestURL, methodName, args, isSuccess, LocalDateTime.now());
+        LogEntity log = new LogEntity("After", ipAddress, requestURL, methodName, args, isSuccess, LocalDateTime.now());
         loggingService.saveLog(log);
         loggingService.saveLogConsole(log);
     }

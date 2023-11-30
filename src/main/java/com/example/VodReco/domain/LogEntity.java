@@ -19,6 +19,9 @@ public class LogEntity {
     private Long id;
 
     @Column(nullable = false)
+    private String divide;
+
+    @Column(nullable = false)
     private String ipAddress;
 
     @Column(nullable = false)
@@ -41,7 +44,8 @@ public class LogEntity {
 
 
     @Builder
-    public LogEntity(String ipAddress, String requestURL, String action, String details, boolean isSuccess, LocalDateTime timestamp) {
+    public LogEntity(String divide, String ipAddress, String requestURL, String action, String details, boolean isSuccess, LocalDateTime timestamp) {
+        this.divide = divide;
         this.ipAddress = ipAddress;
         this.requestURL = requestURL;
         this.action = action;

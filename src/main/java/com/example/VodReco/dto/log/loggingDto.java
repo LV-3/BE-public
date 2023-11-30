@@ -15,6 +15,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 public class loggingDto {
+    private String divide;
     private String ipAddress;
     private String requestURL;
     private String action;
@@ -23,7 +24,8 @@ public class loggingDto {
     private LocalDateTime timestamp;
 
     @Builder
-    public loggingDto(String ipAddress, String requestURL, String action, String details, boolean isSuccess, LocalDateTime timestamp) {
+    public loggingDto(String divide, String ipAddress, String requestURL, String action, String details, boolean isSuccess, LocalDateTime timestamp) {
+        this.divide = divide;
         this.ipAddress = ipAddress;
         this.requestURL = requestURL;
         this.action = action;

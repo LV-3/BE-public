@@ -39,7 +39,7 @@ public class KafkaConsumerConfig {
         factory.setConsumerFactory(consumerFactoryForWish());
         return factory;
     }
-
+//-------------------
 //    @Bean
 //    public ConsumerFactory<String, UpdatedRatingDto> consumerFactoryForRating() {
 //        Map<String, Object> config = new HashMap<>();
