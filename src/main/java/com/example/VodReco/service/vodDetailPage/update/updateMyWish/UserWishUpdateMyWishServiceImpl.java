@@ -10,6 +10,7 @@ import com.example.VodReco.service.KafkaConsumerService;
 import com.example.VodReco.service.KafkaProducerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +22,11 @@ public class UserWishUpdateMyWishServiceImpl implements UserWishUpdateMyWishServ
     private final KafkaConsumerService kafkaConsumerService;
 
     @Override
+    @Transactional //메서드 내 처리가 실패하면 Rollback
+    //카프카 도입 시 컨슈머에서 NPE터지는 이유: 카프카는 기본적으로 비동기. 토픽이 여러 개면 서로 관련 없이 동작하고 + 한 개의 토픽이어도 보내고 받는 게 순차적으로 처리되지 않음.
+    //이 경우 producer가 데이터를 send하기도 전에 consumer가 데이터를 소비하려고 해서 save에서 NPE
+    //프로젝트가 분리된 게 아니라면 굳이 kafka 쓸 필요 없음. 한 번에 두 레포지토리(=두 DB)에 save하면 됨
+    //Q. 두 save 중 하나라도 실패하면 두 DB의 동일성을 보장하지 못하지 않나? A. @Transactional 붙이면 해결.
     public void saveWish(UpdateMyWishRequestDto updateMyWishRequestDto, String contentId) {
         String uniqueId = updateMyWishRequestDto.getSubsr() + contentId;
         UpdateMyWishDto updateMyWishDto = UpdateMyWishDto.builder().uniqueId(uniqueId).subsr(updateMyWishRequestDto.getSubsr())
