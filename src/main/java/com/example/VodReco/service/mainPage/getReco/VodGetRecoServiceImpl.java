@@ -2,6 +2,7 @@ package com.example.VodReco.service.mainPage.getReco;
 
 import com.example.VodReco.domain.ForDeepFM;
 import com.example.VodReco.domain.UserWatch;
+import com.example.VodReco.domain.Vod;
 import com.example.VodReco.dto.client.MainResponseDto;
 import com.example.VodReco.dto.model.fromModel.DescriptionModelDataDto;
 import com.example.VodReco.dto.model.fromModel.MoodModelDataDto;
@@ -114,11 +115,17 @@ public class VodGetRecoServiceImpl implements VodGetRecoService{
         //mood는 null들어올 경우 NPE(231127)
         for (UserWatch v : userWatchRepository.findBySubsr(subsr)) {
             String contentId = v.getContentId();
-            EveryDescriptionDto everyDescriptionDto = EveryDescriptionDto.builder().content_id(contentId).description(vodtoVodDtoWrapper.toVodDto(vodRepository.findByContentId(contentId)).getDescription()).build();
-            EveryMoodDto everyMoodDto = EveryMoodDto.builder().content_id(contentId).mood(stringToListWrapper.stringToList(vodRepository.findByContentId(contentId).getMood())).build();
-            System.out.println("콘솔에서 자료형 확인 = " + stringToListWrapper.stringToList(vodRepository.findByContentId(contentId).getMood()));
-            System.out.println("vod의 mood 필드 자료형 확인 = " + vodRepository.findByContentId(contentId).getMood());
+            Vod byContentId = vodRepository.findByContentId(contentId);
+
+            EveryDescriptionDto everyDescriptionDto;
+            if (byContentId.getIsSeries() == 1) {
+                everyDescriptionDto = EveryDescriptionDto.builder().content_id(contentId).description(vodtoVodDtoWrapper.toVodDto(byContentId).getDescription()).build();
+            } else {
+                everyDescriptionDto = EveryDescriptionDto.builder().content_id(contentId).description(vodtoVodDtoWrapper.toVodDto(byContentId).getTitleDescription()).build();
+            }
             descriptionResponseList.add(everyDescriptionDto);
+
+            EveryMoodDto everyMoodDto = EveryMoodDto.builder().content_id(contentId).mood(stringToListWrapper.stringToList(byContentId.getMood())).build();
             moodResponseList.add(everyMoodDto);
         }
         for(ForDeepFM f : forDeepFMRepository.findBySubsr(subsr)){
@@ -127,8 +134,6 @@ public class VodGetRecoServiceImpl implements VodGetRecoService{
                     .genre_of_ct_cl(forDeepFMDto.getGenre()).template_A(forDeepFMDto.getMood()).template_B(forDeepFMDto.getGpt_genres()).template_C(forDeepFMDto.getGpt_subjects())
                     .liked(forDeepFMDto.getLiked())
                     .build();
-            System.out.println("template_B 자료형 확인 = " + forDeepFMDto.getGpt_genres());
-            System.out.println("everypersonalDto의 template_A 자료형 확인 = " + everyPersonalDto.getTemplate_A());
             personalResponseList.add(everyPersonalDto);
         }
         return ToModelDto.builder()

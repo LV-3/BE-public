@@ -11,11 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @NoArgsConstructor
 public class Vod {
 
-    //    주의: jpa의 @Id가 아님
-//    @Id
     @Field(name = "content_id") // 이거 붙여줘야 mongoDB의 content_id와 스프링부트 내의 contentId가 연결됨 (231109)
     private String contentId;
-    //컬럼명 title로 확정(231127)
     private String title;
     @Field(name = "ct_cl")
     private String category;
@@ -45,11 +42,18 @@ public class Vod {
     @Field(name = "template_C")
     private String gpt_subjects;
 
+    @Field(name = "TITLE_SMRY")
+    private String titleDescription;
+
+    @Field(name = "is_series")
+    private Integer isSeries;
+
 
     @Builder
     public Vod(String contentId, String title, String category, String genre, String disp_rtm,
                String description, String actors, String posterurl, String grade, String country,
-               String release_year, String director, String mood, String gpt_genres, String gpt_subjects) {
+               String release_year, String director, String mood, String gpt_genres, String gpt_subjects,
+               String titleDescription, Integer isSeries) {
 
         this.contentId = contentId;
         this.title = title;
@@ -68,6 +72,9 @@ public class Vod {
         this.mood = mood;
         this.gpt_genres = gpt_genres;
         this.gpt_subjects = gpt_subjects;
+
+        this.titleDescription = titleDescription;
+        this.isSeries = isSeries;
     }
 
 }

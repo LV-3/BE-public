@@ -40,6 +40,9 @@ public class VodDtotoVodWrapper {
                 .gpt_genres(listToStringWrapper.listToString(vodDto.getGpt_genres()))
                 .gpt_subjects(listToStringWrapper.listToString(vodDto.getGpt_subjects()))
 
+                .titleDescription(vodDto.getTitleDescription())
+                .isSeries(vodDto.getIsSeries())
+
                 .build();
     }
 }
