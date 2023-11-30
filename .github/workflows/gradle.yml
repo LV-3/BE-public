@@ -27,16 +27,6 @@ jobs:
           distribution: 'temurin'
 
       - uses: actions/checkout@v3
-<<<<<<< HEAD
-      - name: application.yml 생성
-        run: |
-          touch ./src/main/resources/application.yml
-          echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.yml
-          cat ./src/main/resources/application.yml
-      
-      - name: gradlew 권한 변경
-        run: chmod +x ./gradlew
-=======
       - run: touch ./src/main/resources/application.yml
       - run: echo "${{ secrets.MYSQL_URL }}" >> ./src/main/resources/application.yml
       - run: echo "${{ secrets.MYSQL_USERNAME }}" >> ./src/main/resources/application.yml
@@ -46,7 +36,6 @@ jobs:
       - run: cat ./src/main/resources/application.yml
 
       - run : ./gradlew clean build --exclude-task test
->>>>>>> 1d613ed7bf022c7a9e1c763b27f7a81f79a4b467
 
       - name: Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
