@@ -19,7 +19,7 @@ import java.util.Arrays;
 @Aspect
 @Component
 public class LoggingAspect {
-
+    //git pr 연습방구리
     private final LoggingServiceImpl loggingService;
 
     @Autowired
