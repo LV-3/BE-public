@@ -3,7 +3,6 @@ spring:
     hibernate:
       show-sql: true
       ddl-auto: update
-#      create ?? ?? ??
 
     properties:
       hibernate:
@@ -12,20 +11,13 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: ${secrets.MYSQL_URL}
-#    username: ${secrets.MYSQL_USERNAME}
-#    password: ${secrets.MYSQL_PASSWORD}
-    url: jdbc:mysql://${msql:lv3-mysqldb-ansoo.ccxmcbwnnwze.us-east-1.rds.amazonaws.com}:3306/TestDB?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://${mysql:lv3-mysqldb-ansoo.ccxmcbwnnwze.us-east-1.rds.amazonaws.com}:3306/TestDB?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: admin
     password: 8659653314
 
   data:
     mongodb:
-
-#      uri: ${secrets.MONGODB_URI}
       uri: mongodb://lv3_user_mongo:lv3Pwd@ec2-3-38-106-43.ap-northeast-2.compute.amazonaws.com:27017/mongoTestDB?authSource=admin
-
-
 logging:
   level:
     com.example.VodReco : DEBUG
