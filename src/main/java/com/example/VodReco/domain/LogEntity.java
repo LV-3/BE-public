@@ -1,18 +1,17 @@
 package com.example.VodReco.domain;
 
 import jakarta.persistence.*;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Getter
 @Table(name = "log")
+@NoArgsConstructor
 public class LogEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

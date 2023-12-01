@@ -4,6 +4,7 @@ import com.example.VodReco.domain.Genres;
 import com.example.VodReco.mongoRepository.GenreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class GenreViewGenresServiceImpl implements GenreViewGenresService {
     private final GenreRepository genreRepository;
     //모든 장르 리스트

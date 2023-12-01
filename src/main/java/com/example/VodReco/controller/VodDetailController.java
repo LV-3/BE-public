@@ -29,6 +29,7 @@ import java.util.Optional;
 
 @RestController // = @Controller + @ResponseBody 객체 리턴하면 json으로 만들어주는 역할
 @RequestMapping("/detail")
+@Transactional
 //@RequiredArgsConsgtructor 붙이면 모든 final필드 자동으로 Autowired붙은 생성자 만들어줌
 @RequiredArgsConstructor
 @Tag(name = "Vod detail", description = "Vod API detail") //swagger 어노테이션(231110)
@@ -89,10 +90,10 @@ public class VodDetailController {
     @Operation(summary = "vod별 전체 rating 조회", description = "상세페이지 열릴 때 해당 vod에 대한 전체 사용자의 rating 조회")
 //    public Optional<List<ViewEveryRatingResponseDto>> findEveryRating(@PathVariable("content_id")
 //                                                                          @Schema(description = "content_id", example = "22222") String contentId) {
-    public ResponseEntity<Optional<List<ViewEveryRatingResponseDto>>> findEveryRating(@PathVariable("content_id")
+    public ResponseEntity<List<ViewEveryRatingResponseDto>> findEveryRating(@PathVariable("content_id")
                                                                           @Schema(description = "content_id", example = "22222") String contentId) {
         //return Optional.ofNullable(userRatingViewEveryRatingService.findEveryUserRating(contentId));
-        Optional<List<ViewEveryRatingResponseDto>> ratings = Optional.ofNullable(userRatingViewEveryRatingService.findEveryUserRating(contentId));
+        List<ViewEveryRatingResponseDto> ratings = userRatingViewEveryRatingService.findEveryUserRating(contentId);
         //[jjae] - 변경코드
         if (ratings.isEmpty()) {
             //[세연] 조회 결과 없으면 204(231128), wish조회 API와 status 통일 요망
@@ -104,7 +105,7 @@ public class VodDetailController {
 
 //    상세페이지에서 찜 or 평점 변경
 
-    //  wish 최초 insert
+    //  wish insert(0or1)
     @PostMapping(value = "/{content_id}/wish")
     @Operation(summary = "vod별 찜 최초 등록", description = "상세페이지에서 wish 최초 매기기 또는 기존 wish 변경")
 //    public void saveMyFirstWish(@PathVariable("content_id")
@@ -116,34 +117,17 @@ public class VodDetailController {
                                     @RequestBody UpdateMyWishRequestDto updateMyWishRequestDto) {
         userWishUpdateMyWishService.saveWish(updateMyWishRequestDto, contentId);
         //[jjae] - 변경코드
-        //[세연] save 실패한 경우의 리턴과 분리 요망(231128), 카프카 도입 후 재수정
+        //[세연] save 실패한 경우의 리턴과 분리 요망(231128)
         return ResponseEntity.ok().build();
     }
 
-//    @PutMapping(value = "/{content_id}/wish")
-//    @Operation(summary = "vod별 찜 변경", description = "상세페이지에서 wish 최초 매기기 또는 기존 wish 변경")
-//    public void modifyMyWish(@PathVariable("content_id")
-//                                 @Schema(description = "content_id", example = "20200622")
-//                                 String contentId,
-//                             @Parameter(name = "content_id", description = "컨텐츠 고유id", example = "20200622", required = true)
-//                                 @RequestBody UpdateMyWishRequestDto updateMyWishRequestDto) {
-////        UpdateMyWishDto updateMyWishDto = UpdateMyWishDto.builder().subsr(updateMyWishRequestDto.getSubsr())
-////                .contentId(contentId).wish(updateMyWishRequestDto.getWish())
-////                .title(build();
-////            확인
-////        System.out.println("콘솔 확인용 = " + updateMyWishDto);
-//        userWishUpdateMyWishService.saveWish(updateMyWishRequestDto, contentId);
-//    }
-
-
     // rating 최초 insert
-    // rating 최초 insert(POST)와 변경(PUT), 삭제(DELETE) 분리 요망(231124)
     @PostMapping(value = "/{content_id}/rating")
     @Operation(summary = "vod별 평점 매기기", description = "상세페이지에서 rating, review 최초 등록")
     public ResponseEntity<Void> saveMyFirstRating(@PathVariable("content_id") String contentId, @RequestBody UpdateMyRatingRequestDto updateMyRatingRequestDto) {
         userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
         //[jjae] - 변경코드
-        //[세연] 실패한 경우와 리턴 분리 요망. 카프카 도입 후 서비스 레이어로 로직 이동, 코드 재수정(231128)
+        //[세연] 실패한 경우와 리턴 분리 요망. 서비스 레이어로 로직 이동, 코드 재수정(231128)
         return ResponseEntity.ok().build();
     }
 
@@ -153,12 +137,12 @@ public class VodDetailController {
     public ResponseEntity<Void> updateMyRating(@PathVariable("content_id") String contentId, @RequestBody UpdateMyRatingRequestDto updateMyRatingRequestDto) {
         userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
         //[jjae] - 변경코드
-        //[세연] 실패한 경우와 리턴 분리 요망. 카프카 도입 후 서비스 레이어로 로직 이동, 코드 재수정(231128)
+        //[세연] 실패한 경우와 리턴 분리 요망.  서비스 레이어로 로직 이동, 코드 재수정(231128)
         return ResponseEntity.ok().build();
     }
 
     //rating 삭제
-    @Transactional
+//    @Transactional
     @DeleteMapping(value = "/{content_id}/rating")
     @Operation(summary = "vod별 평점 삭제", description = "상세페이지에서 rating, review 삭제")
 
@@ -166,7 +150,7 @@ public class VodDetailController {
         userRatingDeleteMyRatingService.deleteRating(contentId, userDto.getSubsr());
         System.out.println("삭제된 rating 정보 = " + contentId);
         //[jjae] - 변경코드
-        //[세연] 실패한 경우와 리턴 분리 요망. 카프카 도입 후 서비스 레이어로 로직 이동, 코드 재수정(231128)
+        //[세연] 실패한 경우와 리턴 분리 요망. 서비스 레이어로 로직 이동, 코드 재수정(231128)
         return ResponseEntity.ok().build();
     }
 

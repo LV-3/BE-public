@@ -6,9 +6,11 @@ import com.example.VodReco.mongoRepository.VodRepository;
 import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class VodViewDetailInfoServiceImpl implements VodViewDetailInfoService {
     private final VodRepository vodRepository;
     private final VodtoVodDtoWrapper vodtoVodDtoWrapper;

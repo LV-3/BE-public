@@ -12,23 +12,23 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: ${secrets.MYSQL_URL}
-#    username: ${secrets.MYSQL_USERNAME}
-#    password: ${secrets.MYSQL_PASSWORD}
-    url: ${MYSQL_URL}
-    username: ${MYSQL_USERNAME}
-    password: ${MYSQL_PASSWORD}
+    url: ${secrets.MYSQL_URL}
+    username: ${secrets.MYSQL_USERNAME}
+    password: ${secrets.MYSQL_PASSWORD}
+#    url: ${MYSQL_URL}
+#    username: ${MYSQL_USERNAME}
+#    password: ${MYSQL_PASSWORD}
 
   data:
     mongodb:
 
-#      uri: ${secrets.MONGODB_URI}
-      uri: ${MONGODB_URI}
+      uri: ${secrets.MONGODB_URI}
+#      uri: ${MONGODB_URI}
 
 
   kafka:
-#    bootstrap-servers: ${secrets.KAFKA_SERVER}
-    bootstrap-servers: ${KAFKA_SERVER}
+    bootstrap-servers: ${secrets.KAFKA_SERVER}
+#    bootstrap-servers: ${KAFKA_SERVER}
     consumer:
       group.id: my-group
       auto.offset.reset: earliest

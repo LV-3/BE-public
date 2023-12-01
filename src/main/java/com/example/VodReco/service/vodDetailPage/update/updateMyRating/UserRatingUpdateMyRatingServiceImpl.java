@@ -2,16 +2,20 @@ package com.example.VodReco.service.vodDetailPage.update.updateMyRating;
 
 import com.example.VodReco.dto.rating.UpdateMyRatingDto;
 import com.example.VodReco.dto.rating.UpdateMyRatingRequestDto;
+import com.example.VodReco.mongoRepository.UserRatingViewRepository;
 import com.example.VodReco.mongoRepository.VodRepository;
 import com.example.VodReco.repository.UserRatingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UserRatingUpdateMyRatingServiceImpl implements UserRatingUpdateMyRatingService {
     private final UserRatingRepository userRatingRepository;
     private final VodRepository vodRepository;
+    private final UserRatingViewRepository userRatingViewRepository;
 
     @Override
     public void saveRating(String contentId, UpdateMyRatingRequestDto updateMyRatingRequestDto) {
@@ -27,6 +31,7 @@ public class UserRatingUpdateMyRatingServiceImpl implements UserRatingUpdateMyRa
                 .posterurl(vodRepository.findByContentId(contentId).getPosterurl())
                 .build();
         userRatingRepository.save(updateMyRatingDto.toUserRatingEntity(updateMyRatingDto));
+        userRatingViewRepository.save(updateMyRatingDto.toUserRatingViewEntity(updateMyRatingDto));
     }
 
 }

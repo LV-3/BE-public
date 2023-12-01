@@ -2,9 +2,8 @@ package com.example.VodReco.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
-
 import java.util.List;
 
 
@@ -12,8 +11,8 @@ import java.util.List;
 
 @Getter
 @ToString
+@NoArgsConstructor
 public class VodDto {
-    @Id
     private String contentId;
     private String title;
     private String category;
@@ -32,13 +31,14 @@ public class VodDto {
     private List<String> gpt_genres;
     private List<String> gpt_subjects;
 
-    public VodDto(){
-    }
+    private String titleDescription;
+    private Integer isSeries;
 
     @Builder
     public VodDto(String contentId, String title, String category, String genre, String disp_rtm,
                   String description, String actors, String posterurl, String grade, String country,
-                  String release_year, String director, List<String> mood, List<String> gpt_genres, List<String> gpt_subjects) {
+                  String release_year, String director, List<String> mood, List<String> gpt_genres, List<String> gpt_subjects,
+                  String titleDescription, Integer isSeries) {
 
         this.contentId = contentId;
         this.title = title;
@@ -57,33 +57,10 @@ public class VodDto {
         this.mood = mood;
         this.gpt_genres = gpt_genres;
         this.gpt_subjects = gpt_subjects;
+
+        this.titleDescription = titleDescription;
+        this.isSeries = isSeries;
     }
-
-
-//    public Vod toVodEntity(VodDto vodDto) {
-//        if (vodDto == null) {
-//            return null;
-//        }
-//        return Vod.builder()
-//                .title(vodDto.getTitle())
-//                .contentId(vodDto.getContentId())
-//                .category(vodDto.getCategory())
-//                .genre(vodDto.getGenre())
-//                .disp_rtm(vodDto.getDisp_rtm())
-//
-//                .description(vodDto.getDescription())
-//                .actors(listToStringWrapper.listToString(vodDto.getActors()))
-//                .posterurl(vodDto.getPosterurl())
-//                .grade(vodDto.getGrade())
-//                .country(vodDto.getCountry())
-//
-//                .release_year(vodDto.getRelease_year())
-//                .director(ListToStringWrapper.listToString(vodDto.getDirector()))
-//                .mood(ListToStringWrapper.listToString(vodDto.getMood()))
-//                .gpt_genres(ListToStringWrapper.listToString(vodDto.getGpt_genres()))
-//                .gpt_subjects(ListToStringWrapper.listToString(vodDto.getGpt_subjects()))
-//
-//                .build();
 
 }
 

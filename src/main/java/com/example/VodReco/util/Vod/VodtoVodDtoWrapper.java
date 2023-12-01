@@ -35,6 +35,9 @@ class VodtoVodDtoWrapper {
                 .gpt_genres(stringToListWrapper.stringToList(vod.getGpt_genres()))
                 .gpt_subjects(stringToListWrapper.stringToList(vod.getGpt_subjects()))
 
+                .titleDescription(vod.getTitleDescription())
+                .isSeries(vod.getIsSeries())
+
                 .build();
     }
 }

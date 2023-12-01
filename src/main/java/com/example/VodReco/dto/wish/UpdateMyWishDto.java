@@ -1,6 +1,7 @@
 package com.example.VodReco.dto.wish;
 
 import com.example.VodReco.domain.UserWish;
+import com.example.VodReco.domain.UserWishView;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -31,6 +32,16 @@ public class UpdateMyWishDto {
 
     public UserWish toWishEntity(UpdateMyWishDto updateMyWishDto) {
         return UserWish.builder()
+                .uniqueId(uniqueId)
+                .subsr(subsr)
+                .contentId(contentId)
+                .wish(wish)
+                .title(title)
+                .posterurl(posterurl)
+                .build();
+    }
+    public UserWishView toWishViewEntity(UpdateMyWishDto updateMyWishDto) {
+        return UserWishView.builder()
                 .uniqueId(uniqueId)
                 .subsr(subsr)
                 .contentId(contentId)
