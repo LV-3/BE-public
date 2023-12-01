@@ -5,6 +5,8 @@ import com.example.VodReco.dto.rating.UpdateMyRatingRequestDto;
 import com.example.VodReco.mongoRepository.UserRatingViewRepository;
 import com.example.VodReco.mongoRepository.VodRepository;
 import com.example.VodReco.repository.UserRatingRepository;
+import com.example.VodReco.util.userRating.FromUpdateMyRatingDtoToUserRatingViewWrapper;
+import com.example.VodReco.util.userRating.FromUpdateMyRatingDtoToUserRatingWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,8 @@ public class UserRatingUpdateMyRatingServiceImpl implements UserRatingUpdateMyRa
     private final UserRatingRepository userRatingRepository;
     private final VodRepository vodRepository;
     private final UserRatingViewRepository userRatingViewRepository;
+    private final FromUpdateMyRatingDtoToUserRatingWrapper toUserRatingWrapper;
+    private final FromUpdateMyRatingDtoToUserRatingViewWrapper toUserRatingViewWrapper;
 
     @Override
     public void saveRating(String contentId, UpdateMyRatingRequestDto updateMyRatingRequestDto) {
@@ -30,8 +34,8 @@ public class UserRatingUpdateMyRatingServiceImpl implements UserRatingUpdateMyRa
                 .title(vodRepository.findByContentId(contentId).getTitle())
                 .posterurl(vodRepository.findByContentId(contentId).getPosterurl())
                 .build();
-        userRatingRepository.save(updateMyRatingDto.toUserRatingEntity(updateMyRatingDto));
-        userRatingViewRepository.save(updateMyRatingDto.toUserRatingViewEntity(updateMyRatingDto));
+        userRatingRepository.save(toUserRatingWrapper.toUserRating(updateMyRatingDto));
+        userRatingViewRepository.save(toUserRatingViewWrapper.toUserRatingView(updateMyRatingDto));
     }
 
 }

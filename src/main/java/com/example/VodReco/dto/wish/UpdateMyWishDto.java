@@ -1,13 +1,14 @@
 package com.example.VodReco.dto.wish;
 
-import com.example.VodReco.domain.UserWish;
 import com.example.VodReco.domain.UserWishView;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Getter
 @ToString
+@NoArgsConstructor
 public class UpdateMyWishDto {
     private String uniqueId;
     private String subsr;
@@ -17,8 +18,6 @@ public class UpdateMyWishDto {
     //조회 속도 개선을 위해 추가(231122)
     private String title;
     private String posterurl;
-
-    public UpdateMyWishDto(){}
 
     @Builder
     public UpdateMyWishDto(String uniqueId, String subsr, String contentId, Integer wish, String title, String posterurl) {
@@ -30,25 +29,5 @@ public class UpdateMyWishDto {
         this.posterurl = posterurl;
     }
 
-    public UserWish toWishEntity(UpdateMyWishDto updateMyWishDto) {
-        return UserWish.builder()
-                .uniqueId(uniqueId)
-                .subsr(subsr)
-                .contentId(contentId)
-                .wish(wish)
-                .title(title)
-                .posterurl(posterurl)
-                .build();
-    }
-    public UserWishView toWishViewEntity(UpdateMyWishDto updateMyWishDto) {
-        return UserWishView.builder()
-                .uniqueId(uniqueId)
-                .subsr(subsr)
-                .contentId(contentId)
-                .wish(wish)
-                .title(title)
-                .posterurl(posterurl)
-                .build();
-    }
 }
 
