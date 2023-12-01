@@ -119,9 +119,9 @@ public class VodGetRecoServiceImpl implements VodGetRecoService{
 
             EveryDescriptionDto everyDescriptionDto;
             if (byContentId.getIsSeries() == 1) {
-                everyDescriptionDto = EveryDescriptionDto.builder().content_id(contentId).description(vodtoVodDtoWrapper.toVodDto(byContentId).getDescription()).build();
-            } else {
                 everyDescriptionDto = EveryDescriptionDto.builder().content_id(contentId).description(vodtoVodDtoWrapper.toVodDto(byContentId).getTitleDescription()).build();
+            } else {
+                everyDescriptionDto = EveryDescriptionDto.builder().content_id(contentId).description(vodtoVodDtoWrapper.toVodDto(byContentId).getDescription()).build();
             }
             descriptionResponseList.add(everyDescriptionDto);
 
@@ -130,11 +130,14 @@ public class VodGetRecoServiceImpl implements VodGetRecoService{
         }
         for(ForDeepFM f : forDeepFMRepository.findBySubsr(subsr)){
             ForDeepFMDto forDeepFMDto = toForDeepFMDtoWrapper.toForDeepFMDto(f);
+            //liked가 1인 데이터만 personalResponseList에 담기
+            if (forDeepFMDto.getLiked() == 1) {
             EveryPersonalDto everyPersonalDto = EveryPersonalDto.builder().subsr(subsr).content_id(forDeepFMDto.getContentId()).ct_cl(forDeepFMDto.getCategory())
                     .genre_of_ct_cl(forDeepFMDto.getGenre()).template_A(forDeepFMDto.getMood()).template_B(forDeepFMDto.getGpt_genres()).template_C(forDeepFMDto.getGpt_subjects())
                     .liked(forDeepFMDto.getLiked())
                     .build();
             personalResponseList.add(everyPersonalDto);
+            }
         }
         return ToModelDto.builder()
                 .description_data(descriptionResponseList)
@@ -159,3 +162,5 @@ public class VodGetRecoServiceImpl implements VodGetRecoService{
     }
 
 }
+
+
