@@ -5,7 +5,7 @@ import com.example.VodReco.dto.wish.UpdateMyWishDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class FromUpdateMyWishToUserWishWrapper {
+public class FromUpdateMyWishDtoToUserWishWrapper {
     public UserWish toUserWish(UpdateMyWishDto updateMyWishDto) {
         return this.updateMyWishToUserWish(updateMyWishDto);
     }

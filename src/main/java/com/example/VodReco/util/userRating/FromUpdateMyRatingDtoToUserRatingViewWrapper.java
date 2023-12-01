@@ -1,18 +1,18 @@
 package com.example.VodReco.util.userRating;
 
-import com.example.VodReco.domain.UserRating;
+import com.example.VodReco.domain.UserRatingView;
 import com.example.VodReco.dto.rating.UpdateMyRatingDto;
 import org.springframework.stereotype.Component;
 
 @Component
 
-public class FromUpdateMyRatingDtoToUserRatingWrapper {
-    public UserRating toUserRating(UpdateMyRatingDto updateMyRatingDto) {
-        return this.updateMyRatingDtoToUserRating(updateMyRatingDto);
+public class FromUpdateMyRatingDtoToUserRatingViewWrapper {
+    public UserRatingView toUserRatingView(UpdateMyRatingDto updateMyRatingDto) {
+        return this.updateMyRatingDtoToUserRatingView(updateMyRatingDto);
     }
 
-    private UserRating updateMyRatingDtoToUserRating(UpdateMyRatingDto updateMyRatingDto) {
-        return UserRating.builder()
+    private UserRatingView updateMyRatingDtoToUserRatingView(UpdateMyRatingDto updateMyRatingDto) {
+        return UserRatingView.builder()
                 .uniqueId(updateMyRatingDto.getUniqueId())
                 .subsr(updateMyRatingDto.getSubsr())
                 .title(updateMyRatingDto.getTitle())

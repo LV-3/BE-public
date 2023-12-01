@@ -1,20 +1,16 @@
 package com.example.VodReco.dto.log;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class loggingDto {
+public class LoggingDto {
     private String divide;
     private String ipAddress;
     private String requestURL;
@@ -24,7 +20,7 @@ public class loggingDto {
     private LocalDateTime timestamp;
 
     @Builder
-    public loggingDto(String divide, String ipAddress, String requestURL, String action, String details, boolean isSuccess, LocalDateTime timestamp) {
+    public LoggingDto(String divide, String ipAddress, String requestURL, String action, String details, boolean isSuccess, LocalDateTime timestamp) {
         this.divide = divide;
         this.ipAddress = ipAddress;
         this.requestURL = requestURL;
