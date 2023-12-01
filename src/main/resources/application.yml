@@ -1,0 +1,23 @@
+spring:
+  jpa:
+    hibernate:
+      show-sql: true
+      ddl-auto: update
+
+    properties:
+      hibernate:
+        format_sql: true
+
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${mysql:lv3-mysqldb-ansoo.ccxmcbwnnwze.us-east-1.rds.amazonaws.com}:3306/TestDB?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: admin
+    password: 8659653314
+
+  data:
+    mongodb:
+      uri: mongodb://lv3_user_mongo:lv3Pwd@ec2-3-38-106-43.ap-northeast-2.compute.amazonaws.com:27017/mongoTestDB?authSource=admin
+logging:
+  level:
+    com.example.VodReco : DEBUG
