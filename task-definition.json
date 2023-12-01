@@ -1,5 +1,5 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-1:682971737440:task-definition/eunhaercdeploy:1",
+    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:682971737440:task-definition/lv3ercdeploy:1",
     "containerDefinitions": [
         {
             "name": "lv3container",
