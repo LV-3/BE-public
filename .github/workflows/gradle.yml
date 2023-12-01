@@ -42,7 +42,6 @@ jobs:
         with:
 
           role-to-assume: arn:aws:iam::682971737440:role/eunhadeploy
-
           role-session-name: sampleSessionName
           aws-region: ap-northeast-2
       
@@ -62,11 +61,11 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          #IMAGE_TAG: ${{ github.sha }}
+          IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:latest" >>$GITHUB_OUTPUT
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >>$GITHUB_OUTPUT
       
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
