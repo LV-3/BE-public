@@ -9,7 +9,7 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "deploy" ]
 
 permissions:
   contents: read
@@ -18,7 +18,9 @@ permissions:
 env:
   AWS_REGION: ap-northeast-2
   ECR_REPOSITORY: lv3-springboot
-  ECS_SERVICE: lv3-springboot-serv
+
+  ECS_SERVICE: lv3-springboot-svc
+
   ECS_CLUSTER: lv3cluster
   ECS_TASK_DEFINITION: task-definition.json
   CONTAINER_NAME: lv3container
@@ -41,7 +43,10 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::682971737440:role/eunha-be
+
+
+          role-to-assume: arn:aws:iam::682971737440:role/eunhadeploy
+
           role-session-name: sampleSessionName
           aws-region: ap-northeast-2
       
