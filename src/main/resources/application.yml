@@ -12,45 +12,18 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${secrets.MYSQL_URL}
-    username: ${secrets.MYSQL_USERNAME}
-    password: ${secrets.MYSQL_PASSWORD}
-#    url: ${MYSQL_URL}
-#    username: ${MYSQL_USERNAME}
-#    password: ${MYSQL_PASSWORD}
+#    url: ${secrets.MYSQL_URL}
+#    username: ${secrets.MYSQL_USERNAME}
+#    password: ${secrets.MYSQL_PASSWORD}
+    url: jdbc:mysql://${msql:lv3-mysqldb-ansoo.ccxmcbwnnwze.us-east-1.rds.amazonaws.com}:3306/TestDB?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: admin
+    password: 8659653314
 
   data:
     mongodb:
 
-      uri: ${secrets.MONGODB_URI}
-#      uri: ${MONGODB_URI}
-
-
-  kafka:
-    bootstrap-servers: ${secrets.KAFKA_SERVER}
-#    bootstrap-servers: ${KAFKA_SERVER}
-    consumer:
-      group.id: my-group
-      auto.offset.reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    producer:
-      # 리더에 메세지가 전송되고 replica가 다 적용된 후에 돌려 받는 형식의 옵션
-      acks: all
-      retries: 3
-      compression.type: snappy
-      linger.ms: 1
-      batch.num.messages: 1000
-      queue.buffering.max.messages: 10000
-      queue.buffering.max.ms: 10
-      message.send.max.retries: 2
-      retry.backoff.ms: 100
-      message.timeout.ms: 10000
-      request.timeout.ms: 20000
-      delivery.report.only.error: true
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-
+#      uri: ${secrets.MONGODB_URI}
+      uri: mongodb://lv3_user_mongo:lv3Pwd@ec2-3-38-106-43.ap-northeast-2.compute.amazonaws.com:27017/mongoTestDB?authSource=admin
 
 
 logging:
