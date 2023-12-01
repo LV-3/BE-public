@@ -36,14 +36,10 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      
-      - name: Build Docker-compose
-        run: docker-compose
             
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-
 
           role-to-assume: arn:aws:iam::682971737440:role/eunhadeploy
 
