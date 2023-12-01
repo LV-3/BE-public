@@ -41,7 +41,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
 
-          role-to-assume: arn:aws:iam::682971737440:role/eunhadeploy
+          role-to-assume: arn:aws:iam::682971737440:role/eunha-be
 
           role-session-name: sampleSessionName
           aws-region: ap-northeast-2
