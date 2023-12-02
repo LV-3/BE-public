@@ -8,8 +8,8 @@
 name: Java CI with Gradle
 
 on:
-  push:
-    branches: [ "main" ]
+  pull_request:
+    branches: [ "deploy" ]
 
 permissions:
   contents: read
@@ -18,7 +18,9 @@ permissions:
 env:
   AWS_REGION: ap-northeast-2
   ECR_REPOSITORY: lv3-springboot
-  ECS_SERVICE: lv3-springboot-sv
+
+  ECS_SERVICE: lv3-springboot-svc
+
   ECS_CLUSTER: lv3cluster
   ECS_TASK_DEFINITION: task-definition.json
   CONTAINER_NAME: lv3container
@@ -34,21 +36,28 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      
-      - name: Build Docker-compose
-        run: docker-compose
             
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::682971737440:role/lv3-be
+
+          role-to-assume: arn:aws:iam::682971737440:role/eunhadeploy
+
           role-session-name: sampleSessionName
           aws-region: ap-northeast-2
-      
+
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@62f4f872db3836360b72999f4b87f1ff13310f3a
-      
+
+      - name: Exclude test code
+        run : ./gradlew clean build --exclude-task test
+
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+        with:
+          arguments: build
+
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
         env:
@@ -87,15 +96,7 @@ jobs:
       #     echo "${{ secrets.MONGODB_URI }}" >> ./src/main/resources/application.yml
       #     echo "${{ secrets.KAFKA_SERVER }}" >> ./src/main/resources/application.yml
       #     cat ./src/main/resources/application.yml
-      
 
-      # - name: Exclude test code
-      #   run : ./gradlew clean build --exclude-task test
-
-      # - name: Build with Gradle
-      #   uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
-      #   with:
-      #     arguments: build
       
 
   

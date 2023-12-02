@@ -1,9 +1,9 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-1:682971737440:task-definition/eunhaercdeploy:1",
+    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:682971737440:task-definition/lv3ercdeploy:1",
+
     "containerDefinitions": [
         {
             "name": "lv3container",
-            "image": "682971737440.dkr.ecr.ap-northeast-2.amazonaws.com/lv3-springboot:latest",
             "cpu": 0,
             "portMappings": [
                 {
