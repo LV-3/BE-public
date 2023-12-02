@@ -10,6 +10,9 @@ name: Java CI with Gradle
 on:
   push:
     branches: [ "deploy" ]
+  pull_request:
+    branches: [ "deploy" ]
+
 
 permissions:
   contents: read
@@ -41,7 +44,10 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> main
           role-to-assume: arn:aws:iam::682971737440:role/eunhadeploy
 
           role-session-name: sampleSessionName

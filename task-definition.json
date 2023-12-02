@@ -3,7 +3,6 @@
     "containerDefinitions": [
         {
             "name": "lv3container",
-            "image": "682971737440.dkr.ecr.ap-northeast-2.amazonaws.com/lv3-springboot:latest",
             "cpu": 0,
             "portMappings": [
                 {
