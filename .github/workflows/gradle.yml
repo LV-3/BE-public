@@ -13,6 +13,7 @@ on:
   pull_request:
     branches: [ "deploy" ]
 
+
 permissions:
   contents: read
   id-token: write
@@ -43,28 +44,28 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
           role-to-assume: arn:aws:iam::682971737440:role/eunhadeploy
+
           role-session-name: sampleSessionName
           aws-region: ap-northeast-2
       
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@62f4f872db3836360b72999f4b87f1ff13310f3a
-
-      - name: Exclude test code
-        run : ./gradlew clean build --exclude-task test
-
-      - name: Build with Gradle
-        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
-        with:
-          arguments: build
-
+      
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
+          # Build a docker container and
+          # push it to ECR so that it can
+          # be deployed to ECS.
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >>$GITHUB_OUTPUT
@@ -96,7 +97,13 @@ jobs:
       #     cat ./src/main/resources/application.yml
       
 
+      # - name: Exclude test code
+      #   run : ./gradlew clean build --exclude-task test
 
+      # - name: Build with Gradle
+      #   uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+      #   with:
+      #     arguments: build
       
 
   
