@@ -3,7 +3,6 @@
 
     "containerDefinitions": [
         {
-
             "name": "lv3container",
             "cpu": 0,
             "portMappings": [
