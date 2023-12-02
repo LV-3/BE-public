@@ -38,7 +38,6 @@ public class UserWish {
         this.posterurl = posterurl;
     }
 
-
     public UpdateMyWishDto toUpdateMyWishResponseDto(UserWish userWish) {
         return UpdateMyWishDto.builder()
                 .uniqueId(uniqueId)
