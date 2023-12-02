@@ -13,7 +13,6 @@ on:
   pull_request:
     branches: [ "deploy" ]
 
-
 permissions:
   contents: read
   id-token: write
