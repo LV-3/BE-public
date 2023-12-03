@@ -11,14 +11,14 @@ import com.example.VodReco.dto.model.fromModel.receivedContentIds.ReceivedPerson
 import com.example.VodReco.service.mainPage.getReco.VodGetRecoServiceImpl;
 import com.example.VodReco.service.mainPage.getReco.VodReloadServiceImpl;
 import com.example.VodReco.service.mainPage.viewVodsByMood.VodviewVodsByMoodServiceImpl;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/main")
 public class MainController {
@@ -31,6 +31,16 @@ public class MainController {
     private final ReceivedDescriptionContentIds receivedDescriptionContentIds;
     private final ReceivedMoodContentIds receivedMoodContentIds;
     private final ReceivedPersonalContentIds receivedPersonalContentIds;
+
+    @Lazy
+    public MainController(VodviewVodsByMoodServiceImpl vodviewVodsByMoodService, VodGetRecoServiceImpl vodGetRecoService, VodReloadServiceImpl vodReloadService, ReceivedDescriptionContentIds receivedDescriptionContentIds, ReceivedMoodContentIds receivedMoodContentIds, ReceivedPersonalContentIds receivedPersonalContentIds) {
+        this.vodviewVodsByMoodService = vodviewVodsByMoodService;
+        this.vodGetRecoService = vodGetRecoService;
+        this.vodReloadService = vodReloadService;
+        this.receivedDescriptionContentIds = receivedDescriptionContentIds;
+        this.receivedMoodContentIds = receivedMoodContentIds;
+        this.receivedPersonalContentIds = receivedPersonalContentIds;
+    }
 
     @LogExecutionTime
     @PostMapping("")
