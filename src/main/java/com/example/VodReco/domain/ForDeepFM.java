@@ -5,7 +5,7 @@ import lombok.Getter;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-//추후 user_08, user_09 통합된 Document로 매핑하는 엔티티(231127)
+//필드 8개
 
 @Document(collection = "for_deepFM")
 @Getter
@@ -17,11 +17,11 @@ public class ForDeepFM {
     private String category;
     @Field(name = "genre_of_ct_cl")
     private String genre;
-    @Field(name = "template_A")
+    @Field(name = "template_A_TopGroup")
     private String mood;
-    @Field(name = "template_B")
+    @Field(name = "template_B_TopGroup")
     private String gpt_genres;
-    @Field(name = "template_C")
+    @Field(name = "template_C_TopGroup")
     private String gpt_subjects;
     @Field(name = "liked")
     private Integer liked;
