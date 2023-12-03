@@ -1,5 +1,6 @@
 package com.example.VodReco.controller;
 
+import com.example.VodReco.aspects.LogExecutionTime;
 import com.example.VodReco.dto.UserDto;
 import com.example.VodReco.dto.client.MainResponseDto;
 import com.example.VodReco.dto.client.ToClient1stDto;
@@ -31,12 +32,14 @@ public class MainController {
     private final ReceivedMoodContentIds receivedMoodContentIds;
     private final ReceivedPersonalContentIds receivedPersonalContentIds;
 
+    @LogExecutionTime
     @PostMapping("")
     public Mono<MainResponseDto> getAllRecoFromModel(@RequestBody UserDto userDto) {
         return vodGetRecoService.getAllContentIdsFromModel(userDto.getSubsr());
     }
 
     //최초 접속이 아닌 새로고침 시에는 subsr 필요 없음. 수정 요망(231126)
+    @LogExecutionTime
     @PostMapping("/reload1")
     public List<ToClient1stDto> reloadDescriptionModel() {
 //        System.out.println("줄거리 인덱스 확인 = " + receivedDescriptionContentIds.getReceivedDescriptionDataList());

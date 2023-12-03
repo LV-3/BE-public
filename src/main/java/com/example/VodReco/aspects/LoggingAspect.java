@@ -4,12 +4,17 @@ import com.example.VodReco.domain.LogEntity;
 import com.example.VodReco.service.logging.LoggingServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -19,13 +24,16 @@ import java.util.Arrays;
 @Aspect
 @Component
 public class LoggingAspect {
-    //git pr 연습방구리
     private final LoggingServiceImpl loggingService;
 
     @Autowired
     public LoggingAspect(LoggingServiceImpl loggingService) {
         this.loggingService = loggingService;
     }
+
+    //메서드 시간측정(231203)
+    Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
+
 
     @Before("execution(* com.example.VodReco..*Controller.*(..))")
     public void logBefore(JoinPoint joinPoint) {
@@ -62,6 +70,23 @@ public class LoggingAspect {
             //필요하면 구현하자...
             return false;
         }
+    }
+
+
+    @Around("@annotation(LogExecutionTime)")
+    //LogExecutionTime 어노테이션 파일과 같은 클래스에 있어야 함.
+    public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+
+        //타겟 메서드 실행
+        Object proceed = joinPoint.proceed();
+
+        stopWatch.stop();
+        logger.info(stopWatch.prettyPrint());
+
+        return proceed;
+
     }
 }
 
