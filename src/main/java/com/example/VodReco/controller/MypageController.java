@@ -35,6 +35,7 @@ public class MypageController {
     public ResponseEntity<List<ViewMyRatingListDto>> findMyRatingList(@RequestBody UserDto userDto){
         Optional<List<ViewMyRatingListDto>> myRatingListDtos = userRatingListViewService.findMyRatingList(userDto.getSubsr());
         if (!myRatingListDtos.isPresent() || myRatingListDtos.get().isEmpty()) {
+            //에러코드 204
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(myRatingListDtos.get());
@@ -44,6 +45,7 @@ public class MypageController {
     public ResponseEntity<List<ViewMyWishListDto>> findMyWishList(@RequestBody UserDto userDto){
         Optional<List<ViewMyWishListDto>> myWishListDtos = userWishListViewService.findMyWishList(userDto.getSubsr());
         if (!myWishListDtos.isPresent() || myWishListDtos.get().isEmpty()) {
+            //에러코드 204
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(myWishListDtos.get());
@@ -53,6 +55,7 @@ public class MypageController {
     public ResponseEntity<Optional<List<ViewMyWatchListDto>>> findMyWatchList(@RequestBody UserDto userDto){
         Optional<List<ViewMyWatchListDto>> myWatchListDtos = userWatchListViewService.findMyWatchList(userDto.getSubsr());
         if (!myWatchListDtos.isPresent() || myWatchListDtos.get().isEmpty()) {
+            //에러코드 204
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(myWatchListDtos);
