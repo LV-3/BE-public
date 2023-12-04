@@ -1,9 +1,11 @@
 package com.example.VodReco.service.genre.viewVodsByGenre;
 
 
-import com.example.VodReco.domain.ForGenreView;
+import com.example.VodReco.domain.Vod;
+import com.example.VodReco.dto.VodDto;
 import com.example.VodReco.dto.genre.BasicInfoOfVodDto;
-import com.example.VodReco.mongoRepository.ForGenreViewRepository;
+import com.example.VodReco.mongoRepository.VodRepository;
+import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +18,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class VodViewVodsByGenreServiceImpl implements VodViewVodsByGenreService{
-    private final ForGenreViewRepository forGenreViewRepository;
+
+    private final VodRepository vodRepository;
+    private final VodtoVodDtoWrapper vodtoVodDtoWrapper;
 
     //장르별 Dto 리스트
     @Override
@@ -27,9 +31,12 @@ public class VodViewVodsByGenreServiceImpl implements VodViewVodsByGenreService{
 //        System.out.println(decodedGenre); // "한글 장르" 출력됨
 //        System.out.println("디코딩 전 = " + genre);
 
-        List<ForGenreView> allByGenre = forGenreViewRepository.findAllByGenre(genre);
-        for (ForGenreView a : allByGenre) {
-            BasicInfoOfVodDto basicInfoOfVodDto = a.forGenreViewToDto(a);
+        List<Vod> allByGenre = vodRepository.findAllByGenre(genre);
+        for (Vod v : allByGenre) {
+            VodDto vodDto = vodtoVodDtoWrapper.toVodDto(v);
+            BasicInfoOfVodDto basicInfoOfVodDto = BasicInfoOfVodDto.builder()
+                    .title(vodDto.getTitle()).contentId(vodDto.getContentId())
+                    .posterurl(vodDto.getPosterurl()).build();
             list.add(basicInfoOfVodDto);
         }
         return list;
