@@ -22,7 +22,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-;
 
 import java.util.List;
 
@@ -166,7 +165,6 @@ public class VodDetailController {
     @Operation(summary = "vod별 평점 삭제", description = "상세페이지에서 rating, review 삭제")
 
     public ResponseEntity<Void> deleteMyRating(@PathVariable("content_id") String contentId, @RequestBody UserDto userDto) {
-        //userRatingDeleteMyRatingService.deleteRating(contentId, userDto.getSubsr());
         System.out.println("삭제된 rating 정보 = " + contentId);
         //[jjae] - 변경코드
         try {
