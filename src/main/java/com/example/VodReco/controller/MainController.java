@@ -32,7 +32,7 @@ public class MainController {
     private final ReceivedMoodContentIds receivedMoodContentIds;
     private final ReceivedPersonalContentIds receivedPersonalContentIds;
 
-//    @Lazy
+    @Lazy
     public MainController(VodviewVodsByMoodServiceImpl vodviewVodsByMoodService, VodGetRecoServiceImpl vodGetRecoService, VodReloadServiceImpl vodReloadService, ReceivedDescriptionContentIds receivedDescriptionContentIds, ReceivedMoodContentIds receivedMoodContentIds, ReceivedPersonalContentIds receivedPersonalContentIds) {
         this.vodviewVodsByMoodService = vodviewVodsByMoodService;
         this.vodGetRecoService = vodGetRecoService;
