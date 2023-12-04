@@ -41,9 +41,12 @@ public class LogEntity {
     @Column(nullable = false)
     private LocalDateTime timestamp;
 
+    @Column(nullable = false)
+    private String timeCategory;
+
 
     @Builder
-    public LogEntity(String divide, String ipAddress, String requestURL, String action, String details, boolean isSuccess, LocalDateTime timestamp) {
+    public LogEntity(String divide, String ipAddress, String requestURL, String action, String details, boolean isSuccess, LocalDateTime timestamp, String timeCategory) {
         this.divide = divide;
         this.ipAddress = ipAddress;
         this.requestURL = requestURL;
@@ -51,6 +54,7 @@ public class LogEntity {
         this.details = details;
         this.isSuccess = isSuccess;
         this.timestamp = timestamp;
+        this.timeCategory = timeCategory;
     }
 
 }
