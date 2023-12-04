@@ -42,7 +42,10 @@ public class LoggingAspect {
         String requestURL = request.getRequestURL().toString();
         String methodName = joinPoint.getSignature().toShortString();
         String args = Arrays.toString(joinPoint.getArgs());
-        LogEntity log = new LogEntity("Before", ipAddress, requestURL, methodName, args, false, LocalDateTime.now());
+        LocalDateTime timestamp = LocalDateTime.now();
+        // 시간대 분류
+        String timeCategory = categorizeTime(timestamp.getHour());
+        LogEntity log = new LogEntity("Before", ipAddress, requestURL, methodName, args, false, LocalDateTime.now(), timeCategory);
 
         loggingService.saveLog(log);
         loggingService.saveLogConsole(log);
@@ -57,7 +60,10 @@ public class LoggingAspect {
         String methodName = joinPoint.getSignature().toShortString();
         String args = Arrays.toString(joinPoint.getArgs());
         boolean isSuccess = isSuccess(result);
-        LogEntity log = new LogEntity("After", ipAddress, requestURL, methodName, args, isSuccess, LocalDateTime.now());
+        LocalDateTime timestamp = LocalDateTime.now();
+        // 시간대 분류
+        String timeCategory = categorizeTime(timestamp.getHour());
+        LogEntity log = new LogEntity("After", ipAddress, requestURL, methodName, args, isSuccess, LocalDateTime.now(),timeCategory);
         loggingService.saveLog(log);
         loggingService.saveLogConsole(log);
     }
@@ -69,6 +75,19 @@ public class LoggingAspect {
         } else {
             //필요하면 구현하자...
             return false;
+        }
+
+    }
+
+    private String categorizeTime(int hour) {
+        if (hour >= 0 && hour < 6) {
+            return "dawn";
+        } else if (hour >= 6 && hour < 12) {
+            return "am";
+        } else if (hour >= 12 && hour < 18) {
+            return "pm";
+        } else {
+            return "night";
         }
     }
 

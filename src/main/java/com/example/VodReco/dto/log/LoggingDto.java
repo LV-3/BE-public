@@ -18,9 +18,10 @@
 //    private String details;
 //    private boolean isSuccess;
 //    private LocalDateTime timestamp;
+//    private String timeCategory;
 //
 //    @Builder
-//    public LoggingDto(String divide, String ipAddress, String requestURL, String action, String details, boolean isSuccess, LocalDateTime timestamp) {
+//    public LoggingDto(String divide, String ipAddress, String requestURL, String action, String details, boolean isSuccess, LocalDateTime timestamp, String timeCategory) {
 //        this.divide = divide;
 //        this.ipAddress = ipAddress;
 //        this.requestURL = requestURL;
@@ -28,5 +29,6 @@
 //        this.details = details;
 //        this.isSuccess = isSuccess;
 //        this.timestamp = timestamp;
+//        this.timeCategory = timeCategory;
 //    }
 //}
