@@ -20,6 +20,15 @@
             "mountPoints": [],
             "volumesFrom": [],
             "ulimits": []
+        },"logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+                "awslogs-create-group": "true",
+                "awslogs-group": "/ecs/lv3ercdeploy",
+                "awslogs-region": "ap-northeast-2",
+                "awslogs-stream-prefix": "ecs"
+            },
+            "secretOptions": []
         }
     ],
     "family": "lv3ercdeploy",

@@ -11,6 +11,7 @@ import com.example.VodReco.dto.model.fromModel.receivedContentIds.ReceivedPerson
 import com.example.VodReco.service.mainPage.getReco.VodGetRecoServiceImpl;
 import com.example.VodReco.service.mainPage.getReco.VodReloadServiceImpl;
 import com.example.VodReco.service.mainPage.viewVodsByMood.VodviewVodsByMoodServiceImpl;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -34,7 +35,7 @@ public class MainController {
     private final ReceivedPersonalContentIds receivedPersonalContentIds;
 
     @Lazy
-    @Autowired
+//    @Autowired
     public MainController(VodviewVodsByMoodServiceImpl vodviewVodsByMoodService, VodGetRecoServiceImpl vodGetRecoService, VodReloadServiceImpl vodReloadService, ReceivedDescriptionContentIds receivedDescriptionContentIds, ReceivedMoodContentIds receivedMoodContentIds, ReceivedPersonalContentIds receivedPersonalContentIds) {
         this.vodviewVodsByMoodService = vodviewVodsByMoodService;
         this.vodGetRecoService = vodGetRecoService;
