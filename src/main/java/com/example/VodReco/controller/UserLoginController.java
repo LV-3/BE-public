@@ -25,6 +25,7 @@ public class UserLoginController {
         if (userLoginService.ValidateUser(loginDto).equals(loginDto.getSubsr())) {
             return ResponseEntity.ok().body(userLoginService.ValidateUser(loginDto));
         } else {
+            //에러코드 401(UnAuthorized)
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }

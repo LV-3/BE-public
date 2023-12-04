@@ -12,7 +12,9 @@ import com.example.VodReco.service.mainPage.getReco.VodGetRecoServiceImpl;
 import com.example.VodReco.service.mainPage.getReco.VodReloadServiceImpl;
 import com.example.VodReco.service.mainPage.viewVodsByMood.VodviewVodsByMoodServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import java.util.List;
@@ -24,7 +26,6 @@ import java.util.List;
 public class MainController {
     private final VodviewVodsByMoodServiceImpl vodviewVodsByMoodService;
     private final VodGetRecoServiceImpl vodGetRecoService;
-
     private final VodReloadServiceImpl vodReloadService;
 
     //content_id 목록 리스트에 담아둘 객체 스프링 빈에 등록해서 사용(231130)
@@ -32,7 +33,8 @@ public class MainController {
     private final ReceivedMoodContentIds receivedMoodContentIds;
     private final ReceivedPersonalContentIds receivedPersonalContentIds;
 
-    @Lazy
+//    @Lazy
+    @Autowired
     public MainController(VodviewVodsByMoodServiceImpl vodviewVodsByMoodService, VodGetRecoServiceImpl vodGetRecoService, VodReloadServiceImpl vodReloadService, ReceivedDescriptionContentIds receivedDescriptionContentIds, ReceivedMoodContentIds receivedMoodContentIds, ReceivedPersonalContentIds receivedPersonalContentIds) {
         this.vodviewVodsByMoodService = vodviewVodsByMoodService;
         this.vodGetRecoService = vodGetRecoService;
@@ -44,9 +46,14 @@ public class MainController {
 
     @LogExecutionTime
     @PostMapping("")
-    public Mono<MainResponseDto> getAllRecoFromModel(@RequestBody UserDto userDto) {
-        return vodGetRecoService.getAllContentIdsFromModel(userDto.getSubsr());
+    public ResponseEntity<Mono<MainResponseDto>> getAllRecoFromModel(@RequestBody UserDto userDto) {
+        if (vodGetRecoService.getAllContentIdsFromModel(userDto.getSubsr()) != null) {
+            return ResponseEntity.ok(vodGetRecoService.getAllContentIdsFromModel(userDto.getSubsr()));
+        }
+        //에러코드 204
+            return ResponseEntity.noContent().build();
     }
+
 
     //최초 접속이 아닌 새로고침 시에는 subsr 필요 없음. 수정 요망(231126)
     @LogExecutionTime
@@ -70,8 +77,12 @@ public class MainController {
 
 
     @GetMapping("/{mood}")
-    public List<BasicInfoOfVodDto> sendEachMoodVods (@PathVariable String mood){
-        return vodviewVodsByMoodService.sendEachMoodVods(mood);
+    public ResponseEntity<List<BasicInfoOfVodDto>> sendEachMoodVods (@PathVariable String mood){
+        if (vodviewVodsByMoodService.sendEachMoodVods(mood).isEmpty()) {
+            //에러코드 204
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(vodviewVodsByMoodService.sendEachMoodVods(mood));
     }
 
 
