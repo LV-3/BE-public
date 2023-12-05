@@ -1,7 +1,7 @@
 package com.example.VodReco.service.mainPage.getReco;
 
 import com.example.VodReco.domain.ForDeepFM;
-import com.example.VodReco.domain.UserWatch;
+import com.example.VodReco.domain.UserWatchTotal;
 import com.example.VodReco.domain.Vod;
 import com.example.VodReco.dto.client.MainResponseDto;
 import com.example.VodReco.dto.model.fromModel.DescriptionModelDataDto;
@@ -12,7 +12,7 @@ import com.example.VodReco.dto.model.fromModel.receivedContentIds.ReceivedMoodCo
 import com.example.VodReco.dto.model.fromModel.receivedContentIds.ReceivedPersonalContentIds;
 import com.example.VodReco.dto.model.toModel.*;
 import com.example.VodReco.mongoRepository.ForDeepFMRepository;
-import com.example.VodReco.mongoRepository.UserWatchRepository;
+import com.example.VodReco.mongoRepository.UserWatchTotalRepository;
 import com.example.VodReco.mongoRepository.VodRepository;
 import com.example.VodReco.util.ForDeepFM.ToForDeepFMDtoWrapper;
 import com.example.VodReco.util.StringToListWrapper;
@@ -35,7 +35,7 @@ import java.util.List;
 @Transactional
 public class VodGetRecoServiceImpl implements VodGetRecoService{
 
-    private final UserWatchRepository userWatchRepository;
+    private final UserWatchTotalRepository userWatchTotalRepository;
     private final VodtoVodDtoWrapper vodtoVodDtoWrapper;
     private final ForDeepFMRepository forDeepFMRepository;
     private final ToForDeepFMDtoWrapper toForDeepFMDtoWrapper;
@@ -47,12 +47,10 @@ public class VodGetRecoServiceImpl implements VodGetRecoService{
     private final PersonalModelDataDto personalModelDataDto;
 
     //새로고침 눌리면 사용하던 모든 전역변수 List clearAll 필수(231126)
-//    private final List<String> descriptionDataList;
-//    private final List<String> moodDataList;
-//    private final List<String> personalDataList;
     private final ReceivedDescriptionContentIds receivedDescriptionContentIds;
     private final ReceivedMoodContentIds receivedMoodContentIds;
     private final ReceivedPersonalContentIds receivedPersonalContentIds;
+
 
     private final VodReloadServiceImpl vodReloadService;
 
@@ -116,19 +114,26 @@ public class VodGetRecoServiceImpl implements VodGetRecoService{
         List<EveryPersonalDto> personalResponseList = new ArrayList<>();
 
         //mood는 null들어올 경우 NPE(231127)
-        for (UserWatch v : userWatchRepository.findBySubsr(subsr)) {
+        for (UserWatchTotal v : userWatchTotalRepository.findBySubsr(subsr)) {
             String contentId = v.getContentId();
             Vod byContentId = vodRepository.findByContentId(contentId);
 
             EveryDescriptionDto everyDescriptionDto;
+            //시리즈물은 SMRY 대신 TITLE_SMRY 전송
             if (byContentId.getIsSeries() == 1) {
-                everyDescriptionDto = EveryDescriptionDto.builder().content_id(contentId).description(vodtoVodDtoWrapper.toVodDto(byContentId).getTitleDescription()).build();
+                everyDescriptionDto = EveryDescriptionDto.builder()
+                        .content_id(contentId).description(vodtoVodDtoWrapper.toVodDto(byContentId).getTitleDescription())
+                        .build();
             } else {
-                everyDescriptionDto = EveryDescriptionDto.builder().content_id(contentId).description(vodtoVodDtoWrapper.toVodDto(byContentId).getDescription()).build();
+                everyDescriptionDto = EveryDescriptionDto.builder()
+                        .content_id(contentId).description(vodtoVodDtoWrapper.toVodDto(byContentId).getDescription())
+                        .build();
             }
             descriptionResponseList.add(everyDescriptionDto);
 
-            EveryMoodDto everyMoodDto = EveryMoodDto.builder().content_id(contentId).mood(stringToListWrapper.stringToList(byContentId.getMood())).build();
+            EveryMoodDto everyMoodDto = EveryMoodDto.builder()
+                    .content_id(contentId).mood(stringToListWrapper.stringToList(byContentId.getMood()))
+                    .build();
             moodResponseList.add(everyMoodDto);
         }
         for(ForDeepFM f : forDeepFMRepository.findBySubsr(subsr)){
