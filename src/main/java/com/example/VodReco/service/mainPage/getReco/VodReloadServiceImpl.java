@@ -47,9 +47,9 @@ public class VodReloadServiceImpl implements VodReloadService{
         //별도 테이블 만들면 이 메서드 수정(231126)
         public ToClient1stDto buildToClient1stDto(String contentId){
             VodDto vodDto = vodtoVodDtoWrapper.toVodDto(vodRepository.findByContentId(contentId));
-
+//            프론트엔드에 mood,gpt_genres, gpt_subjects 하나씩만 보내기 위해 subList(0,0) 이용 (231206)
             return ToClient1stDto.builder().contentId(contentId).posterurl(vodDto.getPosterurl()).title(vodDto.getTitle())
-                    .mood(vodDto.getMood()).gpt_genres(vodDto.getGpt_genres()).gpt_subjects(vodDto.getGpt_subjects())
+                    .mood(vodDto.getMood().subList(0, 0)).gpt_genres(vodDto.getGpt_genres().subList(0, 0)).gpt_subjects(vodDto.getGpt_subjects().subList(0, 0))
                     .build();
         }
 
