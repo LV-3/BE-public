@@ -11,8 +11,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document(collection = "user_wish_view")
 public class UserWishView {
     @Id
-    @Field(name = "_id")
-    private Object id; // TODO: 자료형 Object 가능한지 확인
     @Field(name = "unique_id")
 //    @ColumnDefault("defaultId")
     private String uniqueId;
@@ -24,8 +22,7 @@ public class UserWishView {
     private String posterurl;
 
     @Builder
-    public UserWishView(Object id, String uniqueId, String subsr, String contentId, Integer wish, String title, String posterurl) {
-        this.id = id;
+    public UserWishView(String uniqueId, String subsr, String contentId, Integer wish, String title, String posterurl) {
         this.uniqueId = uniqueId;
         this.subsr = subsr;
         this.contentId = contentId;

@@ -47,13 +47,15 @@ public class Vod {
 
     @Field(name = "is_series")
     private Integer isSeries;
+    @Field(name = "series_id")
+    private String seriesId;
 
 
     @Builder
     public Vod(String contentId, String title, String category, String genre, String disp_rtm,
                String description, String actors, String posterurl, String grade, String country,
                String release_year, String director, String mood, String gpt_genres, String gpt_subjects,
-               String titleDescription, Integer isSeries) {
+               String titleDescription, Integer isSeries, String seriesId) {
 
         this.contentId = contentId;
         this.title = title;
@@ -75,6 +77,7 @@ public class Vod {
 
         this.titleDescription = titleDescription;
         this.isSeries = isSeries;
+        this.seriesId = seriesId;
     }
 
 }

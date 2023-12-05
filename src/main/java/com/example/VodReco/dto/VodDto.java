@@ -33,12 +33,13 @@ public class VodDto {
 
     private String titleDescription;
     private Integer isSeries;
+    private String seriesId;
 
     @Builder
     public VodDto(String contentId, String title, String category, String genre, String disp_rtm,
                   String description, String actors, String posterurl, String grade, String country,
                   String release_year, String director, List<String> mood, List<String> gpt_genres, List<String> gpt_subjects,
-                  String titleDescription, Integer isSeries) {
+                  String titleDescription, Integer isSeries, String seriesId) {
 
         this.contentId = contentId;
         this.title = title;
@@ -60,6 +61,7 @@ public class VodDto {
 
         this.titleDescription = titleDescription;
         this.isSeries = isSeries;
+        this.seriesId = seriesId;
     }
 
 }

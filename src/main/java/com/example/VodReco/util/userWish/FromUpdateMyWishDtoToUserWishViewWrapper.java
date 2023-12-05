@@ -15,9 +15,7 @@ public class FromUpdateMyWishDtoToUserWishViewWrapper {
     }
 
     private UserWishView updateMyWishDtoToUserWishView(UpdateMyWishDto updateMyWishDto) {
-        Object id = userWishViewRepository.findByUniqueId(updateMyWishDto.getUniqueId()).getId();
         return UserWishView.builder()
-                .id(id)
                 .uniqueId(updateMyWishDto.getUniqueId())
                 .subsr(updateMyWishDto.getSubsr())
                 .title(updateMyWishDto.getTitle())
