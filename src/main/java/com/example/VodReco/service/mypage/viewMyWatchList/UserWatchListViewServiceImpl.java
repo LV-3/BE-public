@@ -36,7 +36,7 @@ public class UserWatchListViewServiceImpl implements UserWatchListViewService{
                         .subsr(w.getSubsr())
                         .contentId(minContentId)
                         .title(w.getTitle())
-                        .user_preference(w.getUser_preference())
+                        .user_preference(w.getUserPreference())
                         .posterurl(w.getPosterurl())
                         .build();
                 myWatchListDtos.add(viewMyWatchListDto);
@@ -45,7 +45,7 @@ public class UserWatchListViewServiceImpl implements UserWatchListViewService{
                         .subsr(w.getSubsr())
                         .contentId(w.getContentId())
                         .title(w.getTitle())
-                        .user_preference(w.getUser_preference())
+                        .user_preference(w.getUserPreference())
                         .posterurl(w.getPosterurl())
                         .build();
                 myWatchListDtos.add(viewMyWatchListDto);

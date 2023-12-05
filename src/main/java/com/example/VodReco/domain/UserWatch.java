@@ -16,7 +16,9 @@ public class UserWatch {
     private String subsr;
     @Field(name = "content_id")
     private String contentId;
-    private Integer user_preference;
+
+    @Field(name = "user_preference")
+    private Integer userPreference;
 
     private String title;
     @Field(name = "ImgUrl")
@@ -25,11 +27,11 @@ public class UserWatch {
     private String seriesId;
 
     @Builder
-    public UserWatch(String subsr, String contentId, Integer user_preference, String title, String posterurl, String seriesId) {
+    public UserWatch(String subsr, String contentId, Integer userPreference, String title, String posterurl, String seriesId) {
 
         this.contentId = contentId;
         this.subsr = subsr;
-        this.user_preference = user_preference;
+        this.userPreference = userPreference;
         this.title = title;
         this.posterurl = posterurl;
         this.seriesId = seriesId;
