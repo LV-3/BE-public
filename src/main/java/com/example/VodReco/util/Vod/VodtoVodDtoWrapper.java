@@ -37,6 +37,7 @@ class VodtoVodDtoWrapper {
 
                 .titleDescription(vod.getTitleDescription())
                 .isSeries(vod.getIsSeries())
+                .seriesId(vod.getSeriesId())
 
                 .build();
     }

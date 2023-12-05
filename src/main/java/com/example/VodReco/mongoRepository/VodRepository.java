@@ -12,6 +12,7 @@ public interface VodRepository extends MongoRepository<Vod,String> {
     List<Vod> findAllByGenre(String genre);
 
     List<Vod> findByMoodContaining(String mood);
+    List<Vod> findBySeriesId(String seriesId);
 
 
 }

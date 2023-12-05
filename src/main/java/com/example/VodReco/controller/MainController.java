@@ -34,6 +34,7 @@ public class MainController {
 
     @Lazy
 //    @Autowired
+//    두 개 붙으면 Lazy가 이김
     public MainController(VodviewVodsByMoodServiceImpl vodviewVodsByMoodService, VodGetRecoServiceImpl vodGetRecoService, VodReloadServiceImpl vodReloadService, ReceivedDescriptionContentIds receivedDescriptionContentIds, ReceivedMoodContentIds receivedMoodContentIds, ReceivedPersonalContentIds receivedPersonalContentIds) {
         this.vodviewVodsByMoodService = vodviewVodsByMoodService;
         this.vodGetRecoService = vodGetRecoService;

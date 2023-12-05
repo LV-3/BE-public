@@ -4,13 +4,14 @@ import com.example.VodReco.domain.Vod;
 import com.example.VodReco.dto.VodDto;
 import com.example.VodReco.dto.genre.BasicInfoOfVodDto;
 import com.example.VodReco.mongoRepository.VodRepository;
+import com.example.VodReco.util.ContentIdToBasicInfoOfVodsWrapper;
+import com.example.VodReco.util.ValidateDuplicateSeriesIdWrapper;
 import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -19,20 +20,12 @@ public class VodviewVodsByMoodServiceImpl{
 
     private final VodRepository vodRepository;
     private final VodtoVodDtoWrapper vodtoVodDtoWrapper;
+    private final ValidateDuplicateSeriesIdWrapper validateDuplicateSeriesIdWrapper;
+    private final ContentIdToBasicInfoOfVodsWrapper contentIdToBasicInfoOfVodsWrapper;
 
     public List<BasicInfoOfVodDto> sendEachMoodVods(String mood) {
-        List<Vod> byMoodContaining = vodRepository.findByMoodContaining(mood);
         List<BasicInfoOfVodDto> list = new ArrayList<>();
-        for (Vod v : byMoodContaining) {
-            VodDto vodDto = vodtoVodDtoWrapper.toVodDto(v);
-            BasicInfoOfVodDto basicInfoOfVodDto = BasicInfoOfVodDto.builder()
-                    .contentId(vodDto.getContentId())
-                    .posterurl(vodDto.getPosterurl())
-                    .title(vodDto.getTitle())
-                    .build();
-            list.add(basicInfoOfVodDto);
-        }
-        return list;
+        List<String> contentIds = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(vodRepository.findByMoodContaining(mood).stream().map(Vod::getContentId).toList());
+        return contentIdToBasicInfoOfVodsWrapper.getBasicInfoOfVodDtos(list, contentIds, vodtoVodDtoWrapper, vodRepository);
     }
-
 }
