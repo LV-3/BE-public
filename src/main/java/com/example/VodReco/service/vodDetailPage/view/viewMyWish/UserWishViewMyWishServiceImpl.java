@@ -20,14 +20,13 @@ public class UserWishViewMyWishServiceImpl implements UserWishViewMyWishService 
     public ViewMyWishResponseDto findMyWish(String subsr, String contentId){
 //        UserWishView userWishView = userWishViewRepository.findBySubsrAndContentId(subsr, contentId);
         String uniqueId = subsr + contentId;
-        // TODO : findByUniqueId에 아무것도 없을 때 예외처리
-        Optional<Optional<UserWishView>> byUniqueId = Optional.ofNullable(userWishViewRepository.findByUniqueId(uniqueId));
+        Optional<UserWishView> byUniqueId = Optional.ofNullable(userWishViewRepository.findByUniqueId(uniqueId));
         //dto로 받기. 수정 요망(231124)
 
-        if (userWishView.getWish() == 0 || ) {
+        if (byUniqueId.isEmpty() || byUniqueId.get().getWish() == 0) {
             return null;
         }
-        // TODO : 변환 메서드 별도 클래스로 분리
-        return userWishView.toViewMyWishResponseDto(userWishView);
+        // TODO : 변환 메서드 별도 클래스로 분리 요망
+        return byUniqueId.get().toViewMyWishResponseDto(byUniqueId.get());
     }
 }
