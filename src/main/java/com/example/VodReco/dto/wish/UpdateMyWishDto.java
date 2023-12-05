@@ -1,6 +1,5 @@
 package com.example.VodReco.dto.wish;
 
-import com.example.VodReco.domain.UserWishView;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
