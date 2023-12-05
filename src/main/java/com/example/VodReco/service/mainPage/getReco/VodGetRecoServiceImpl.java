@@ -136,7 +136,7 @@ public class VodGetRecoServiceImpl implements VodGetRecoService{
             //liked가 1인 데이터만 personalResponseList에 담기
             if (forDeepFMDto.getLiked() == 1) {
             EveryPersonalDto everyPersonalDto = EveryPersonalDto.builder().subsr(subsr).content_id(forDeepFMDto.getContentId()).ct_cl(forDeepFMDto.getCategory())
-                    .genre_of_ct_cl(forDeepFMDto.getGenre()).template_A(forDeepFMDto.getMood()).template_B(forDeepFMDto.getGpt_genres()).template_C(forDeepFMDto.getGpt_subjects())
+                    .genre_of_ct_cl(forDeepFMDto.getGenre()).template_A_TopGroup(forDeepFMDto.getMood()).template_B_TopGroup(forDeepFMDto.getGpt_genres()).template_C_TopGroup(forDeepFMDto.getGpt_subjects())
                     .liked(forDeepFMDto.getLiked())
                     .build();
             personalResponseList.add(everyPersonalDto);
