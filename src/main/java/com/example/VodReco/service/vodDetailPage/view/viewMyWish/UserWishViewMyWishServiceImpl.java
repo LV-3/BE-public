@@ -22,6 +22,7 @@ public class UserWishViewMyWishServiceImpl implements UserWishViewMyWishService 
         if (userWishView.getWish() == 0) {
             return null;
         }
+        // TODO : 변환 메서드 별도 클래스로 분리
         return userWishView.toViewMyWishResponseDto(userWishView);
     }
 }
