@@ -68,7 +68,8 @@ public class VodGetRecoServiceImpl implements VodGetRecoService{
         ToModelDto toModelDto = setDataForModel(subsr);
 
         WebClient webClient = WebClient.builder()
-                .baseUrl("http://1.220.201.108:8000")
+//                .baseUrl("http://1.220.201.108:8000")
+                .baseUrl("lv3-loadbalancer-f-725358857.ap-northeast-2.elb.amazonaws.com")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
 
@@ -89,6 +90,8 @@ public class VodGetRecoServiceImpl implements VodGetRecoService{
                         moodList.add((String) moodModelDataDto.getMoodData().get(i));
                         personalList.add((String) personalModelDataDto.getPersonalData().get(i));
                     }
+//                    필요 시 여기에 중복검사 추가
+
                         receivedDescriptionContentIds.setReceivedDescriptionDataList(descriptionList);
                         receivedMoodContentIds.setReceivedMoodDataList(moodList);
                         receivedPersonalContentIds.setReceivedPersonalDataList(personalList);
