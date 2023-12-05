@@ -21,13 +21,17 @@ public class UserWatch {
     private String title;
     @Field(name = "ImgUrl")
     private String posterurl;
+    @Field(name = "series_id")
+    private String seriesId;
 
     @Builder
-    public UserWatch(String subsr, String contentId, Integer user_preference, String title, String posterurl) {
+    public UserWatch(String subsr, String contentId, Integer user_preference, String title, String posterurl, String seriesId) {
+
         this.contentId = contentId;
         this.subsr = subsr;
         this.user_preference = user_preference;
         this.title = title;
         this.posterurl = posterurl;
+        this.seriesId = seriesId;
     }
 }
