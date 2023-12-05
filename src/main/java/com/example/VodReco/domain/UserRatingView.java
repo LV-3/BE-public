@@ -3,6 +3,7 @@ package com.example.VodReco.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -10,6 +11,9 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @NoArgsConstructor
 @Document(collection = "user_rating_view")
 public class UserRatingView {
+    @Id
+    @Field(name = "_id")
+    private Object id;
     @Field(name = "unique_id")
     private String uniqueId;
     // wish, rating은 subsr 겹쳐도 됨. 사용자가 여러 개의 vod에 대한 평가 내림(231104)
@@ -24,7 +28,8 @@ public class UserRatingView {
     private String posterurl;
 
     @Builder
-    public UserRatingView(String uniqueId, String subsr, String contentId, Integer rating, String review, String rating_date, String title, String posterurl) {
+    public UserRatingView(Object id, String uniqueId, String subsr, String contentId, Integer rating, String review, String rating_date, String title, String posterurl) {
+        this.id = id;
         this.uniqueId = uniqueId;
         this.subsr = subsr;
         this.contentId = contentId;
