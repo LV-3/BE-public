@@ -15,9 +15,9 @@ public class FromUpdateMyRatingDtoToUserRatingViewWrapper {
     }
 
     private UserRatingView updateMyRatingDtoToUserRatingView(UpdateMyRatingDto updateMyRatingDto) {
-        Object id = userRatingViewRepository.findByUniqueId(updateMyRatingDto.getUniqueId());
+//        Object id = userRatingViewRepository.findByUniqueId(updateMyRatingDto.getUniqueId());
         return UserRatingView.builder()
-                .id(id)
+//                .id(id)
                 .uniqueId(updateMyRatingDto.getUniqueId())
                 .subsr(updateMyRatingDto.getSubsr())
                 .title(updateMyRatingDto.getTitle())

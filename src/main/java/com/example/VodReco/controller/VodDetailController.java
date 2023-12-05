@@ -147,16 +147,17 @@ public class VodDetailController {
 
     //rating 변경
     @PutMapping(value = "/{content_id}/rating")
-    @Operation(summary = "vod별 평점 매기기", description = "상세페이지에서 기존 rating, review 변경")
+    @Operation(summary = "vod별 평점 변경", description = "상세페이지에서 기존 rating, review 변경한 뒤 저장")
     public ResponseEntity<Void> updateMyRating(@PathVariable("content_id") String contentId, @RequestBody UpdateMyRatingRequestDto updateMyRatingRequestDto) {
         //[jjae] - 변경코드
-        try {
+//        try {
             userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
+            //던져지는 exception때문에 롤백됨 -> 에러. 일단 200만 남기고 1차 구현(231206)
             return ResponseEntity.ok().build();
-        } catch (Exception e) {
-//            에러코드 500
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+//        } catch (Exception e) {
+////            에러코드 500
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
     }
 
     //rating 삭제
@@ -167,13 +168,13 @@ public class VodDetailController {
     public ResponseEntity<Void> deleteMyRating(@PathVariable("content_id") String contentId, @RequestBody UserDto userDto) {
         System.out.println("삭제된 rating 정보 = " + contentId);
         //[jjae] - 변경코드
-        try {
+//        try {
             userRatingDeleteMyRatingService.deleteRating(contentId, userDto.getSubsr());
             return ResponseEntity.ok().build();
-        } catch (Exception e) {
-//            에러코드 500
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+//        } catch (Exception e) {
+////            에러코드 500
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
     }
 }
 
