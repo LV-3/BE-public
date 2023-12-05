@@ -23,18 +23,18 @@ public class EveryPersonalDto {
 //    @JsonProperty("template_A")
 //    private List<String> mood;
 
-    private List<String> template_A;
+    private List<String> template_A_TopGroup;
 //    private String template_A;
     //    @JsonProperty("template_B")
-    private List<String> template_B;
+    private List<String> template_B_TopGroup;
 //    private String template_B;
 //    @JsonProperty("template_C")
-    private List<String> template_C;
+    private List<String> template_C_TopGroup;
 //    private String template_C;
     private Integer liked;
 
     @Builder
-    public EveryPersonalDto(String subsr, String content_id, String ct_cl, String genre_of_ct_cl, List<String> template_A, List<String> template_B, List<String> template_C,
+    public EveryPersonalDto(String subsr, String content_id, String ct_cl, String genre_of_ct_cl, List<String> template_A_TopGroup, List<String> template_B_TopGroup, List<String> template_C_TopGroup,
 //                            String contentId, String category, String genre,
 //                            List<String> mood, List<String> gpt_genres,
 //                            List<String> gpt_subjects,
@@ -44,9 +44,9 @@ public class EveryPersonalDto {
         this.content_id = content_id;
         this.genre_of_ct_cl = genre_of_ct_cl;
         this.ct_cl = ct_cl;
-        this.template_A = template_A;
-        this.template_B = template_B;
-        this.template_C = template_C;
+        this.template_A_TopGroup = template_A_TopGroup;
+        this.template_B_TopGroup = template_B_TopGroup;
+        this.template_C_TopGroup = template_C_TopGroup;
 //        this.category = category;
 //        this.genre = genre;
 //        this.mood = mood;
