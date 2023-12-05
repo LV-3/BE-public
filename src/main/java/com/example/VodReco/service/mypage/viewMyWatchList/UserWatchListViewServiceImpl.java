@@ -22,6 +22,9 @@ public class UserWatchListViewServiceImpl implements UserWatchListViewService{
         List<ViewMyWatchListDto> myWatchListDtos = new ArrayList<>();
         List<UserWatch> myWatchList = userWatchRepository.findAllBySubsr(subsr);
 
+//        TODO : 시리즈물 처리 필요(231204). content_id로 조회된 모든 vod is_series 검사한 뒤 시리즈물이면 content_id 가장 작은 vod 뽑아서 화면에 보내기
+//        TODO : 중복 content_id 중 시리즈물 아닌 vod의 user_preference 계산 로직 추가
+//        TODO : 중복 content_id 중 시리즈물인 vod의 user_preference 계산 로직 추가
         if(myWatchList.isEmpty()){
             return Optional.empty();
         }

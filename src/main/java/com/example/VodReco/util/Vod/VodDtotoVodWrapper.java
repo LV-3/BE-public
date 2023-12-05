@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 
 //근데 Vod테이블 자체가 업데이트되지 않는데, dto에서 vod로 바꿀 일이 있을까? (231123)
+//추후 삭제(231204)
 @Component
 @RequiredArgsConstructor
 public class VodDtotoVodWrapper {
@@ -42,6 +43,7 @@ public class VodDtotoVodWrapper {
 
                 .titleDescription(vodDto.getTitleDescription())
                 .isSeries(vodDto.getIsSeries())
+                .seriesId(vodDto.getSeriesId())
 
                 .build();
     }
