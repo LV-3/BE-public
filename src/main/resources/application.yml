@@ -8,6 +8,10 @@ spring:
       hibernate:
         format_sql: true
 
+  mvc:
+    async:
+      request-timeout: -1
+
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

@@ -10,10 +10,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @ToString
 public class EveryPersonalDto {
-    private String subsr;
+    private Integer subsr;
 //    @JsonProperty("content_id")
 //    private String contentId;
-    private String content_id;
+    private Integer content_id;
 //    @JsonProperty("ct_cl")
 //    private String category;
     private String ct_cl;
@@ -34,7 +34,7 @@ public class EveryPersonalDto {
     private Integer liked;
 
     @Builder
-    public EveryPersonalDto(String subsr, String content_id, String ct_cl, String genre_of_ct_cl, List<String> template_A_TopGroup, List<String> template_B_TopGroup, List<String> template_C_TopGroup,
+    public EveryPersonalDto(Integer subsr, Integer content_id, String ct_cl, String genre_of_ct_cl, List<String> template_A_TopGroup, List<String> template_B_TopGroup, List<String> template_C_TopGroup,
 //                            String contentId, String category, String genre,
 //                            List<String> mood, List<String> gpt_genres,
 //                            List<String> gpt_subjects,
