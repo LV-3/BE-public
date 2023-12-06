@@ -48,8 +48,8 @@ public class MainController {
 
     @LogExecutionTime
     @PostMapping("")
-    public ResponseEntity<Mono<MainResponseDto>> getAllRecoFromModel(@RequestBody UserDto userDto) {
 //    public ResponseEntity<Mono<MainResponseDto>> getAllRecoFromModel(@RequestBody UserDto userDto) {
+    public ResponseEntity<MainResponseDto> getAllRecoFromModel(@RequestBody UserDto userDto) {
         if (vodGetRecoService.getAllContentIdsFromModel(userDto.getSubsr()) != null) {
             return ResponseEntity.ok(vodGetRecoService.getAllContentIdsFromModel(userDto.getSubsr()));
         }
