@@ -34,10 +34,6 @@ public class ValidateDuplicateSeriesIdWrapper {
         return makeSeriesIdUnique(contentIdsList);
     }
 
-    //main에도 적용하려면 List<String>으로 파라미터 받을 수 있도록 findBy해서 미리 content_id로 List 만들어놓고 .. 근데 이러면 seriesId를 또 어떻게 뽑냐? 이건아니지
-    // 아니면 main에서 63개를 전부 findByContentId해서 Vod로 만들어야 되는ㄷ ㅔ생각해보니 이게 더 에바네. 1번으로 결정
-
-
     //content_id 리스트 받아서 시리즈물 처리(시리즈물이라면 가장 작은 content_id 하나로 대체)된 새로운 content_id 리스트를 반환하는 메서드
     private List<String> makeSeriesIdUnique(List<String> contentIdsList) {
         List<String> contentIds = new ArrayList<>();
@@ -61,7 +57,7 @@ public class ValidateDuplicateSeriesIdWrapper {
 
     //seriesId 파라미터로 받아서 -> 가장 작은 contentId 리턴하는 메서드
     public String convertToMinContentId(String seriesId) {
-        List<Vod> vodList = vodRepository.findAllByGenre(seriesId);
+        List<Vod> vodList = vodRepository.findBySeriesId(seriesId);
         List<String> contentIdsOfSeries = new ArrayList<>(vodList.stream().map(Vod::getContentId).toList());
         Collections.sort(contentIdsOfSeries); //오름차순 정렬
         return contentIdsOfSeries.get(0);

@@ -2,7 +2,6 @@ package com.example.VodReco.service.mainPage.getReco;
 
 import com.example.VodReco.domain.*;
 import com.example.VodReco.dto.client.MainResponseDto;
-import com.example.VodReco.dto.client.ToClient1stDto;
 import com.example.VodReco.dto.model.fromModel.DescriptionModelDataDto;
 import com.example.VodReco.dto.model.fromModel.MoodModelDataDto;
 import com.example.VodReco.dto.model.fromModel.PersonalModelDataDto;
@@ -110,12 +109,13 @@ public class VodGetRecoServiceImpl implements VodGetRecoService{
                     receivedMoodContentIds.setReceivedMoodDataList(validatedMoodContentIdList);
                     receivedPersonalContentIds.setReceivedPersonalDataList(validatedPersonalContentIdList);
 
+                    System.out.println("비동기 블럭 내 subsr 사용 가능? = " + subsr);
+
                     List<String> descriptionContentIds21 = this.getsubList(receivedDescriptionContentIds.getReceivedDescriptionDataList(), subsr);
                     List<String> moodContentIds21 = this.getsubList(receivedMoodContentIds.getReceivedMoodDataList(), subsr);
                     List<String> personalContentIds21 = this.getsubList(receivedPersonalContentIds.getReceivedPersonalDataList(), subsr);
 
 //                    TODO : vodReloadService 삭제 시 내부 buildToClient1stDto 메서드 옮겨오기
-
 
                     // 결과 반환
 //                    genre_data로 되어있는지? mood_data로 되어있는지? 프론트에 key값 물어보기
