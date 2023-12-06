@@ -49,7 +49,7 @@ public class VodReloadServiceImpl implements VodReloadService{
             VodDto vodDto = vodtoVodDtoWrapper.toVodDto(vodRepository.findByContentId(contentId));
 //            프론트엔드에 mood,gpt_genres, gpt_subjects 하나씩만 보내기 위해 subList(0,0) 이용 (231206)
             return ToClient1stDto.builder().contentId(contentId).posterurl(vodDto.getPosterurl()).title(vodDto.getTitle())
-                    .mood(vodDto.getMood().subList(0, 0)).gpt_genres(vodDto.getGpt_genres().subList(0, 0)).gpt_subjects(vodDto.getGpt_subjects().subList(0, 0))
+                    .mood(vodDto.getMood().subList(0, 1)).gpt_genres(vodDto.getGpt_genres().subList(0, 1)).gpt_subjects(vodDto.getGpt_subjects().subList(0, 1))
                     .build();
         }
 

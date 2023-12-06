@@ -13,7 +13,6 @@ import com.example.VodReco.mongoRepository.ForDeepFMRepository;
 import com.example.VodReco.mongoRepository.UserWatchRepository;
 import com.example.VodReco.mongoRepository.UserWatchTotalRepository;
 import com.example.VodReco.mongoRepository.VodRepository;
-import com.example.VodReco.util.ContentIdToSeriesIdWrapper;
 import com.example.VodReco.util.ForDeepFM.ToForDeepFMDtoWrapper;
 import com.example.VodReco.util.StringToListWrapper;
 import com.example.VodReco.util.ValidateDuplicateSeriesIdWrapper;
@@ -28,16 +27,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class VodGetRecoServiceImpl implements VodGetRecoService{
+public class VodGetRecoServiceImpl implements VodGetRecoService {
 
     private final UserWatchTotalRepository userWatchTotalRepository;
     private final UserWatchRepository userWatchRepository;
@@ -57,9 +52,99 @@ public class VodGetRecoServiceImpl implements VodGetRecoService{
     private final ReceivedPersonalContentIds receivedPersonalContentIds;
 
     private final ValidateDuplicateSeriesIdWrapper validateDuplicateSeriesIdWrapper;
-    private final ContentIdToSeriesIdWrapper contentIdToSeriesIdWrapper;
 
     private final VodReloadServiceImpl vodReloadService;
+
+
+
+    //테스트용
+//    List<String> descriptionContentIds21 = new ArrayList<>();
+//    List<String> moodContentIds21 = new ArrayList<>();
+//    List<String> personalContentIds21 = new ArrayList<>();
+//
+//    public List<String> getDescriptionContentIds21() {
+//        descriptionContentIds21.add("1");
+//        descriptionContentIds21.add("2");
+//        descriptionContentIds21.add("3");
+//        descriptionContentIds21.add("4");
+//        descriptionContentIds21.add("5");
+//        descriptionContentIds21.add("6");
+//        descriptionContentIds21.add("7");
+//        descriptionContentIds21.add("8");
+//        descriptionContentIds21.add("9");
+//        descriptionContentIds21.add("10");
+//        descriptionContentIds21.add("11");
+//        descriptionContentIds21.add("12");
+//        descriptionContentIds21.add("13");
+//        descriptionContentIds21.add("14");
+//        descriptionContentIds21.add("15");
+//        descriptionContentIds21.add("16");
+//        descriptionContentIds21.add("17");
+//        descriptionContentIds21.add("18");
+//        descriptionContentIds21.add("19");
+//        descriptionContentIds21.add("20");
+//        descriptionContentIds21.add("21");
+//        return this.descriptionContentIds21;
+//    }
+//
+//    public List<String> getMoodContentIds21() {
+//        moodContentIds21.add("101");
+//        moodContentIds21.add("102");
+//        moodContentIds21.add("103");
+//        moodContentIds21.add("104");
+//        moodContentIds21.add("105");
+//        moodContentIds21.add("106");
+//        moodContentIds21.add("107");
+//        moodContentIds21.add("108");
+//        moodContentIds21.add("109");
+//        moodContentIds21.add("110");
+//        moodContentIds21.add("111");
+//        moodContentIds21.add("112");
+//        moodContentIds21.add("113");
+//        moodContentIds21.add("114");
+//        moodContentIds21.add("115");
+//        moodContentIds21.add("116");
+//        moodContentIds21.add("117");
+////        moodContentIds21.add("118");
+////        moodContentIds21.add("119");
+////        moodContentIds21.add("120");
+////        moodContentIds21.add("121");
+//        return this.moodContentIds21;
+//    }
+//
+//    public List<String> getPersonalContentIds21() {
+//        personalContentIds21.add("201");
+//        personalContentIds21.add("202");
+//        personalContentIds21.add("203");
+//        personalContentIds21.add("204");
+//        personalContentIds21.add("205");
+//        personalContentIds21.add("206");
+//        personalContentIds21.add("207");
+//        personalContentIds21.add("208");
+//        personalContentIds21.add("209");
+//        personalContentIds21.add("210");
+//        personalContentIds21.add("211");
+//        personalContentIds21.add("212");
+//        personalContentIds21.add("213");
+//        personalContentIds21.add("214");
+//        personalContentIds21.add("215");
+//        personalContentIds21.add("216");
+//        personalContentIds21.add("217");
+//        personalContentIds21.add("218");
+//        personalContentIds21.add("219");
+//        personalContentIds21.add("220");
+//        personalContentIds21.add("2221");
+//
+//        personalContentIds21.add("317");
+//        personalContentIds21.add("318");
+//        personalContentIds21.add("319");
+//        personalContentIds21.add("320");
+//        personalContentIds21.add("321");
+//
+//        return this.personalContentIds21;
+//    }
+
+
 
     @Override
     public Mono<MainResponseDto> getAllContentIdsFromModel(String subsr) {
@@ -138,7 +223,7 @@ public class VodGetRecoServiceImpl implements VodGetRecoService{
     //    TODO : access modifier private으로 바꿀 수 있으면 바꾸기
 //    21개 개수 맞추는 메서드
     public List<String> getsubList(List<String> list, String subsr) {
-        Set<String> set = new HashSet<>(list); //이론 상 이 상태에는 중복 없음. 이후 처리 위해 set으로 미리 변환한 것
+        Set<String> set = new HashSet<>(list); //이론상 이 상태에는 중복 없음. 이후 처리 위해 set으로 미리 변환한 것
         if (list.size() >= 21) {
             List<String> first21s = list.stream()
                     .limit(21)
@@ -158,10 +243,23 @@ public class VodGetRecoServiceImpl implements VodGetRecoService{
 
 
     public List<String> getSortedByUserPreference(String subsr) {
+        List<String> list = new ArrayList<>();
         List<UserWatch> sortedUserWatchs = userWatchRepository.findBySubsrOrderByUserPreferenceDesc(subsr);
-        return sortedUserWatchs.stream()
-                .map(UserWatch::getContentId)
-                .collect(Collectors.toList());
+        for (UserWatch s : sortedUserWatchs) {
+            if (s.getContentId() == null) {
+                list.add(validateDuplicateSeriesIdWrapper.convertToMinContentId(s.getSeriesId()));
+            } else {
+                list.add(s.getContentId());
+            }
+        }
+
+        return list;
+//               FIXME : userWatch에는 content_id가 없는 데이터가 많음. UserWatch대신 UserWatchTotal에서 조회한 뒤
+//                ContentIdToSeriesIdWrapper → ValidateDuplicateSeriesId 내부의 convertToMinContentId에 집어넣고
+//                리턴받은 content_id를 List에 add
+//                FIXME : 2번째 방안 - userWatch for문 돌려서 if content_id null이면 getSeriesId해서 convertToMinContentId에 집어넣고 리턴받은 content_id를 List에 add.
+//                 2번 방안으로 구현. UserWatchTotal은 너무 방대함. 조회 속도 위함
+
     }
 
     public ToModelDto setDataForModel(String subsr) {
@@ -192,15 +290,15 @@ public class VodGetRecoServiceImpl implements VodGetRecoService{
                     .build();
             moodResponseList.add(everyMoodDto);
         }
-        for(ForDeepFM f : forDeepFMRepository.findBySubsr(subsr)){
+        for (ForDeepFM f : forDeepFMRepository.findBySubsr(subsr)) {
             ForDeepFMDto forDeepFMDto = toForDeepFMDtoWrapper.toForDeepFMDto(f);
             //liked가 1인 데이터만 personalResponseList에 담기
             if (forDeepFMDto.getLiked() == 1) {
-            EveryPersonalDto everyPersonalDto = EveryPersonalDto.builder().subsr(subsr).content_id(forDeepFMDto.getContentId()).ct_cl(forDeepFMDto.getCategory())
-                    .genre_of_ct_cl(forDeepFMDto.getGenre()).template_A_TopGroup(forDeepFMDto.getMood()).template_B_TopGroup(forDeepFMDto.getGpt_genres()).template_C_TopGroup(forDeepFMDto.getGpt_subjects())
-                    .liked(forDeepFMDto.getLiked())
-                    .build();
-            personalResponseList.add(everyPersonalDto);
+                EveryPersonalDto everyPersonalDto = EveryPersonalDto.builder().subsr(Integer.parseInt(subsr)).content_id(Integer.parseInt(forDeepFMDto.getContentId())).ct_cl(forDeepFMDto.getCategory())
+                        .genre_of_ct_cl(forDeepFMDto.getGenre()).template_A_TopGroup(forDeepFMDto.getMood()).template_B_TopGroup(forDeepFMDto.getGpt_genres()).template_C_TopGroup(forDeepFMDto.getGpt_subjects())
+                        .liked(forDeepFMDto.getLiked())
+                        .build();
+                personalResponseList.add(everyPersonalDto);
             }
         }
         return ToModelDto.builder()
