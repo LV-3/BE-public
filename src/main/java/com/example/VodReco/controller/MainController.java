@@ -3,7 +3,6 @@ package com.example.VodReco.controller;
 import com.example.VodReco.aspects.LogExecutionTime;
 import com.example.VodReco.dto.UserDto;
 import com.example.VodReco.dto.client.MainResponseDto;
-import com.example.VodReco.dto.client.ToClient1stDto;
 import com.example.VodReco.dto.genre.BasicInfoOfVodDto;
 import com.example.VodReco.dto.model.fromModel.receivedContentIds.ReceivedDescriptionContentIds;
 import com.example.VodReco.dto.model.fromModel.receivedContentIds.ReceivedMoodContentIds;
@@ -50,15 +49,14 @@ public class MainController {
     @LogExecutionTime
     @PostMapping("")
     public ResponseEntity<Mono<MainResponseDto>> getAllRecoFromModel(@RequestBody UserDto userDto) {
+//    public ResponseEntity<Mono<MainResponseDto>> getAllRecoFromModel(@RequestBody UserDto userDto) {
         if (vodGetRecoService.getAllContentIdsFromModel(userDto.getSubsr()) != null) {
             return ResponseEntity.ok(vodGetRecoService.getAllContentIdsFromModel(userDto.getSubsr()));
         }
         //에러코드 204
             return ResponseEntity.noContent().build();
     }
-
-
-    //최초 접속이 아닌 새로고침 시에는 subsr 필요 없음. 수정 요망(231126)
+        //최초 접속이 아닌 새로고침 시에는 subsr 필요 없음. 수정 요망(231126)
 //    @LogExecutionTime
 //    @PostMapping("/reload1")
 //    public List<ToClient1stDto> reloadDescriptionModel() {
