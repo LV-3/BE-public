@@ -1,7 +1,6 @@
 package com.example.VodReco.service.mainPage.viewVodsByMood;
 
 import com.example.VodReco.domain.Vod;
-import com.example.VodReco.dto.VodDto;
 import com.example.VodReco.dto.genre.BasicInfoOfVodDto;
 import com.example.VodReco.mongoRepository.VodRepository;
 import com.example.VodReco.util.ContentIdToBasicInfoOfVodsWrapper;
@@ -16,13 +15,14 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class VodviewVodsByMoodServiceImpl{
+public class VodviewVodsByMoodServiceImpl implements VodviewVodsByMoodService{
 
     private final VodRepository vodRepository;
     private final VodtoVodDtoWrapper vodtoVodDtoWrapper;
     private final ValidateDuplicateSeriesIdWrapper validateDuplicateSeriesIdWrapper;
     private final ContentIdToBasicInfoOfVodsWrapper contentIdToBasicInfoOfVodsWrapper;
 
+    @Override
     public List<BasicInfoOfVodDto> sendEachMoodVods(String mood) {
         List<BasicInfoOfVodDto> list = new ArrayList<>();
         List<String> contentIds = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(vodRepository.findByMoodContaining(mood).stream().map(Vod::getContentId).toList());

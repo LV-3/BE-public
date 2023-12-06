@@ -20,12 +20,8 @@ import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 import java.util.*;
 
@@ -58,96 +54,97 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
 
 
     //테스트용
-//    List<String> descriptionContentIds21 = new ArrayList<>();
-//    List<String> moodContentIds21 = new ArrayList<>();
-//    List<String> personalContentIds21 = new ArrayList<>();
-//
-//    public List<String> getDescriptionContentIds21() {
-//        descriptionContentIds21.add("1");
-//        descriptionContentIds21.add("2");
-//        descriptionContentIds21.add("3");
-//        descriptionContentIds21.add("4");
-//        descriptionContentIds21.add("5");
-//        descriptionContentIds21.add("6");
-//        descriptionContentIds21.add("7");
-//        descriptionContentIds21.add("8");
-//        descriptionContentIds21.add("9");
-//        descriptionContentIds21.add("10");
-//        descriptionContentIds21.add("11");
-//        descriptionContentIds21.add("12");
-//        descriptionContentIds21.add("13");
-//        descriptionContentIds21.add("14");
-//        descriptionContentIds21.add("15");
-//        descriptionContentIds21.add("16");
-//        descriptionContentIds21.add("17");
-//        descriptionContentIds21.add("18");
-//        descriptionContentIds21.add("19");
-//        descriptionContentIds21.add("20");
-//        descriptionContentIds21.add("21");
-//        return this.descriptionContentIds21;
-//    }
-//
-//    public List<String> getMoodContentIds21() {
-//        moodContentIds21.add("101");
-//        moodContentIds21.add("102");
-//        moodContentIds21.add("103");
-//        moodContentIds21.add("104");
-//        moodContentIds21.add("105");
-//        moodContentIds21.add("106");
-//        moodContentIds21.add("107");
-//        moodContentIds21.add("108");
-//        moodContentIds21.add("109");
-//        moodContentIds21.add("110");
-//        moodContentIds21.add("111");
-//        moodContentIds21.add("112");
-//        moodContentIds21.add("113");
-//        moodContentIds21.add("114");
-//        moodContentIds21.add("115");
-//        moodContentIds21.add("116");
-//        moodContentIds21.add("117");
-////        moodContentIds21.add("118");
-////        moodContentIds21.add("119");
-////        moodContentIds21.add("120");
-////        moodContentIds21.add("121");
-//        return this.moodContentIds21;
-//    }
-//
-//    public List<String> getPersonalContentIds21() {
-//        personalContentIds21.add("201");
-//        personalContentIds21.add("202");
-//        personalContentIds21.add("203");
-//        personalContentIds21.add("204");
-//        personalContentIds21.add("205");
-//        personalContentIds21.add("206");
-//        personalContentIds21.add("207");
-//        personalContentIds21.add("208");
-//        personalContentIds21.add("209");
-//        personalContentIds21.add("210");
-//        personalContentIds21.add("211");
-//        personalContentIds21.add("212");
-//        personalContentIds21.add("213");
-//        personalContentIds21.add("214");
-//        personalContentIds21.add("215");
-//        personalContentIds21.add("216");
-//        personalContentIds21.add("217");
-//        personalContentIds21.add("218");
-//        personalContentIds21.add("219");
-//        personalContentIds21.add("220");
-//        personalContentIds21.add("2221");
-//
-//        personalContentIds21.add("317");
-//        personalContentIds21.add("318");
-//        personalContentIds21.add("319");
-//        personalContentIds21.add("320");
-//        personalContentIds21.add("321");
-//
-//        return this.personalContentIds21;
-//    }
+    List<String> descriptionContentIds21 = new ArrayList<>();
+    List<String> moodContentIds21 = new ArrayList<>();
+    List<String> personalContentIds21 = new ArrayList<>();
+
+    public List<String> getDescriptionContentIds21() {
+        descriptionContentIds21.add("1");
+        descriptionContentIds21.add("2");
+        descriptionContentIds21.add("3");
+        descriptionContentIds21.add("4");
+        descriptionContentIds21.add("5");
+        descriptionContentIds21.add("6");
+        descriptionContentIds21.add("7");
+        descriptionContentIds21.add("8");
+        descriptionContentIds21.add("9");
+        descriptionContentIds21.add("10");
+        descriptionContentIds21.add("11");
+        descriptionContentIds21.add("12");
+        descriptionContentIds21.add("13");
+        descriptionContentIds21.add("14");
+        descriptionContentIds21.add("15");
+        descriptionContentIds21.add("16");
+        descriptionContentIds21.add("17");
+        descriptionContentIds21.add("18");
+        descriptionContentIds21.add("19");
+        descriptionContentIds21.add("20");
+        descriptionContentIds21.add("21");
+        return this.descriptionContentIds21;
+    }
+
+    public List<String> getMoodContentIds21() {
+        moodContentIds21.add("101");
+        moodContentIds21.add("102");
+        moodContentIds21.add("103");
+        moodContentIds21.add("104");
+        moodContentIds21.add("105");
+        moodContentIds21.add("106");
+        moodContentIds21.add("107");
+        moodContentIds21.add("108");
+        moodContentIds21.add("109");
+        moodContentIds21.add("110");
+        moodContentIds21.add("111");
+        moodContentIds21.add("112");
+        moodContentIds21.add("113");
+        moodContentIds21.add("114");
+        moodContentIds21.add("115");
+        moodContentIds21.add("116");
+        moodContentIds21.add("117");
+        moodContentIds21.add("118");
+        moodContentIds21.add("119");
+        moodContentIds21.add("120");
+        moodContentIds21.add("121");
+        return this.moodContentIds21;
+    }
+
+    public List<String> getPersonalContentIds21() {
+        personalContentIds21.add("201");
+        personalContentIds21.add("202");
+        personalContentIds21.add("203");
+        personalContentIds21.add("204");
+        personalContentIds21.add("205");
+        personalContentIds21.add("206");
+        personalContentIds21.add("207");
+        personalContentIds21.add("208");
+        personalContentIds21.add("209");
+        personalContentIds21.add("210");
+        personalContentIds21.add("211");
+        personalContentIds21.add("212");
+        personalContentIds21.add("213");
+        personalContentIds21.add("214");
+        personalContentIds21.add("215");
+        personalContentIds21.add("216");
+        personalContentIds21.add("217");
+        personalContentIds21.add("218");
+        personalContentIds21.add("219");
+        personalContentIds21.add("220");
+        personalContentIds21.add("2221");
+
+        personalContentIds21.add("317");
+        personalContentIds21.add("318");
+        personalContentIds21.add("319");
+        personalContentIds21.add("320");
+        personalContentIds21.add("321");
+
+        return this.personalContentIds21;
+    }
 
 
 
     @Override
-    public Mono<MainResponseDto> getAllContentIdsFromModel(String subsr) {
+//    public Mono<MainResponseDto> getAllContentIdsFromModel(String subsr) {
+    public MainResponseDto getAllContentIdsFromModel(String subsr) {
         //직전에 모든 추천결과 21개를 보지 않은 상태로 /main에 재진입했을 때 처음부터 다시 받아오기 위해 clear
 //        TODO : 추후 삭제 (231206)
         if (!receivedDescriptionContentIds.getReceivedDescriptionDataList().isEmpty() || !receivedMoodContentIds.getReceivedMoodDataList().isEmpty() || !receivedPersonalContentIds.getReceivedPersonalDataList().isEmpty()) {
@@ -157,67 +154,75 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
         }
 
         ToModelDto toModelDto = setDataForModel(subsr);
-
-        WebClient webClient = WebClient.builder()
-//                .baseUrl("http://1.220.201.108:8000")
-                .baseUrl("lv3-loadbalancer-f-725358857.ap-northeast-2.elb.amazonaws.com")
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .build();
-
-        return webClient.post()
-                .uri("/prcs_models")
-                .body(Mono.just(toModelDto), ToModelDto.class)
-                .retrieve()
-                .bodyToMono(String.class)
-                .flatMap(result -> {
-                    // 비동기 작업 완료 후 처리할 로직
-                    parse(result);
-
-                    List<String> descriptionList = new ArrayList<>();
-                    List<String> moodList = new ArrayList<>();
-                    List<String> personalList = new ArrayList<>();
-                    for (int i = 0; i < descriptionModelDataDto.getDescriptonData().length(); i++) {
-                        descriptionList.add((String) descriptionModelDataDto.getDescriptonData().get(i));
-                    }
-                    for (int j = 0; j < moodModelDataDto.getMoodData().length(); j++) {
-                        moodList.add((String) moodModelDataDto.getMoodData().get(j));
-                    }
-                    for (int k = 0; k < personalModelDataDto.getPersonalData().length(); k++) {
-                        personalList.add((String) personalModelDataDto.getPersonalData().get(k));
-                    }
-
-                    List<String> validatedDescriptionContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(descriptionList);
-                    List<String> validatedMoodContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(descriptionList);
-                    List<String> validatedPersonalContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(descriptionList);
-
-                    receivedDescriptionContentIds.setReceivedDescriptionDataList(validatedDescriptionContentIdList);
-                    receivedMoodContentIds.setReceivedMoodDataList(validatedMoodContentIdList);
-                    receivedPersonalContentIds.setReceivedPersonalDataList(validatedPersonalContentIdList);
-
-                    System.out.println("비동기 블럭 내 subsr 사용 가능? = " + subsr);
-
-                    List<String> descriptionContentIds21 = this.getsubList(receivedDescriptionContentIds.getReceivedDescriptionDataList(), subsr);
-                    List<String> moodContentIds21 = this.getsubList(receivedMoodContentIds.getReceivedMoodDataList(), subsr);
-                    List<String> personalContentIds21 = this.getsubList(receivedPersonalContentIds.getReceivedPersonalDataList(), subsr);
+//
+//        WebClient webClient = WebClient.builder()
+////                .baseUrl("http://1.220.201.108:8000")
+//                .baseUrl("lv3-loadbalancer-f-725358857.ap-northeast-2.elb.amazonaws.com")
+//                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+//                .build();
+//
+//        return webClient.post()
+//                .uri("/prcs_models")
+//                .body(Mono.just(toModelDto), ToModelDto.class)
+//                .retrieve()
+//                .bodyToMono(String.class)
+//                .flatMap(result -> {
+//                    // 비동기 작업 완료 후 처리할 로직
+//                    parse(result);
+//
+//                    List<String> descriptionList = new ArrayList<>();
+//                    List<String> moodList = new ArrayList<>();
+//                    List<String> personalList = new ArrayList<>();
+//                    for (int i = 0; i < descriptionModelDataDto.getDescriptonData().length(); i++) {
+//                        descriptionList.add((String) descriptionModelDataDto.getDescriptonData().get(i));
+//                    }
+//                    for (int j = 0; j < moodModelDataDto.getMoodData().length(); j++) {
+//                        moodList.add((String) moodModelDataDto.getMoodData().get(j));
+//                    }
+//                    for (int k = 0; k < personalModelDataDto.getPersonalData().length(); k++) {
+//                        personalList.add((String) personalModelDataDto.getPersonalData().get(k));
+//                    }
+//
+//                    List<String> validatedDescriptionContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(descriptionList);
+//                    List<String> validatedMoodContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(descriptionList);
+//                    List<String> validatedPersonalContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(descriptionList);
+//
+//                    receivedDescriptionContentIds.setReceivedDescriptionDataList(validatedDescriptionContentIdList);
+//                    receivedMoodContentIds.setReceivedMoodDataList(validatedMoodContentIdList);
+//                    receivedPersonalContentIds.setReceivedPersonalDataList(validatedPersonalContentIdList);
+//
+//                    System.out.println("비동기 블럭 내 subsr 사용 가능? = " + subsr);
+//
+//                    List<String> descriptionContentIds21 = this.getsubList(receivedDescriptionContentIds.getReceivedDescriptionDataList(), subsr);
+//                    List<String> moodContentIds21 = this.getsubList(receivedMoodContentIds.getReceivedMoodDataList(), subsr);
+//                    List<String> personalContentIds21 = this.getsubList(receivedPersonalContentIds.getReceivedPersonalDataList(), subsr);
 
 //                    TODO : vodReloadService 삭제 시 내부 buildToClient1stDto 메서드 옮겨오기
 
                     // 결과 반환
 //                    genre_data로 되어있는지? mood_data로 되어있는지? 프론트에 key값 물어보기
-                    return Mono.just(MainResponseDto.builder()
-                                            .description_data(descriptionContentIds21.stream().map(vodReloadService::buildToClient1stDto).toList())
-                                            .genre_data(moodContentIds21.stream().map(vodReloadService::buildToClient1stDto).toList())
-                                            .personal_data(personalContentIds21.stream().map(vodReloadService::buildToClient1stDto).toList())
+//        return Mono.just(MainResponseDto.builder()
+//                                            .description_data(descriptionContentIds21.stream().map(vodReloadService::buildToClient1stDto).toList())
+//                                            .genre_data(moodContentIds21.stream().map(vodReloadService::buildToClient1stDto).toList())
+//                                            .personal_data(personalContentIds21.stream().map(vodReloadService::buildToClient1stDto).toList())
+
+
 //                            .description_data(vodReloadService.reloadRec(receivedDescriptionContentIds.getReceivedDescriptionDataList()))
 //                            .genre_data(vodReloadService.reloadRec(receivedMoodContentIds.getReceivedMoodDataList()))
 //                            .personal_data(vodReloadService.reloadRec(receivedPersonalContentIds.getReceivedPersonalDataList()))
-                            .build());
-                })
+        return MainResponseDto.builder()
+                .description_data(this.getsubList(this.getDescriptionContentIds21(), subsr).stream().map(vodReloadService::buildToClient1stDto).toList())
+                .genre_data(this.getsubList(this.getMoodContentIds21(), subsr).stream().map(vodReloadService::buildToClient1stDto).toList())
+                        .personal_data(this.getsubList(this.getPersonalContentIds21(), subsr).stream().map(vodReloadService::buildToClient1stDto).toList())
 
-                .doOnError(error -> {
-                    System.out.println(toModelDto);
-                    System.err.println("에러 발생: " + error);
-                });
+                .build();
+
+//                })
+
+//                .doOnError(error -> {
+//                    System.out.println(toModelDto);
+//                    System.err.println("에러 발생: " + error);
+//                });
     }
 
     //    TODO : access modifier private으로 바꿀 수 있으면 바꾸기
