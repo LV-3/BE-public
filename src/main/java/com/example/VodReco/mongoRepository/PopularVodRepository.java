@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 public interface PopularVodRepository extends MongoRepository<PopularVod, Long> {
-    List<PopularVod> findByTimeGroupAndCountGreaterThanEqual(String timeGroup, Integer count);
+    List<PopularVod> findTop10ByTimeGroupOrderByCountDesc(String timeGroup);
 }
