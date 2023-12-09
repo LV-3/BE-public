@@ -3,10 +3,12 @@ package com.example.VodReco.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "vods") // (collection = "vods") 꼭 써야 DB에 넣어둔 컬렉션과 매핑돼서 데이터 가져올 수 있음! (231109)
+//@CompoundIndex(def = "{'title': 'text', 'actors': 'text'}")
 @Getter
 @NoArgsConstructor
 public class Vod {
