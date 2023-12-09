@@ -14,7 +14,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .allowedOrigins("http://1.220.201.108:3001", "http://1.220.201.108:3000", "http://1.223.55.43:8000", "http://1.220.201.108:8000",
                         "http://lv3-s3.s3-website.ap-northeast-2.amazonaws.com", "lv3-loadbalancer-f-725358857.ap-northeast-2.elb.amazonaws.com",
                         "http://hellogptv.com", "https://front.hellogptv.com",
-                        "http://192.168.123.105:3000", "http://175.117.217.50:3000")
+                        "http://192.168.123.105:3000",
+                        "http://175.117.217.50:3000", "http://172.26.208.1:3000")
                 .allowedMethods("OPTIONS", "GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*")
                 .allowCredentials(true)
