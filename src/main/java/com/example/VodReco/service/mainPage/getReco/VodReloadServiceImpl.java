@@ -46,30 +46,48 @@ public class VodReloadServiceImpl implements VodReloadService{
         }
     }
 
-        //별도 테이블 만들면 이 메서드 수정(231126)
         public ToClient1stDto buildToClient1stDto(String contentId){
             VodDto vodDto = vodtoVodDtoWrapper.toVodDto(vodRepository.findByContentId(contentId));
 //            프론트엔드에 mood,gpt_genres, gpt_subjects 하나씩만 보내기 위해 subList(0,1) 이용 (231206)
 
-//            TODO : mood, gpt_subjects, gpt_genres가 null일 경우 간단한 null처리. 추후 리팩토링 (231206)
+//            mood, gpt_subjects, gpt_genres가 null일 경우 간단한 null처리. 추후 리팩토링 (231206)
+//            List<String> gpt_subjects = new ArrayList<>();
+//            List<String> gpt_genres = new ArrayList<>();
+//            List<String> mood = new ArrayList<>();
+//
+//            if (vodDto.getMood() != null && !vodDto.getMood().isEmpty()) {
+//                mood.add(vodDto.getMood().get(0));
+//            }
+//            if (vodDto.getGpt_subjects() != null && !vodDto.getGpt_subjects().isEmpty()) {
+//                gpt_subjects.add(vodDto.getGpt_subjects().get(0));
+//            }
+//            if (vodDto.getGpt_genres() != null && !vodDto.getGpt_genres().isEmpty()) {
+//                gpt_genres.add(vodDto.getGpt_genres().get(0));
+//            }
+
             List<String> gpt_subjects = new ArrayList<>();
             List<String> gpt_genres = new ArrayList<>();
             List<String> mood = new ArrayList<>();
+            if (!vodDto.getUniqueTemplates().isEmpty()) {
+                String template1 = vodDto.getUniqueTemplates().get(0);
+                String template2 = vodDto.getUniqueTemplates().get(1);
+                String template3 = vodDto.getUniqueTemplates().get(2);
 
-            if (vodDto.getMood() != null && !vodDto.getMood().isEmpty()) {
-                mood.add(vodDto.getMood().get(0));
+                mood.add(template1);
+                gpt_genres.add(template2);
+                gpt_subjects.add(template3);
+
             }
-            if (vodDto.getGpt_subjects() != null && !vodDto.getGpt_subjects().isEmpty()) {
-                gpt_subjects.add(vodDto.getGpt_subjects().get(0));
-            }
-            if (vodDto.getGpt_genres() != null && !vodDto.getGpt_genres().isEmpty()) {
-                gpt_genres.add(vodDto.getGpt_genres().get(0));
-            }
+
 
             return ToClient1stDto.builder().contentId(contentId).posterurl(vodDto.getPosterurl()).title(vodDto.getTitle())
                     .mood(mood).gpt_genres(gpt_genres).gpt_subjects(gpt_subjects)
                     .build();
         }
+
+    public void checkIfNotTranslated(List<String> list, String templateWord) {
+        if templateWord.
+    }
 
 
     }
