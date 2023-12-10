@@ -23,11 +23,13 @@ public class ForDeepFM {
     private String gpt_genres;
     @Field(name = "template_C_TopGroup")
     private String gpt_subjects;
-    @Field(name = "liked")
-    private Integer liked;
+//    @Field(name = "liked")
+//    private Integer liked;
+    @Field(name = "user_preference")
+    private Integer userPreference;
 
     @Builder
-    public ForDeepFM(String subsr, String contentId, String category, String genre, String mood, String gpt_genres, String gpt_subjects, Integer liked) {
+    public ForDeepFM(String subsr, String contentId, String category, String genre, String mood, String gpt_genres, String gpt_subjects, Integer userPreference) {
         this.subsr = subsr;
         this.contentId = contentId;
         this.category = category;
@@ -35,6 +37,6 @@ public class ForDeepFM {
         this.mood = mood;
         this.gpt_genres = gpt_genres;
         this.gpt_subjects = gpt_subjects;
-        this.liked = liked;
+        this.userPreference = userPreference;
     }
 }
