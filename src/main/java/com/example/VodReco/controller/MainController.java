@@ -22,6 +22,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -63,32 +64,16 @@ public class MainController {
     @LogExecutionTime
     @PostMapping("")
 //    public ResponseEntity<Mono<MainResponseDto>> getAllRecoFromModel(@RequestBody UserDto userDto) {
-    public ResponseEntity<MainResponseDto> getAllRecoFromModel(@RequestBody UserDto userDto) {
-        if (vodGetRecoService.getAllContentIdsFromModel(userDto.getSubsr()) != null) {
-            return ResponseEntity.ok(vodGetRecoService.getAllContentIdsFromModel(userDto.getSubsr()));
-        }
-        //에러코드 204
-            return ResponseEntity.noContent().build();
+//    public ResponseEntity<MainResponseDto> getAllRecoFromModel(@RequestBody UserDto userDto) {
+    public Mono<MainResponseDto> getAllRecoFromModel(@RequestBody UserDto userDto) {
+//        if (vodGetRecoService.getAllContentIdsFromModel(userDto.getSubsr()) != null) {
+//            return ResponseEntity.ok(vodGetRecoService.getAllContentIdsFromModel(userDto.getSubsr()));
+            return vodGetRecoService.getAllContentIdsFromModel(userDto.getSubsr());
+//        }
+//        //에러코드 204
+//            return ResponseEntity.noContent().build();
+
     }
-        //최초 접속이 아닌 새로고침 시에는 subsr 필요 없음. 수정 요망(231126)
-//    @LogExecutionTime
-//    @PostMapping("/reload1")
-//    public List<ToClient1stDto> reloadDescriptionModel() {
-////        System.out.println("줄거리 인덱스 확인 = " + receivedDescriptionContentIds.getReceivedDescriptionDataList());
-//        return vodReloadService.reloadRec(receivedDescriptionContentIds.getReceivedDescriptionDataList());
-//    }
-//
-//    @PostMapping("/reload2")
-//    public List<ToClient1stDto> reloadMoodModel() {
-////        System.out.println("무드 인덱스 확인 = " + receivedMoodContentIds.getReceivedMoodDataList());
-//        return vodReloadService.reloadRec(receivedMoodContentIds.getReceivedMoodDataList());
-//    }
-//
-//    @PostMapping("/reload3")
-//    public List<ToClient1stDto> reloadPersonalModel() {
-////        System.out.println("퍼스널 인덱스 확인 = " + receivedPersonalContentIds.getReceivedPersonalDataList());
-//        return vodReloadService.reloadRec(receivedPersonalContentIds.getReceivedPersonalDataList());
-//    }
 
 
     @GetMapping("/{mood}")

@@ -3,6 +3,7 @@ package com.example.VodReco.service.mainPage.getReco;
 import com.example.VodReco.dto.VodDto;
 import com.example.VodReco.dto.client.ToClient1stDto;
 import com.example.VodReco.mongoRepository.VodRepository;
+import com.example.VodReco.util.CheckNotTranslatedTemplatedWords;
 import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,22 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class VodReloadServiceImpl implements VodReloadService{
-
-
-
+public class VodReloadServiceImpl{
     private final VodRepository vodRepository;
     private final VodtoVodDtoWrapper vodtoVodDtoWrapper;
+    private final CheckNotTranslatedTemplatedWords checkNotTranslatedTemplatedWords;
 
-    @Override
-    public List<ToClient1stDto> reloadRec(List<String> list) {
-//    public List<ToClient1stDto> reloadDescriptionModelRec() {
-//        System.out.println("content_id List 들어오나 확인 = " + list);
-        return getToClient1stDtos(list);
-    }
 
     private List<ToClient1stDto> getToClient1stDtos(List<String> DataList) {
         List<ToClient1stDto> list = new ArrayList<>();
@@ -65,29 +60,26 @@ public class VodReloadServiceImpl implements VodReloadService{
 //                gpt_genres.add(vodDto.getGpt_genres().get(0));
 //            }
 
-            List<String> gpt_subjects = new ArrayList<>();
-            List<String> gpt_genres = new ArrayList<>();
-            List<String> mood = new ArrayList<>();
-            if (!vodDto.getUniqueTemplates().isEmpty()) {
-                String template1 = vodDto.getUniqueTemplates().get(0);
-                String template2 = vodDto.getUniqueTemplates().get(1);
-                String template3 = vodDto.getUniqueTemplates().get(2);
-
-                mood.add(template1);
-                gpt_genres.add(template2);
-                gpt_subjects.add(template3);
-
+            if (vodDto.getUniqueTemplates() != null) {
+                //uniqueTemplates의 요소 하나씩 get해 번역 검사 돌린 후 tags 리스트에 add하기.
+                //tags리스트의 요소 개수는 최대 3개까지 && uniqueTemplates의 요소 개수 이하의 i에서 번역검사 + add 반복.
+                    List<String> tags = new ArrayList<>();
+                    int i = 0;
+                    while (tags.size() <= 3 && i < vodDto.getUniqueTemplates().size()) {
+                        if (checkNotTranslatedTemplatedWords.checkIfNotTranslated(vodDto.getUniqueTemplates().get(i))) {
+                            tags.add(vodDto.getUniqueTemplates().get(i));
+                        }
+                        i++;
+                    }
+                    return ToClient1stDto.builder().contentId(contentId).posterurl(vodDto.getPosterurl()).title(vodDto.getTitle())
+                            .tags(tags)
+                            .build();
+                //uniqueTemplates가 null인 경우 빈 리스트 리턴
+            } else {
+                return ToClient1stDto.builder().contentId(contentId).posterurl(vodDto.getPosterurl()).title(vodDto.getTitle())
+                        .tags(new ArrayList<>())
+                        .build();
             }
-
-
-            return ToClient1stDto.builder().contentId(contentId).posterurl(vodDto.getPosterurl()).title(vodDto.getTitle())
-                    .mood(mood).gpt_genres(gpt_genres).gpt_subjects(gpt_subjects)
-                    .build();
         }
-
-    public void checkIfNotTranslated(List<String> list, String templateWord) {
-        if templateWord.
-    }
-
 
     }
