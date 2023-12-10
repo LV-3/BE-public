@@ -8,17 +8,9 @@ import com.example.VodReco.dto.model.fromModel.receivedContentIds.ReceivedDescri
 import com.example.VodReco.dto.model.fromModel.receivedContentIds.ReceivedMoodContentIds;
 import com.example.VodReco.dto.model.fromModel.receivedContentIds.ReceivedPersonalContentIds;
 import com.example.VodReco.dto.model.toModel.*;
-import com.example.VodReco.mongoRepository.ForDeepFMRepository;
-import com.example.VodReco.mongoRepository.UserWatchRepository;
-import com.example.VodReco.mongoRepository.UserWatchTotalRepository;
-import com.example.VodReco.mongoRepository.VodRepository;
-import com.example.VodReco.util.CheckNotTranslatedTemplatedWords;
-import com.example.VodReco.util.ForDeepFM.ToForDeepFMDtoWrapper;
-import com.example.VodReco.util.StringToListWrapper;
 import com.example.VodReco.util.forRecommendation.SetDataToSendToClient;
 import com.example.VodReco.util.forRecommendation.SetDataToSendToModel;
 import com.example.VodReco.util.series.ValidateDuplicateSeriesIdWrapper;
-import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -44,8 +36,6 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
     private final ReceivedPersonalContentIds receivedPersonalContentIds;
 
     private final ValidateDuplicateSeriesIdWrapper validateDuplicateSeriesIdWrapper;
-
-    private final CheckNotTranslatedTemplatedWords checkNotTranslatedTemplatedWords;
 
     private final SetDataToSendToModel setDataToSendToModel;
     private final SetDataToSendToClient setDataToSendToClient;
@@ -143,13 +133,6 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
     @Override
     public Mono<MainResponseDto> getAllContentIdsFromModel(String subsr) {
 //    public MainResponseDto getAllContentIdsFromModel(String subsr) {
-        //직전에 모든 추천결과 21개를 보지 않은 상태로 /main에 재진입했을 때 처음부터 다시 받아오기 위해 clear
-//        TODO : 추후 삭제 (231206)
-        if (!receivedDescriptionContentIds.getReceivedDescriptionDataList().isEmpty() || !receivedMoodContentIds.getReceivedMoodDataList().isEmpty() || !receivedPersonalContentIds.getReceivedPersonalDataList().isEmpty()) {
-            receivedDescriptionContentIds.getReceivedDescriptionDataList().clear();
-            receivedMoodContentIds.getReceivedMoodDataList().clear();
-            receivedPersonalContentIds.getReceivedPersonalDataList().clear();
-        }
 
         ToModelDto toModelDto = setDataToSendToModel.setDataForModel(subsr);
 
@@ -168,6 +151,7 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
                             // 비동기 작업 완료 후 처리할 로직
                             setDataToSendToClient.parse(result);
 
+                            //JSONArray로 받아온 content_id들 리스트로 변환
                             List<String> descriptionList = new ArrayList<>();
                             List<String> moodList = new ArrayList<>();
                             List<String> personalList = new ArrayList<>();
@@ -177,31 +161,36 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
                             for (int j = 0; j < moodModelDataDto.getMoodData().length(); j++) {
                                 moodList.add((String) moodModelDataDto.getMoodData().get(j));
                             }
-                            for (int k = 0; k < personalModelDataDto.getPersonalData().length(); k++) {
+//                            0번째 index는 별도 처리(231211)
+                            for (int k = 1; k < personalModelDataDto.getPersonalData().length(); k++) {
                                 personalList.add((String) personalModelDataDto.getPersonalData().get(k));
                             }
 
-                            List<String> validatedDescriptionContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(descriptionList);
-                            List<String> validatedMoodContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(descriptionList);
-                            List<String> validatedPersonalContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(descriptionList);
 
+                            //시리즈 처리
+                            List<String> validatedDescriptionContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(descriptionList);
+                            List<String> validatedMoodContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(moodList);
+                            List<String> validatedPersonalContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(personalList);
+
+                            //시리즈 처리 통과한 리스트
                             receivedDescriptionContentIds.setReceivedDescriptionDataList(validatedDescriptionContentIdList);
                             receivedMoodContentIds.setReceivedMoodDataList(validatedMoodContentIdList);
                             receivedPersonalContentIds.setReceivedPersonalDataList(validatedPersonalContentIdList);
 
                             System.out.println("비동기 블럭 내 subsr 사용 가능? = " + subsr);
 
+                            //시리즈 처리 통과한 리스트 getsubList처리해서 클라이언트에 리턴하는 리스트의 요소 개수 21개 맞추기
                             List<String> descriptionContentIds21 = setDataToSendToClient.getsubList(receivedDescriptionContentIds.getReceivedDescriptionDataList(), subsr);
                             List<String> moodContentIds21 = setDataToSendToClient.getsubList(receivedMoodContentIds.getReceivedMoodDataList(), subsr);
                             List<String> personalContentIds21 = setDataToSendToClient.getsubList(receivedPersonalContentIds.getReceivedPersonalDataList(), subsr);
-
-//                    TODO : vodReloadService 삭제 시 내부 buildToClient1stDto 메서드 옮겨오기
 
                             // 결과 반환
                             return Mono.just(MainResponseDto.builder()
                                     .description_data(descriptionContentIds21.stream().map(setDataToSendToClient::buildToClient1stDto).toList())
                                     .genre_data(moodContentIds21.stream().map(setDataToSendToClient::buildToClient1stDto).toList())
                                     .personal_data(personalContentIds21.stream().map(setDataToSendToClient::buildToClient1stDto).toList())
+                                    //231211 추가
+                                    .personal_words((String) personalModelDataDto.getPersonalData().get(0))
                                     .build());
                         })
 
