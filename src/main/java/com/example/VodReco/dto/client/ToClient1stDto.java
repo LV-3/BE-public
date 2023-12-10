@@ -14,17 +14,13 @@ public class ToClient1stDto {
     private String contentId;
     private String posterurl;
     private String title;
-    private List<String> mood;
-    private List<String> gpt_genres;
-    private List<String> gpt_subjects;
+    private List<String> tags;
 
     @Builder
-    public ToClient1stDto(String contentId, String posterurl, String title, List<String> mood, List<String> gpt_subjects, List<String> gpt_genres) {
+    public ToClient1stDto(String contentId, String posterurl, String title, List<String> tags) {
         this.contentId = contentId;
         this.posterurl = posterurl;
         this.title = title;
-        this.mood = mood;
-        this.gpt_genres = gpt_genres;
-        this.gpt_subjects = gpt_subjects;
+        this.tags = tags;
     }
 }
