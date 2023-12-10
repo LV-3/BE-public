@@ -7,14 +7,18 @@ import com.example.VodReco.dto.genre.BasicInfoOfVodDto;
 import com.example.VodReco.dto.model.fromModel.receivedContentIds.ReceivedDescriptionContentIds;
 import com.example.VodReco.dto.model.fromModel.receivedContentIds.ReceivedMoodContentIds;
 import com.example.VodReco.dto.model.fromModel.receivedContentIds.ReceivedPersonalContentIds;
+import com.example.VodReco.dto.popular.ViewPopularVodsDto;
 import com.example.VodReco.service.mainPage.getReco.VodGetRecoServiceImpl;
 import com.example.VodReco.service.mainPage.getReco.VodReloadServiceImpl;
+import com.example.VodReco.service.mainPage.viewPopularVods.ViewPopularVodsServiceImpl;
 import com.example.VodReco.service.mainPage.viewVodsByMood.VodviewVodsByMoodServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -33,17 +37,20 @@ public class MainController {
     private final ReceivedDescriptionContentIds receivedDescriptionContentIds;
     private final ReceivedMoodContentIds receivedMoodContentIds;
     private final ReceivedPersonalContentIds receivedPersonalContentIds;
+    private final ViewPopularVodsServiceImpl viewPopularVodsService;
 
     @Lazy
 //    @Autowired
 //    두 개 붙으면 Lazy가 이김
-    public MainController(VodviewVodsByMoodServiceImpl vodviewVodsByMoodService, VodGetRecoServiceImpl vodGetRecoService, VodReloadServiceImpl vodReloadService, ReceivedDescriptionContentIds receivedDescriptionContentIds, ReceivedMoodContentIds receivedMoodContentIds, ReceivedPersonalContentIds receivedPersonalContentIds) {
+    public MainController(VodviewVodsByMoodServiceImpl vodviewVodsByMoodService, VodGetRecoServiceImpl vodGetRecoService, VodReloadServiceImpl vodReloadService, ReceivedDescriptionContentIds receivedDescriptionContentIds, ReceivedMoodContentIds receivedMoodContentIds, ReceivedPersonalContentIds receivedPersonalContentIds, , ViewPopularVodsServiceImpl viewPopularVodsService) {
         this.vodviewVodsByMoodService = vodviewVodsByMoodService;
         this.vodGetRecoService = vodGetRecoService;
         this.vodReloadService = vodReloadService;
         this.receivedDescriptionContentIds = receivedDescriptionContentIds;
         this.receivedMoodContentIds = receivedMoodContentIds;
         this.receivedPersonalContentIds = receivedPersonalContentIds;
+        this.viewPopularVodsService = viewPopularVodsService;
+
     }
 
     @LogExecutionTime
@@ -84,6 +91,26 @@ public class MainController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(vodviewVodsByMoodService.sendEachMoodVods(mood));
+    }
+
+    @PostMapping("/popular")
+    public ResponseEntity<List<ViewPopularVodsDto>> getPopularVodsForMainPage() {
+        LocalDateTime now = LocalDateTime.now();
+        int hour = now.getHour();
+        String timeGroup;
+
+        if (hour >= 18) {
+            timeGroup = "night";
+        } else if (hour >= 6 && hour < 12) {
+            timeGroup = "am";
+        } else if (hour >= 12 && hour < 18) {
+            timeGroup = "pm";
+        } else {
+            timeGroup = "dawn";
+        }
+
+        List<ViewPopularVodsDto> popularVods = viewPopularVodsService.getPopularVodsByTimeGroup(timeGroup);
+        return ResponseEntity.ok(popularVods);
     }
 
 
