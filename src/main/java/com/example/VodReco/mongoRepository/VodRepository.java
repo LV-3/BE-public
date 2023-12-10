@@ -13,7 +13,7 @@ public interface VodRepository extends MongoRepository<Vod,String> {
     Vod findByContentId(String contentId);
     List<Vod> findAllByGenre(String genre);
 
-    List<Vod> findByMoodContaining(String mood);
+    List<Vod> findByUniqueTemplatesContaining(String tag);
     List<Vod> findBySeriesId(String seriesId);
 
     //검색기능
