@@ -1,6 +1,5 @@
 package com.example.VodReco.service.mainPage.getReco;
 
-import com.example.VodReco.domain.*;
 import com.example.VodReco.dto.client.MainResponseDto;
 import com.example.VodReco.dto.model.fromModel.DescriptionModelDataDto;
 import com.example.VodReco.dto.model.fromModel.MoodModelDataDto;
@@ -13,13 +12,14 @@ import com.example.VodReco.mongoRepository.ForDeepFMRepository;
 import com.example.VodReco.mongoRepository.UserWatchRepository;
 import com.example.VodReco.mongoRepository.UserWatchTotalRepository;
 import com.example.VodReco.mongoRepository.VodRepository;
+import com.example.VodReco.util.CheckNotTranslatedTemplatedWords;
 import com.example.VodReco.util.ForDeepFM.ToForDeepFMDtoWrapper;
 import com.example.VodReco.util.StringToListWrapper;
-import com.example.VodReco.util.ValidateDuplicateSeriesIdWrapper;
+import com.example.VodReco.util.forRecommendation.SetDataToSendToClient;
+import com.example.VodReco.util.forRecommendation.SetDataToSendToModel;
+import com.example.VodReco.util.series.ValidateDuplicateSeriesIdWrapper;
 import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
 import lombok.RequiredArgsConstructor;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -34,14 +34,6 @@ import java.util.*;
 @Transactional
 public class VodGetRecoServiceImpl implements VodGetRecoService {
 
-    private final UserWatchTotalRepository userWatchTotalRepository;
-    private final UserWatchRepository userWatchRepository;
-    private final VodtoVodDtoWrapper vodtoVodDtoWrapper;
-    private final ForDeepFMRepository forDeepFMRepository;
-    private final ToForDeepFMDtoWrapper toForDeepFMDtoWrapper;
-    private final VodRepository vodRepository;
-    private final StringToListWrapper stringToListWrapper;
-
     private final DescriptionModelDataDto descriptionModelDataDto;
     private final MoodModelDataDto moodModelDataDto;
     private final PersonalModelDataDto personalModelDataDto;
@@ -53,7 +45,10 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
 
     private final ValidateDuplicateSeriesIdWrapper validateDuplicateSeriesIdWrapper;
 
-    private final VodReloadServiceImpl vodReloadService;
+    private final CheckNotTranslatedTemplatedWords checkNotTranslatedTemplatedWords;
+
+    private final SetDataToSendToModel setDataToSendToModel;
+    private final SetDataToSendToClient setDataToSendToClient;
 
 
 
@@ -145,7 +140,6 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
     }
 
 
-
     @Override
     public Mono<MainResponseDto> getAllContentIdsFromModel(String subsr) {
 //    public MainResponseDto getAllContentIdsFromModel(String subsr) {
@@ -157,7 +151,7 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
             receivedPersonalContentIds.getReceivedPersonalDataList().clear();
         }
 
-        ToModelDto toModelDto = setDataForModel(subsr);
+        ToModelDto toModelDto = setDataToSendToModel.setDataForModel(subsr);
 
         WebClient webClient = WebClient.builder()
 //                .baseUrl("http://1.220.201.108:8000")
@@ -172,7 +166,7 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
                 .bodyToMono(String.class)
                 .flatMap(result -> {
                             // 비동기 작업 완료 후 처리할 로직
-                            parse(result);
+                            setDataToSendToClient.parse(result);
 
                             List<String> descriptionList = new ArrayList<>();
                             List<String> moodList = new ArrayList<>();
@@ -197,17 +191,17 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
 
                             System.out.println("비동기 블럭 내 subsr 사용 가능? = " + subsr);
 
-                            List<String> descriptionContentIds21 = this.getsubList(receivedDescriptionContentIds.getReceivedDescriptionDataList(), subsr);
-                            List<String> moodContentIds21 = this.getsubList(receivedMoodContentIds.getReceivedMoodDataList(), subsr);
-                            List<String> personalContentIds21 = this.getsubList(receivedPersonalContentIds.getReceivedPersonalDataList(), subsr);
+                            List<String> descriptionContentIds21 = setDataToSendToClient.getsubList(receivedDescriptionContentIds.getReceivedDescriptionDataList(), subsr);
+                            List<String> moodContentIds21 = setDataToSendToClient.getsubList(receivedMoodContentIds.getReceivedMoodDataList(), subsr);
+                            List<String> personalContentIds21 = setDataToSendToClient.getsubList(receivedPersonalContentIds.getReceivedPersonalDataList(), subsr);
 
 //                    TODO : vodReloadService 삭제 시 내부 buildToClient1stDto 메서드 옮겨오기
 
                             // 결과 반환
                             return Mono.just(MainResponseDto.builder()
-                                    .description_data(descriptionContentIds21.stream().map(vodReloadService::buildToClient1stDto).toList())
-                                    .genre_data(moodContentIds21.stream().map(vodReloadService::buildToClient1stDto).toList())
-                                    .personal_data(personalContentIds21.stream().map(vodReloadService::buildToClient1stDto).toList())
+                                    .description_data(descriptionContentIds21.stream().map(setDataToSendToClient::buildToClient1stDto).toList())
+                                    .genre_data(moodContentIds21.stream().map(setDataToSendToClient::buildToClient1stDto).toList())
+                                    .personal_data(personalContentIds21.stream().map(setDataToSendToClient::buildToClient1stDto).toList())
                                     .build());
                         })
 
@@ -226,104 +220,6 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
                 });
     }
 
-    //    TODO : access modifier private으로 바꿀 수 있으면 바꾸기
-//    21개 개수 맞추는 메서드
-    public List<String> getsubList(List<String> list, String subsr) {
-        Set<String> set = new HashSet<>(list); //이론상 이 상태에는 중복 없음. 이후 처리 위해 set으로 미리 변환한 것
-        if (list.size() >= 21) {
-            List<String> first21s = list.stream()
-                    .limit(21)
-                    .toList();
-            return first21s;
-        } else {
-            while (set.size() < 21) {
-//                전체 중복 방지 위해 set 사용
-                set.add(this.getSortedByUserPreference(subsr).get(0));
-                this.getSortedByUserPreference(subsr).remove(0);
-            }
-//            TODO : user_preference 데이터까지 전부 써도 21개가 안 되는 예외는 아직 처리 안 함
-            List<String> first21s = set.stream().toList();
-            return first21s;
-        }
-    }
-
-
-    public List<String> getSortedByUserPreference(String subsr) {
-        List<String> list = new ArrayList<>();
-        List<UserWatch> sortedUserWatchs = userWatchRepository.findBySubsrOrderByUserPreferenceDesc(subsr);
-        for (UserWatch s : sortedUserWatchs) {
-            if (s.getContentId() == null) {
-                list.add(validateDuplicateSeriesIdWrapper.convertToMinContentId(s.getSeriesId()));
-            } else {
-                list.add(s.getContentId());
-            }
-        }
-
-        return list;
-//               FIXME : userWatch에는 content_id가 없는 데이터가 많음. UserWatch대신 UserWatchTotal에서 조회한 뒤
-//                ContentIdToSeriesIdWrapper → ValidateDuplicateSeriesId 내부의 convertToMinContentId에 집어넣고
-//                리턴받은 content_id를 List에 add
-//                FIXME : 2번째 방안 - userWatch for문 돌려서 if content_id null이면 getSeriesId해서 convertToMinContentId에 집어넣고 리턴받은 content_id를 List에 add.
-//                 2번 방안으로 구현. UserWatchTotal은 너무 방대함. 조회 속도 위함
-
-    }
-
-    public ToModelDto setDataForModel(String subsr) {
-        List<EveryDescriptionDto> descriptionResponseList = new ArrayList<>();
-        List<EveryMoodDto> moodResponseList = new ArrayList<>();
-        List<EveryPersonalDto> personalResponseList = new ArrayList<>();
-
-        //mood는 null들어올 경우 NPE(231127)
-        for (UserWatchTotal v : userWatchTotalRepository.findBySubsr(subsr)) {
-            String contentId = v.getContentId();
-            Vod byContentId = vodRepository.findByContentId(contentId);
-
-            EveryDescriptionDto everyDescriptionDto;
-            //시리즈물은 SMRY 대신 TITLE_SMRY 전송
-            if (byContentId.getIsSeries() == 1) {
-                everyDescriptionDto = EveryDescriptionDto.builder()
-                        .content_id(contentId).description(vodtoVodDtoWrapper.toVodDto(byContentId).getTitleDescription())
-                        .build();
-            } else {
-                everyDescriptionDto = EveryDescriptionDto.builder()
-                        .content_id(contentId).description(vodtoVodDtoWrapper.toVodDto(byContentId).getDescription())
-                        .build();
-            }
-            descriptionResponseList.add(everyDescriptionDto);
-
-            EveryMoodDto everyMoodDto = EveryMoodDto.builder()
-                    .content_id(contentId).mood(stringToListWrapper.stringToList(byContentId.getMood()))
-                    .build();
-            moodResponseList.add(everyMoodDto);
-        }
-        for (ForDeepFM f : forDeepFMRepository.findBySubsr(subsr)) {
-            ForDeepFMDto forDeepFMDto = toForDeepFMDtoWrapper.toForDeepFMDto(f);
-            //liked가 1인 데이터만 personalResponseList에 담기
-//            if (forDeepFMDto.getLiked() == 1) {
-                EveryPersonalDto everyPersonalDto = EveryPersonalDto.builder().subsr(Integer.parseInt(subsr)).content_id(Integer.parseInt(forDeepFMDto.getContentId())).ct_cl(forDeepFMDto.getCategory())
-                        .genre_of_ct_cl(forDeepFMDto.getGenre()).template_A_TopGroup(forDeepFMDto.getMood()).template_B_TopGroup(forDeepFMDto.getGpt_genres()).template_C_TopGroup(forDeepFMDto.getGpt_subjects())
-                        .userPreference(forDeepFMDto.getUserPreference())
-                        .build();
-                personalResponseList.add(everyPersonalDto);
-            }
-        return ToModelDto.builder()
-                .description_data(descriptionResponseList)
-                .mood_data(moodResponseList)
-                .personal_data(personalResponseList)
-                .build();
-
-    }
-
-    public void parse(String recoResult) {
-        JSONObject jsonObject = new JSONObject(recoResult);
-        JSONArray descriptionData = jsonObject.getJSONArray("description_data");
-        System.out.println("descriptionData 확인 = " + descriptionData.toString());
-        JSONArray moodData = jsonObject.getJSONArray("mood_data");
-        JSONArray personalData = jsonObject.getJSONArray("personal_data");
-        descriptionModelDataDto.setDescriptonData(descriptionData);
-        moodModelDataDto.setMoodData(moodData);
-        personalModelDataDto.setPersonalData(personalData);
-    }
 
 }
 
