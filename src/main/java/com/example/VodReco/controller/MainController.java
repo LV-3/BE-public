@@ -44,12 +44,12 @@ public class MainController {
     @Lazy
 //    @Autowired
 //    두 개 붙으면 Lazy가 이김
-    public MainController(VodviewVodsByMoodServiceImpl vodviewVodsByMoodService, VodGetRecoServiceImpl vodGetRecoService, VodReloadServiceImpl vodReloadService,
-                          ReceivedDescriptionContentIds receivedDescriptionContentIds, ReceivedMoodContentIds receivedMoodContentIds, ReceivedPersonalContentIds receivedPersonalContentIds,
+    public MainController(VodviewVodsByMoodServiceImpl vodviewVodsByMoodService, VodGetRecoServiceImpl vodGetRecoService,
+                          ReceivedDescriptionContentIds receivedDescriptionContentIds, ReceivedMoodContentIds receivedMoodContentIds,
+                          ReceivedPersonalContentIds receivedPersonalContentIds,
                           ViewPopularVodsServiceImpl viewPopularVodsService, SearchVodServiceImpl searchVodService) {
         this.vodviewVodsByMoodService = vodviewVodsByMoodService;
         this.vodGetRecoService = vodGetRecoService;
-        this.vodReloadService = vodReloadService;
         this.receivedDescriptionContentIds = receivedDescriptionContentIds;
         this.receivedMoodContentIds = receivedMoodContentIds;
         this.receivedPersonalContentIds = receivedPersonalContentIds;
