@@ -6,13 +6,10 @@ import com.example.VodReco.dto.UserDto;
 import com.example.VodReco.dto.VodDto;
 import com.example.VodReco.dto.client.MainResponseDto;
 import com.example.VodReco.dto.genre.BasicInfoOfVodDto;
-import com.example.VodReco.dto.model.fromModel.receivedContentIds.ReceivedDescriptionContentIds;
-import com.example.VodReco.dto.model.fromModel.receivedContentIds.ReceivedMoodContentIds;
-import com.example.VodReco.dto.model.fromModel.receivedContentIds.ReceivedPersonalContentIds;
 import com.example.VodReco.service.mainPage.getReco.VodGetRecoServiceImpl;
 import com.example.VodReco.service.mainPage.searchVods.SearchVodServiceImpl;
 import com.example.VodReco.service.mainPage.viewPopularVods.ViewPopularVodsServiceImpl;
-import com.example.VodReco.service.mainPage.viewVodsByMood.VodviewVodsByMoodServiceImpl;
+import com.example.VodReco.service.mainPage.viewVodsByTag.VodviewVodsByTagServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
@@ -30,29 +27,20 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/main")
 public class MainController {
-    private final VodviewVodsByMoodServiceImpl vodviewVodsByMoodService;
+    private final VodviewVodsByTagServiceImpl vodviewVodsByMoodService;
     private final VodGetRecoServiceImpl vodGetRecoService;
-    private final VodReloadServiceImpl vodReloadService;
 
     //content_id 목록 리스트에 담아둘 객체 스프링 빈에 등록해서 사용(231130)
-    private final ReceivedDescriptionContentIds receivedDescriptionContentIds;
-    private final ReceivedMoodContentIds receivedMoodContentIds;
-    private final ReceivedPersonalContentIds receivedPersonalContentIds;
     private final ViewPopularVodsServiceImpl viewPopularVodsService;
     private final SearchVodServiceImpl searchVodService;
 
     @Lazy
 //    @Autowired
 //    두 개 붙으면 Lazy가 이김
-    public MainController(VodviewVodsByMoodServiceImpl vodviewVodsByMoodService, VodGetRecoServiceImpl vodGetRecoService,
-                          ReceivedDescriptionContentIds receivedDescriptionContentIds, ReceivedMoodContentIds receivedMoodContentIds,
-                          ReceivedPersonalContentIds receivedPersonalContentIds,
+    public MainController(VodviewVodsByTagServiceImpl vodviewVodsByMoodService, VodGetRecoServiceImpl vodGetRecoService,
                           ViewPopularVodsServiceImpl viewPopularVodsService, SearchVodServiceImpl searchVodService) {
         this.vodviewVodsByMoodService = vodviewVodsByMoodService;
         this.vodGetRecoService = vodGetRecoService;
-        this.receivedDescriptionContentIds = receivedDescriptionContentIds;
-        this.receivedMoodContentIds = receivedMoodContentIds;
-        this.receivedPersonalContentIds = receivedPersonalContentIds;
         this.viewPopularVodsService = viewPopularVodsService;
         this.searchVodService = searchVodService;
     }
@@ -72,14 +60,17 @@ public class MainController {
     }
 
 
-    @GetMapping("/{mood}")
-    public ResponseEntity<List<BasicInfoOfVodDto>> sendEachMoodVods (@PathVariable String mood){
-        if (vodviewVodsByMoodService.sendEachMoodVods(mood).isEmpty()) {
+    //태그(템플릿 단어)별 vod 조회
+    @GetMapping("/{tags}")
+    public ResponseEntity<List<BasicInfoOfVodDto>> sendEachTagVods (@PathVariable String tag){
+        if (vodviewVodsByMoodService.sendEachTagVods(tag).isEmpty()) {
             //에러코드 204
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(vodviewVodsByMoodService.sendEachMoodVods(mood));
+        return ResponseEntity.ok(vodviewVodsByMoodService.sendEachTagVods(tag));
     }
+
+
 
     @PostMapping("/popular")
     public ResponseEntity<List<PopularVod>> getTop10Vods() {
