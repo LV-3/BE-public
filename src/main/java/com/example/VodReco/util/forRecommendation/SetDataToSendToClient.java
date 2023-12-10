@@ -76,12 +76,14 @@ public class SetDataToSendToClient {
 
     }
 
-    public void parse(String recoResult) {
-        JSONObject jsonObject = new JSONObject(recoResult);
+    public void parse(String recResult) {
+        JSONObject jsonObject = new JSONObject(recResult);
         JSONArray descriptionData = jsonObject.getJSONArray("description_data");
         System.out.println("descriptionData 확인 = " + descriptionData.toString());
         JSONArray moodData = jsonObject.getJSONArray("mood_data");
+        System.out.println("moodData 확인 = " + moodData.toString());
         JSONArray personalData = jsonObject.getJSONArray("personal_data");
+
         descriptionModelDataDto.setDescriptonData(descriptionData);
         moodModelDataDto.setMoodData(moodData);
         personalModelDataDto.setPersonalData(personalData);
