@@ -1,4 +1,4 @@
-package com.example.VodReco.util;
+package com.example.VodReco.util.series;
 
 import com.example.VodReco.mongoRepository.VodRepository;
 import lombok.RequiredArgsConstructor;
