@@ -23,8 +23,8 @@ spring:
 
   data:
     mongodb:
-#      uri: mongodb://lv3_user_mongo:lv3Pwd@ec2-54-180-106-28.ap-northeast-2.compute.amazonaws.com:27017/mongoTestDB?authSource=admin
-      uri: mongodb://lv3_user_mongo:lv3Pwd@ec2-3-38-106-43.ap-northeast-2.compute.amazonaws.com:27017/mongoTestDB?authSource=admin
+      uri: mongodb://lv3_user_mongo:sufferFromYou333@ec2-54-180-106-28.ap-northeast-2.compute.amazonaws.com:27017/VodRecoForView?authSource=admin
+#      uri: mongodb://lv3_user_mongo:lv3Pwd@ec2-3-38-106-43.ap-northeast-2.compute.amazonaws.com:27017/mongoTestDB?authSource=admin
 logging:
   level:
     com.example.VodReco : DEBUG
