@@ -52,12 +52,25 @@ public class Vod {
     @Field(name = "series_id")
     private String seriesId;
 
+    @Field(name = "front_view_template")
+    private String uniqueTemplates;
+
+    @Field(name = "translated_template_A")
+    private String translatedTemplateA;
+    @Field(name = "translated_template_B")
+    private String translatedTemplateB;
+    @Field(name = "translated_template_C")
+    private String translatedTemplateC;
+
+
+
 
     @Builder
     public Vod(String contentId, String title, String category, String genre, String disp_rtm,
                String description, String actors, String posterurl, String grade, String country,
                String release_year, String director, String mood, String gpt_genres, String gpt_subjects,
-               String titleDescription, Integer isSeries, String seriesId) {
+               String titleDescription, Integer isSeries, String seriesId,
+               String uniqueTemplates, String translatedTemplateA, String translatedTemplateB, String translatedTemplateC) {
 
         this.contentId = contentId;
         this.title = title;
@@ -80,6 +93,13 @@ public class Vod {
         this.titleDescription = titleDescription;
         this.isSeries = isSeries;
         this.seriesId = seriesId;
+
+        this.uniqueTemplates = uniqueTemplates;
+        this.translatedTemplateA = translatedTemplateA;
+        this.translatedTemplateB = translatedTemplateB;
+        this.translatedTemplateC = translatedTemplateC;
+
+
     }
 
 }
