@@ -39,6 +39,11 @@ class VodtoVodDtoWrapper {
                 .isSeries(vod.getIsSeries())
                 .seriesId(vod.getSeriesId())
 
+                .uniqueTemplates(stringToListWrapper.stringToList(vod.getUniqueTemplates()))
+                .translatedTemplateA(stringToListWrapper.stringToList(vod.getTranslatedTemplateA()))
+                .translatedTemplateB(stringToListWrapper.stringToList(vod.getTranslatedTemplateB()))
+                .translatedTemplateC(stringToListWrapper.stringToList(vod.getTranslatedTemplateC()))
+
                 .build();
     }
 }
