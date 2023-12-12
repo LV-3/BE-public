@@ -28,8 +28,12 @@ public class ForDeepFM {
     @Field(name = "user_preference")
     private Integer userPreference;
 
+    @Field(name = "TimeGroup")
+    private String timeGroup;
+
     @Builder
-    public ForDeepFM(String subsr, String contentId, String category, String genre, String mood, String gpt_genres, String gpt_subjects, Integer userPreference) {
+    public ForDeepFM(String subsr, String contentId, String category, String genre, String mood, String gpt_genres, String gpt_subjects, Integer userPreference, String timeGroup) {
+
         this.subsr = subsr;
         this.contentId = contentId;
         this.category = category;
@@ -38,5 +42,6 @@ public class ForDeepFM {
         this.gpt_genres = gpt_genres;
         this.gpt_subjects = gpt_subjects;
         this.userPreference = userPreference;
+        this.timeGroup = timeGroup;
     }
 }

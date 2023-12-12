@@ -17,12 +17,15 @@ public class EveryPersonalDto {
     private List<String> template_A_TopGroup;
     private List<String> template_B_TopGroup;
     private List<String> template_C_TopGroup;
-    @JsonProperty("user_preference")
-    private Integer userPreference;
+//    @JsonProperty("user_preference")
+//    private Integer userPreference;
+    private Integer user_preference;
+    @JsonProperty("TimeGroup")
+    private String TimeGroup;
 
     @Builder
     public EveryPersonalDto(Integer subsr, Integer content_id, String ct_cl, String genre_of_ct_cl, List<String> template_A_TopGroup, List<String> template_B_TopGroup, List<String> template_C_TopGroup,
-                            Integer userPreference) {
+                            Integer user_preference, String TimeGroup) {
         this.subsr = subsr;
         this.content_id = content_id;
         this.genre_of_ct_cl = genre_of_ct_cl;
@@ -30,7 +33,8 @@ public class EveryPersonalDto {
         this.template_A_TopGroup = template_A_TopGroup;
         this.template_B_TopGroup = template_B_TopGroup;
         this.template_C_TopGroup = template_C_TopGroup;
-        this.userPreference = userPreference;
+        this.user_preference = user_preference;
+        this.TimeGroup = TimeGroup;
 
     }
 

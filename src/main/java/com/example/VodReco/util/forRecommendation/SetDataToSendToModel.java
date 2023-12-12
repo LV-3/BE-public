@@ -10,6 +10,7 @@ import com.example.VodReco.mongoRepository.VodRepository;
 import com.example.VodReco.util.ForDeepFM.ToForDeepFMDtoWrapper;
 import com.example.VodReco.util.StringToListWrapper;
 import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +27,10 @@ public class SetDataToSendToModel {
     private final ForDeepFMRepository forDeepFMRepository;
     private final ToForDeepFMDtoWrapper toForDeepFMDtoWrapper;
 
-    public ToModelDto setDataForModel(String subsr) {
+    private final ObjectMapper objectMapper;
+
+
+    public ToModel2ndDto setDataForModel(String subsr) {
         List<EveryDescriptionDto> descriptionResponseList = new ArrayList<>();
         List<EveryMoodDto> moodResponseList = new ArrayList<>();
         List<EveryPersonalDto> personalResponseList = new ArrayList<>();
@@ -60,15 +64,18 @@ public class SetDataToSendToModel {
 //            if (forDeepFMDto.getLiked() == 1) {
             EveryPersonalDto everyPersonalDto = EveryPersonalDto.builder().subsr(Integer.parseInt(subsr)).content_id(Integer.parseInt(forDeepFMDto.getContentId())).ct_cl(forDeepFMDto.getCategory())
                     .genre_of_ct_cl(forDeepFMDto.getGenre()).template_A_TopGroup(forDeepFMDto.getMood()).template_B_TopGroup(forDeepFMDto.getGpt_genres()).template_C_TopGroup(forDeepFMDto.getGpt_subjects())
-                    .userPreference(forDeepFMDto.getUserPreference())
+                    .user_preference(forDeepFMDto.getUserPreference())
+                    .TimeGroup(forDeepFMDto.getTimeGroup())
                     .build();
             personalResponseList.add(everyPersonalDto);
         }
-        return ToModelDto.builder()
+        ToModelDto toModelDto = ToModelDto.builder()
                 .description_data(descriptionResponseList)
                 .mood_data(moodResponseList)
+//                .personal_data(new ArrayList<>())
                 .personal_data(personalResponseList)
                 .build();
+        return ToModel2ndDto.builder().dataForModel(toModelDto).build();
 
     }
 
