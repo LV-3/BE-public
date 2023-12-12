@@ -1,4 +1,4 @@
-package com.example.VodReco.service.category.viewTVCategories;
+package com.example.VodReco.service.category.viewMovieCategories;
 
 import com.example.VodReco.domain.CategoryGenre;
 import com.example.VodReco.mongoRepository.CategoryGenreRepository;
@@ -10,13 +10,13 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryGenreViewTVServiceImpl implements CategoryGenreViewTVService{
+public class CategoryGenreViewMovieServiceImpl implements CategoryGenreViewMovieService {
     private final CategoryGenreRepository categoryGenreRepository;
     private final StringToListWrapper stringToListWrapper;
 
     @Override
-    public List<String> viewTVCategoriesList(){
-        CategoryGenre tv = categoryGenreRepository.findByMaster("TV");
-        return stringToListWrapper.stringToList(tv.getSlave());
+    public List<String> viewMovieGenresList(){
+        CategoryGenre movieGenre = categoryGenreRepository.findByMaster("영화");
+        return stringToListWrapper.stringToList(movieGenre.getSlave());
     }
 }
