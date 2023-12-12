@@ -30,7 +30,6 @@ public class MainController {
     private final VodviewVodsByTagServiceImpl vodviewVodsByMoodService;
     private final VodGetRecoServiceImpl vodGetRecoService;
 
-    //content_id 목록 리스트에 담아둘 객체 스프링 빈에 등록해서 사용(231130)
     private final ViewPopularVodsServiceImpl viewPopularVodsService;
     private final SearchVodServiceImpl searchVodService;
 
@@ -62,12 +61,12 @@ public class MainController {
 
     //태그(템플릿 단어)별 vod 조회
     @GetMapping("/{tags}")
-    public ResponseEntity<List<BasicInfoOfVodDto>> sendEachTagVods (@PathVariable String tag){
-        if (vodviewVodsByMoodService.sendEachTagVods(tag).isEmpty()) {
+    public ResponseEntity<List<BasicInfoOfVodDto>> sendEachTagVods (@PathVariable String tags){
+        if (vodviewVodsByMoodService.sendEachTagVods(tags).isEmpty()) {
             //에러코드 204
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(vodviewVodsByMoodService.sendEachTagVods(tag));
+        return ResponseEntity.ok(vodviewVodsByMoodService.sendEachTagVods(tags));
     }
 
 
