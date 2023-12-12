@@ -96,16 +96,6 @@ jobs:
           cluster: ${{ env.ECS_CLUSTER }}
           wait-for-service-stability: true
 
-      # - name: Make application.yml file
-      #   run: |
-      #     touch ./src/main/resources/application.yml
-      #     echo "${{ secrets.MYSQL_URL }}" >> ./src/main/resources/application.yml
-      #     echo "${{ secrets.MYSQL_USERNAME }}" >> ./src/main/resources/application.yml
-      #     echo "${{ secrets.MYSQL_PASSWORD }}" >> ./src/main/resources/application.yml
-      #     echo "${{ secrets.MONGODB_URI }}" >> ./src/main/resources/application.yml
-      #     echo "${{ secrets.KAFKA_SERVER }}" >> ./src/main/resources/application.yml
-      #     cat ./src/main/resources/application.yml
-
       
 
   
