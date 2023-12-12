@@ -1,10 +1,10 @@
-package com.example.VodReco.service.mainPage.viewVodsByMood;
+package com.example.VodReco.service.mainPage.viewVodsByTag;
 
 import com.example.VodReco.domain.Vod;
 import com.example.VodReco.dto.genre.BasicInfoOfVodDto;
 import com.example.VodReco.mongoRepository.VodRepository;
 import com.example.VodReco.util.ContentIdToBasicInfoOfVodsWrapper;
-import com.example.VodReco.util.ValidateDuplicateSeriesIdWrapper;
+import com.example.VodReco.util.series.ValidateDuplicateSeriesIdWrapper;
 import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class VodviewVodsByMoodServiceImpl implements VodviewVodsByMoodService{
+public class VodviewVodsByTagServiceImpl implements VodviewVodsByTagService {
 
     private final VodRepository vodRepository;
     private final VodtoVodDtoWrapper vodtoVodDtoWrapper;
@@ -23,9 +23,9 @@ public class VodviewVodsByMoodServiceImpl implements VodviewVodsByMoodService{
     private final ContentIdToBasicInfoOfVodsWrapper contentIdToBasicInfoOfVodsWrapper;
 
     @Override
-    public List<BasicInfoOfVodDto> sendEachMoodVods(String mood) {
+    public List<BasicInfoOfVodDto> sendEachTagVods(String tag) {
         List<BasicInfoOfVodDto> list = new ArrayList<>();
-        List<String> contentIds = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(vodRepository.findByMoodContaining(mood).stream().map(Vod::getContentId).toList());
+        List<String> contentIds = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(vodRepository.findByUniqueTemplatesContaining(tag).stream().map(Vod::getContentId).toList());
         return contentIdToBasicInfoOfVodsWrapper.getBasicInfoOfVodDtos(list, contentIds, vodtoVodDtoWrapper, vodRepository);
     }
 }

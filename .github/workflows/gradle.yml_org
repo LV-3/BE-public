@@ -48,16 +48,6 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@62f4f872db3836360b72999f4b87f1ff13310f3a
-      
-      - name: Gradle Caching
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
 
       - name: Exclude test code
         run : ./gradlew clean build --exclude-task test
@@ -95,6 +85,16 @@ jobs:
           service: ${{ env.ECS_SERVICE }}
           cluster: ${{ env.ECS_CLUSTER }}
           wait-for-service-stability: true
+
+      # - name: Make application.yml file
+      #   run: |
+      #     touch ./src/main/resources/application.yml
+      #     echo "${{ secrets.MYSQL_URL }}" >> ./src/main/resources/application.yml
+      #     echo "${{ secrets.MYSQL_USERNAME }}" >> ./src/main/resources/application.yml
+      #     echo "${{ secrets.MYSQL_PASSWORD }}" >> ./src/main/resources/application.yml
+      #     echo "${{ secrets.MONGODB_URI }}" >> ./src/main/resources/application.yml
+      #     echo "${{ secrets.KAFKA_SERVER }}" >> ./src/main/resources/application.yml
+      #     cat ./src/main/resources/application.yml
 
       
 

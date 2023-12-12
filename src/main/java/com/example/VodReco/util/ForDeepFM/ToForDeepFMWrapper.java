@@ -26,7 +26,7 @@ public class ToForDeepFMWrapper {
                 .mood(listToStringWrapper.listToString(forDeepFMDto.getMood()))
                 .gpt_genres(listToStringWrapper.listToString(forDeepFMDto.getGpt_genres()))
                 .gpt_subjects(listToStringWrapper.listToString(forDeepFMDto.getGpt_subjects()))
-                .liked(forDeepFMDto.getLiked())
+                .userPreference(forDeepFMDto.getUserPreference())
 
                 .build();
 
