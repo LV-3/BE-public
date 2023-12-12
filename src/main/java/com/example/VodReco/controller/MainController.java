@@ -10,6 +10,7 @@ import com.example.VodReco.service.mainPage.getReco.VodGetRecoServiceImpl;
 import com.example.VodReco.service.mainPage.searchVods.SearchVodServiceImpl;
 import com.example.VodReco.service.mainPage.viewPopularVods.ViewPopularVodsServiceImpl;
 import com.example.VodReco.service.mainPage.viewVodsByTag.VodviewVodsByTagServiceImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
@@ -30,18 +31,20 @@ public class MainController {
     private final VodviewVodsByTagServiceImpl vodviewVodsByMoodService;
     private final VodGetRecoServiceImpl vodGetRecoService;
 
-    private final ViewPopularVodsServiceImpl viewPopularVodsService;
-    private final SearchVodServiceImpl searchVodService;
+
+
+    private final ObjectMapper objectMapper;
+
 
     @Lazy
 //    @Autowired
 //    두 개 붙으면 Lazy가 이김
     public MainController(VodviewVodsByTagServiceImpl vodviewVodsByMoodService, VodGetRecoServiceImpl vodGetRecoService,
-                          ViewPopularVodsServiceImpl viewPopularVodsService, SearchVodServiceImpl searchVodService) {
+                          ObjectMapper objectMapper) {
         this.vodviewVodsByMoodService = vodviewVodsByMoodService;
         this.vodGetRecoService = vodGetRecoService;
-        this.viewPopularVodsService = viewPopularVodsService;
-        this.searchVodService = searchVodService;
+
+        this.objectMapper = objectMapper;
     }
 
     @LogExecutionTime
@@ -71,22 +74,7 @@ public class MainController {
 
 
 
-    @PostMapping("/popular")
-    public ResponseEntity<List<PopularVod>> getTop10Vods() {
-        List<PopularVod> popularVods = viewPopularVodsService.getTop10PopularVods();
-            return ResponseEntity.ok(popularVods);
-        }
 
-
-    @GetMapping("/search")
-    public ResponseEntity<List<VodDto>> searchVods(@RequestParam(value ="searchTerm",required = false) String searchTerm) {
-        List<VodDto> foundVods = searchVodService.searchVods(searchTerm);
-        if (foundVods.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            // 검색 결과 반환
-            return new ResponseEntity<>(foundVods, HttpStatus.OK);
-        }
 }
 
 
