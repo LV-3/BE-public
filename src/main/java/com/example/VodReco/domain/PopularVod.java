@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 @Getter
 @Setter
-@Document(collection = "public_favor_vods")
+@Document(collection = "popular_vods")
 public class PopularVod {
     //@Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
