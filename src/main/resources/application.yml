@@ -2,11 +2,7 @@ spring:
   jpa:
     hibernate:
       show-sql: true
-<<<<<<< HEAD
       #      TODO : 실제 서비스 시 효율을 위해 show-sql true로 두지 않을 것.
-=======
-#      TODO : 실제 서비스 시 효율을 위해 show-sql true로 두지 않을 것.
->>>>>>> ee03288dcf889e4228ecd9c775223939d52a2ddb
       ddl-auto: update
 
     properties:
@@ -20,11 +16,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-<<<<<<< HEAD
     #    url: jdbc:mysql://${mysql:lv3-mysqldb-ansoo.ccxmcbwnnwze.us-east-1.rds.amazonaws.com}:3306/TestDB?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-=======
-#    url: jdbc:mysql://${mysql:lv3-mysqldb-ansoo.ccxmcbwnnwze.us-east-1.rds.amazonaws.com}:3306/TestDB?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
->>>>>>> ee03288dcf889e4228ecd9c775223939d52a2ddb
     url: jdbc:mysql://${mysql:hellogptvmysql.cdillw7s0dxx.ap-northeast-2.rds.amazonaws.com}:3306/FromUser?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: admin
     password: 8659653314
