@@ -31,8 +31,6 @@ public class MainController {
     private final VodviewVodsByTagServiceImpl vodviewVodsByMoodService;
     private final VodGetRecoServiceImpl vodGetRecoService;
 
-
-
     private final ObjectMapper objectMapper;
 
 
