@@ -2,6 +2,7 @@ package com.example.VodReco.service.mainPage.viewPopularVods;
 
 import com.example.VodReco.domain.PopularVod;
 import com.example.VodReco.mongoRepository.PopularVodRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,13 +10,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ViewPopularVodsServiceImpl implements ViewPopularVodsService{
     private final PopularVodRepository popularVodRepository;
-
-    @Autowired
-    public ViewPopularVodsServiceImpl(PopularVodRepository popularVodRepository) {
-        this.popularVodRepository = popularVodRepository;
-    }
 
     public List<PopularVod> getTop10PopularVods() {
         // 시간대에 따른 VOD 가져오기
