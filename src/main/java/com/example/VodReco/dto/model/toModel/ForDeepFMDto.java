@@ -18,9 +18,11 @@ public class ForDeepFMDto {
     private List<String> gpt_genres;
     private List<String> gpt_subjects;
     private Integer userPreference;
+    private String timeGroup;
 
     @Builder
-    public ForDeepFMDto(String subsr, String contentId, String category, String genre, List<String> mood, List<String> gpt_genres, List<String> gpt_subjects, Integer userPreference) {
+    public ForDeepFMDto(String subsr, String contentId, String category, String genre, List<String> mood, List<String> gpt_genres, List<String> gpt_subjects, Integer userPreference,
+                        String timeGroup) {
         this.subsr = subsr;
         this.contentId = contentId;
         this.category = category;
@@ -29,6 +31,7 @@ public class ForDeepFMDto {
         this.gpt_genres = gpt_genres;
         this.gpt_subjects = gpt_subjects;
         this.userPreference = userPreference;
+        this.timeGroup = timeGroup;
 
     }
 }
