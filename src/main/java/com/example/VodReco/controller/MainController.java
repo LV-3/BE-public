@@ -109,21 +109,13 @@ public class MainController {
 
     @GetMapping("/search")
     public ResponseEntity<List<VodDto>> searchVods(@RequestParam(value ="searchTerm",required = false) String searchTerm) {
-        // searchTerm이 null인지 확인 후 처리
-        if (searchTerm != null) {
-            searchTerm = searchTerm.replaceAll("\\s+", ""); // 모든 공백 제거
-        }
-        System.out.print(searchTerm);
         List<VodDto> foundVods = searchVodService.searchVods(searchTerm);
-        // 검색 결과 없는 경우,
         if (foundVods.isEmpty()) {
-            //System.out.print(foundVods);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            // 검색 결과 반환
+            return new ResponseEntity<>(foundVods, HttpStatus.OK);
         }
-        // 검색 결과 반환
-        //System.out.print(foundVods);
-        return new ResponseEntity<>(foundVods, HttpStatus.OK);
-    }
 }
 
 
