@@ -3,72 +3,63 @@ package com.example.VodReco.service.mainPage.searchVods;
 import com.example.VodReco.domain.Vod;
 import com.example.VodReco.dto.VodDto;
 import com.example.VodReco.mongoRepository.VodRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
 public class SearchVodServiceImpl implements SearchVodService{
-    private final VodRepository vodRepository;
+    private final MongoTemplate mongoTemplate;
 
-    public SearchVodServiceImpl(VodRepository vodRepository) {
-        this.vodRepository = vodRepository;
+    @Autowired
+    public SearchVodServiceImpl(MongoTemplate mongoTemplate) {
+        this.mongoTemplate = mongoTemplate;
     }
-//    @Override
-//    public List<VodDto> searchVods(String searchTerm) {
-//        if (searchTerm == null || searchTerm.trim().isEmpty()) {
-//            return Collections.emptyList();
-//        }
-//
-//        // 모든 공백을 제거한 검색어
-//        String searchTermWithoutSpaces = searchTerm.replaceAll("\\s+", "");
-//
-//        // 정확한 일치 검색
-//        List<Vod> exactMatchByTitle = vodRepository.findByExactTitle(searchTerm);
-//        List<Vod> exactMatchByActors = vodRepository.findByExactActors(searchTerm);
-//
-//        // 부분 일치 검색
-//        List<Vod> partialMatchByTitleOrActors = vodRepository.findByTitleOrActors(searchTermWithoutSpaces);
-//
-//        // 중복 제거하고 합치기
-//        Set<Vod> combinedVods = new HashSet<>();
-//        combinedVods.addAll(exactMatchByTitle);
-//        combinedVods.addAll(exactMatchByActors);
-//        combinedVods.addAll(partialMatchByTitleOrActors);
-//
-//        return combinedVods.stream()
-//                .map(this::mapToDto)
-//                .collect(Collectors.toList());
-//    }
-    @Override
     public List<VodDto> searchVods(String searchTerm) {
-        if (searchTerm == null) {
-            return Collections.emptyList();
+        // 사용자 입력 검색어의 공백 제거
+        String searchTermWithoutSpaces = searchTerm.replaceAll("\\s+", "");
+
+        // MongoDB에서 전체 데이터 가져오기
+        List<Vod> allVods = mongoTemplate.findAll(Vod.class);
+
+        // 공백 제거한 검색어와 데이터베이스의 값을 비교하여 검색하기
+        List<Vod> foundVods = new ArrayList<>();
+        for (Vod vod : allVods) {
+            // 값이 null이면 continue하여 다음 루프로 넘어감
+            if (vod.getActors() == null) {
+                continue;
+            }
+
+            String titleWithoutSpaces = vod.getTitle().replaceAll("\\s+", "");
+            String actorsWithoutSpaces = vod.getActors().replaceAll("\\s+", "");
+
+            if (titleWithoutSpaces.toLowerCase().contains(searchTermWithoutSpaces.toLowerCase())
+                    || actorsWithoutSpaces.toLowerCase().contains(searchTermWithoutSpaces.toLowerCase())) {
+                foundVods.add(vod);
+            }
         }
 
-        searchTerm = searchTerm.trim();
-        // 정규식 패턴 생성
-        Pattern pattern = Pattern.compile(".*" + searchTerm + ".*", Pattern.CASE_INSENSITIVE);
-
-        // 제목에 포함하는 VOD 검색
-        List<Vod> vodEntitiesByTitle = vodRepository.findByTitleContainingIgnoreCase(searchTerm);
-
-        // 배우명에 포함하는 VOD 검색
-        List<Vod> vodEntitiesByActors = vodRepository.findByActorsIgnoreCaseContaining(searchTerm);
-
-        // 두 결과를 합친 후 중복 제거하여 DTO로 변환하여 반환
-        Set<Vod> combinedVods = new HashSet<>();
-        combinedVods.addAll(vodEntitiesByTitle);
-        combinedVods.addAll(vodEntitiesByActors);
-
-        return combinedVods.stream()
+        return foundVods.stream()
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
+//        String searchTermWithoutSpaces = searchTerm.replaceAll("\\s+", "");
+//        Criteria criteria = new Criteria();
+//        criteria.orOperator(
+//                Criteria.where("title").regex(".*" + searchTermWithoutSpaces + ".*", "i"),
+//                Criteria.where("actors").regex(".*" + searchTermWithoutSpaces + ".*", "i")
+//        );
+//
+//        Query query = new Query(criteria);
+//
+//        List<Vod> vods = mongoTemplate.find(query, Vod.class);
+//
+//        return vods.stream()
+//                .map(this::mapToDto)
+//                .collect(Collectors.toList());
     }
 
     private VodDto mapToDto(Vod vod) {
@@ -80,4 +71,58 @@ public class SearchVodServiceImpl implements SearchVodService{
                 .actors(vod.getActors())
                 .build();
     }
+//    @Override
+//    public List<VodDto> searchVods(String searchTerm) {
+//        if (searchTerm == null || searchTerm.trim().isEmpty()) {
+//            return Collections.emptyList();
+//        }
+//
+//        // 사용자 입력 검색어의 각 단어를 분리
+//        String[] searchWords = searchTerm.split("\\s+");
+//
+//        // 검색 결과를 저장할 Set 초기화
+//        Set<Vod> combinedVods = new HashSet<>();
+//
+//        // 각 단어를 포함하는 결과를 찾아 합치기
+//        for (String word : searchWords) {
+//            // 각 단어를 포함하는 VOD 검색 (제목과 배우명에 대해)
+//            List<Vod> vodEntitiesByTitle = vodRepository.findByTitleIgnoreCaseContaining(word);
+//            List<Vod> vodEntitiesByActors = vodRepository.findByActorsIgnoreCaseContaining(word);
+//
+//            // 결과를 Set에 추가
+//            combinedVods.addAll(vodEntitiesByTitle);
+//            combinedVods.addAll(vodEntitiesByActors);
+//        }
+////        if (searchTerm == null) {
+////            return Collections.emptyList();
+////        }
+//
+////        // 사용자 입력 검색어의 공백 제거
+////        String searchTermWithoutSpaces = searchTerm.replaceAll("\\s+", "");
+////
+////        // 제목에 포함하는 VOD 검색 (공백 제거)
+////        List<Vod> vodEntitiesByTitle = vodRepository.findByTitleIgnoreCaseContaining(searchTermWithoutSpaces);
+////
+////        // 배우명에 포함하는 VOD 검색 (공백 제거)
+////        List<Vod> vodEntitiesByActors = vodRepository.findByActorsIgnoreCaseContaining(searchTermWithoutSpaces);
+////
+////        // 두 결과를 합친 후 중복 제거하여 DTO로 변환하여 반환
+////        Set<Vod> combinedVods = new HashSet<>();
+////        combinedVods.addAll(vodEntitiesByTitle);
+////        combinedVods.addAll(vodEntitiesByActors);
+//
+//        return combinedVods.stream()
+//                .map(this::mapToDto)
+//                .collect(Collectors.toList());
+//    }
+//
+//    private VodDto mapToDto(Vod vod) {
+//        // Entity를 DTO로 변환하는 로직
+//        return VodDto.builder()
+//                .contentId(vod.getContentId())
+//                .title(vod.getTitle())
+//                .posterurl(vod.getPosterurl())
+//                .actors(vod.getActors())
+//                .build();
+//    }
 }
