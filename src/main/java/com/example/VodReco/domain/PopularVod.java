@@ -1,6 +1,7 @@
 package com.example.VodReco.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,7 @@ public class PopularVod {
     //@Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     //private Long id;
+    @JsonIgnore
     @Field(name = "_id")
     private ObjectId mongoId;
     @Field(name = "content_id")

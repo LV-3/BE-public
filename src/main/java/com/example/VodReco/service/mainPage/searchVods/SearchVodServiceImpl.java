@@ -2,22 +2,32 @@ package com.example.VodReco.service.mainPage.searchVods;
 
 import com.example.VodReco.domain.Vod;
 import com.example.VodReco.dto.VodDto;
+import com.example.VodReco.dto.genre.BasicInfoOfVodDto;
 import com.example.VodReco.mongoRepository.VodRepository;
+import com.example.VodReco.util.ContentIdToBasicInfoOfVodsWrapper;
+import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
 public class SearchVodServiceImpl implements SearchVodService{
+    private final VodRepository vodRepository;
     private final MongoTemplate mongoTemplate;
+    private final ContentIdToBasicInfoOfVodsWrapper contentIdToBasicInfoOfVodsWrapper;
+    private final VodtoVodDtoWrapper vodtoVodDtoWrapper;
+
 
     @Autowired
-    public SearchVodServiceImpl(MongoTemplate mongoTemplate) {
+    public SearchVodServiceImpl(VodRepository vodRepository, MongoTemplate mongoTemplate,ContentIdToBasicInfoOfVodsWrapper contentIdToBasicInfoOfVodsWrapper, VodtoVodDtoWrapper vodtoVodDtoWrapper) {
+        this.vodRepository=vodRepository;
         this.mongoTemplate = mongoTemplate;
+        this.contentIdToBasicInfoOfVodsWrapper = contentIdToBasicInfoOfVodsWrapper;
+        this.vodtoVodDtoWrapper = vodtoVodDtoWrapper;
+
     }
     public List<VodDto> searchVods(String searchTerm) {
         // 사용자 입력 검색어의 공백 제거
@@ -46,6 +56,8 @@ public class SearchVodServiceImpl implements SearchVodService{
         return foundVods.stream()
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
+
+
 //        String searchTermWithoutSpaces = searchTerm.replaceAll("\\s+", "");
 //        Criteria criteria = new Criteria();
 //        criteria.orOperator(
@@ -68,8 +80,12 @@ public class SearchVodServiceImpl implements SearchVodService{
                 .contentId(vod.getContentId())
                 .title(vod.getTitle())
                 .posterurl(vod.getPosterurl())
-                .actors(vod.getActors())
                 .build();
+    }
+
+    public List<BasicInfoOfVodDto> getBasicInfoOfVods(List<String> contentIds) {
+        List<BasicInfoOfVodDto> basicInfoList = new ArrayList<>();
+        return contentIdToBasicInfoOfVodsWrapper.getBasicInfoOfVodDtos(basicInfoList, contentIds, vodtoVodDtoWrapper, vodRepository);
     }
 //    @Override
 //    public List<VodDto> searchVods(String searchTerm) {
