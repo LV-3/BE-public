@@ -16,6 +16,10 @@ public interface VodRepository extends MongoRepository<Vod,String> {
     List<Vod> findByUniqueTemplatesContaining(String tag);
     List<Vod> findBySeriesId(String seriesId);
 
+    List<Vod> findByCategory(String category);
+
+
+
     //검색기능
     //@Query("{'$or':[ {'title': { $regex: ?0, $options: 'i' }}, {'actors': { $regex: ?0, $options: 'i' }} ]}")
     //List<Vod> findByTitleIgnoreCaseContainingOrActorsIgnoreCaseContaining(Pattern title, Pattern actors);
@@ -24,6 +28,8 @@ public interface VodRepository extends MongoRepository<Vod,String> {
     List<Vod> findByActorsIgnoreCaseContaining(String actor);
     //@Query("{$or:[ {'title': ?0} ]}")
     List<Vod> findByTitleContainingIgnoreCase(String title);
+
+    List<Vod> findByCategoryAndGenre(String category, String genre);
 
 //    @Query("{$or:[ {'title': ?0} ]}")
 //    List<Vod> findByExactTitle(String title);
