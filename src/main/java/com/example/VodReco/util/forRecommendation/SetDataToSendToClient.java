@@ -77,7 +77,7 @@ public class SetDataToSendToClient {
     }
 
     public void parse(String recResult) {
-        JSONObject jsonObject = new JSONObject(recResult);
+        JSONObject jsonObject = new JSONObject(recResult.trim());
         JSONArray descriptionData = jsonObject.getJSONArray("description_data");
         System.out.println("descriptionData 확인 = " + descriptionData.toString());
         JSONArray moodData = jsonObject.getJSONArray("mood_data");
