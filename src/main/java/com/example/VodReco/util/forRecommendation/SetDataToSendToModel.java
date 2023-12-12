@@ -65,7 +65,7 @@ public class SetDataToSendToModel {
             EveryPersonalDto everyPersonalDto = EveryPersonalDto.builder().subsr(Integer.parseInt(subsr)).content_id(Integer.parseInt(forDeepFMDto.getContentId())).ct_cl(forDeepFMDto.getCategory())
                     .genre_of_ct_cl(forDeepFMDto.getGenre()).template_A_TopGroup(forDeepFMDto.getMood()).template_B_TopGroup(forDeepFMDto.getGpt_genres()).template_C_TopGroup(forDeepFMDto.getGpt_subjects())
                     .user_preference(forDeepFMDto.getUserPreference())
-                    .TimeGroup(forDeepFMDto.getTimeGroup())
+                    .timeGroup(forDeepFMDto.getTimeGroup())
                     .build();
             personalResponseList.add(everyPersonalDto);
         }

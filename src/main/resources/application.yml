@@ -11,7 +11,7 @@ spring:
 
   mvc:
     async:
-      request-timeout: -1
+      request-timeout: 1000
 
 
   datasource:
