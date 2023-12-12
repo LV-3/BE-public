@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.apache.kafka.common.protocol.types.Field;
+
 import java.util.List;
 
 
@@ -35,11 +37,17 @@ public class VodDto {
     private Integer isSeries;
     private String seriesId;
 
+    private List<String> uniqueTemplates;
+    private List<String> translatedTemplateA;
+    private List<String> translatedTemplateB;
+    private List<String> translatedTemplateC;
+
     @Builder
     public VodDto(String contentId, String title, String category, String genre, String disp_rtm,
                   String description, String actors, String posterurl, String grade, String country,
                   String release_year, String director, List<String> mood, List<String> gpt_genres, List<String> gpt_subjects,
-                  String titleDescription, Integer isSeries, String seriesId) {
+                  String titleDescription, Integer isSeries, String seriesId,
+                  List<String> uniqueTemplates, List<String> translatedTemplateA, List<String> translatedTemplateB, List<String> translatedTemplateC) {
 
         this.contentId = contentId;
         this.title = title;
@@ -62,6 +70,13 @@ public class VodDto {
         this.titleDescription = titleDescription;
         this.isSeries = isSeries;
         this.seriesId = seriesId;
+
+        this.uniqueTemplates = uniqueTemplates;
+        this.translatedTemplateA = translatedTemplateA;
+        this.translatedTemplateB = translatedTemplateB;
+        this.translatedTemplateC = translatedTemplateC;
+
+
     }
 
 }
