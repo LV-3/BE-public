@@ -43,6 +43,8 @@ public class VodDetailController {
 
 
     //상세페이지 열릴 때
+    //[에러코드 관련] - 상세페이지 열때 모든 정보는 DB에서 꺼내오기 때문에 오류발생확률 낮음 -> GlobalExceptionHandler에서 처리
+    // 조회 결과 없는 경우에는 null(200) 전송
 
     //1. 기본정보
     @GetMapping(value = "/{content_id}")
@@ -51,12 +53,12 @@ public class VodDetailController {
         //return vodViewDetailInfoService.getVodByContentId(contentId);
         // [jjae] - 변경코드
         VodDetailResponseDto vodDetailResponseDto = vodViewDetailInfoService.getVodByContentId(contentId);
-        if (vodDetailResponseDto != null) {
+//        if (vodDetailResponseDto != null) {
             return ResponseEntity.ok(vodDetailResponseDto);
-        } else {
-            //에러 코드 404
-            return ResponseEntity.notFound().build();
-        }
+//        } else {
+//            //에러 코드 404
+//            return ResponseEntity.notFound().build();
+//        }
     }
 
 
@@ -73,7 +75,8 @@ public class VodDetailController {
         //[jjae] - 변경코드
         if (viewMyWishResponseDto == null) {
             //[세연] 에러 코드 404
-            return ResponseEntity.notFound().build();
+            //return ResponseEntity.notFound().build();
+            return ResponseEntity.ok().body(null);
         }
         return ResponseEntity.ok(viewMyWishResponseDto.getWish());
     }
@@ -91,7 +94,7 @@ public class VodDetailController {
         //[jjae] - 변경코드
         if (ratings.isEmpty()) {
             //[세연] 조회 결과 없으면 204(231128), wish조회 API와 status 통일 요망
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok().body(null);
         }
         return ResponseEntity.ok(ratings);
     }
@@ -113,13 +116,13 @@ public class VodDetailController {
         //[jjae]- [ 발생가능한 에러 ]
         //유효성 검사 오류: 클라이언트가 잘못된 데이터를 보낸 경우 (예: 필수 필드 누락, 잘못된 형식 등)
         //데이터베이스 오류: 데이터 저장 시 데이터베이스 연결이 실패하는 경우, 저장 실패 등
-        try {
+//        try {
             userWishUpdateMyWishService.saveWish(updateMyWishRequestDto, contentId);
             return ResponseEntity.ok().build();
-        } catch (Exception e) {
-//            에러 코드 500
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+//        } catch (Exception e) {
+////            에러 코드 500
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
 
         //처리 오류: 어떤 이유로 인해 찜을 저장하는 로직이 실패하는 경우
     }
@@ -134,14 +137,14 @@ public class VodDetailController {
         //입력 유효성 검사 오류: 클라이언트가 잘못된 데이터를 전송하는 경우
         //데이터베이스 저장 오류: 데이터 저장 시 데이터베이스에서 오류가 발생하는 경우
         //인증 및 권한 오류: 사용자가 권한이 없는 작업을 수행하려고 시도하는 경우 --> 권한이 없을일은,, 로그인하지 않은 사용자인데 이건 불가능한 에러
-        try {
+//        try {
             userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
             return ResponseEntity.ok().build();
-        } catch (ValidationException e) { //-> 클라이언트가 잘못된 데이터를 전송하는 경우 //이것도 가능성 없으면 빼도 될덧
-            return ResponseEntity.badRequest().build();//400에러
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();//500에러
-        }
+//        } catch (ValidationException e) { //-> 클라이언트가 잘못된 데이터를 전송하는 경우 //이것도 가능성 없으면 빼도 될덧
+//            return ResponseEntity.badRequest().build();//400에러
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();//500에러
+//        }
 
     }
 

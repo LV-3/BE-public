@@ -31,7 +31,8 @@ public class VodGenreController {
             return ResponseEntity.ok(genreList);
         } else {
             //애러코드 204
-            return ResponseEntity.noContent().build();
+            //return ResponseEntity.ok().body(null);
+            return ResponseEntity.ok().body(null);
         }
 
     }
@@ -47,7 +48,8 @@ public class VodGenreController {
             return ResponseEntity.ok(vodList);
         } else {
             //204
-            return ResponseEntity.noContent().build();
+            //return ResponseEntity.noContent().build();
+            return ResponseEntity.ok().body(null);
         }
     }
 }
