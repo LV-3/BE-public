@@ -131,7 +131,7 @@ public class VodDetailController {
     @PostMapping(value = "/{content_id}/rating")
     @Operation(summary = "vod별 평점 매기기", description = "상세페이지에서 rating, review 최초 등록")
     public ResponseEntity<String> saveMyFirstRating(@PathVariable("content_id") String contentId, @RequestBody UpdateMyRatingRequestDto updateMyRatingRequestDto) {
-        if (updateMyRatingRequestDto.getRating() == 0 || updateMyRatingRequestDto.getReview() == null) {
+        if (updateMyRatingRequestDto.getRating() == 0 || updateMyRatingRequestDto.getReview().isEmpty()) {
             return ResponseEntity.badRequest().body("Rating cannot be 0 and Review cannot be null.");
         } else {
             userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
@@ -158,7 +158,7 @@ public class VodDetailController {
     @PutMapping(value = "/{content_id}/rating")
     @Operation(summary = "vod별 평점 변경", description = "상세페이지에서 기존 rating, review 변경한 뒤 저장")
     public ResponseEntity<Void> updateMyRating(@PathVariable("content_id") String contentId, @RequestBody UpdateMyRatingRequestDto updateMyRatingRequestDto) {
-        if (updateMyRatingRequestDto.getRating() == 0 || updateMyRatingRequestDto.getReview() == null) {
+        if (updateMyRatingRequestDto.getRating() == 0 || updateMyRatingRequestDto.getReview().isEmpty()) {
             return ResponseEntity.badRequest().build();
         } else {
             // 유효한 경우에만 변경 로직을 수행하도록 처리
