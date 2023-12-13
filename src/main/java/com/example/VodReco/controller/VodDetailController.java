@@ -131,15 +131,21 @@ public class VodDetailController {
     @PostMapping(value = "/{content_id}/rating")
     @Operation(summary = "vod별 평점 매기기", description = "상세페이지에서 rating, review 최초 등록")
     public ResponseEntity<String> saveMyFirstRating(@PathVariable("content_id") String contentId, @RequestBody UpdateMyRatingRequestDto updateMyRatingRequestDto) {
-        userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
+        if (updateMyRatingRequestDto.getRating() == 0 || updateMyRatingRequestDto.getReview() == null) {
+            return ResponseEntity.badRequest().body("Rating cannot be 0 and Review cannot be null.");
+        } else {
+            userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
+            return ResponseEntity.ok().build();
+        }
+        //       userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
         //[jjae] - 변경코드
         // [jjae] - 발생할 수 있는 에러
         //입력 유효성 검사 오류: 클라이언트가 잘못된 데이터를 전송하는 경우
         //데이터베이스 저장 오류: 데이터 저장 시 데이터베이스에서 오류가 발생하는 경우
         //인증 및 권한 오류: 사용자가 권한이 없는 작업을 수행하려고 시도하는 경우 --> 권한이 없을일은,, 로그인하지 않은 사용자인데 이건 불가능한 에러
 //        try {
-            userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
-            return ResponseEntity.ok().build();
+//            userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
+//            return ResponseEntity.ok().build();
 //        } catch (ValidationException e) { //-> 클라이언트가 잘못된 데이터를 전송하는 경우 //이것도 가능성 없으면 빼도 될덧
 //            return ResponseEntity.badRequest().build();//400에러
 //        } catch (Exception e) {
@@ -152,11 +158,18 @@ public class VodDetailController {
     @PutMapping(value = "/{content_id}/rating")
     @Operation(summary = "vod별 평점 변경", description = "상세페이지에서 기존 rating, review 변경한 뒤 저장")
     public ResponseEntity<Void> updateMyRating(@PathVariable("content_id") String contentId, @RequestBody UpdateMyRatingRequestDto updateMyRatingRequestDto) {
+        if (updateMyRatingRequestDto.getRating() == 0 || updateMyRatingRequestDto.getReview() == null) {
+            return ResponseEntity.badRequest().build();
+        } else {
+            // 유효한 경우에만 변경 로직을 수행하도록 처리
+            userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
+            return ResponseEntity.ok().build();
+        }
         //[jjae] - 변경코드
 //        try {
-            userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
+            //userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
             //던져지는 exception때문에 롤백됨 -> 에러. 일단 200만 남기고 1차 구현(231206)
-            return ResponseEntity.ok().build();
+            //return ResponseEntity.ok().build();
 //        } catch (Exception e) {
 ////            에러코드 500
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
