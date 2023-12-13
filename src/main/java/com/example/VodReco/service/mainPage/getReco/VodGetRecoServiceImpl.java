@@ -179,7 +179,7 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
                     //테스트용
 //                    System.out.println(result);
 
-                            setDataToSendToClient.parse(result);
+                            setDataToSendToClient.parse(result, subsr);
 
 
                             //JSONArray로 받아온 content_id들 리스트로 변환
@@ -239,6 +239,7 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
                 .doOnError(error -> {
 //                    System.out.println("데이터 = " + toModelJsonDto.getJsonDto());
 //                    System.out.println("무드 데이터 = " + jsonMood);
+                    System.err.println("에러 발생: " + error);
                     System.err.println("에러 발생: " + error);
 
                 });

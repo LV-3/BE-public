@@ -16,10 +16,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "http://hellogptv.com", "https://front.hellogptv.com",
                         "http://192.168.123.105:3000",
                         "http://175.117.217.50:3000", "http://172.26.208.1:3000",
-                        "https://d225nwg9l5o274.cloudfront.net")
+                        "https://d225nwg9l5o274.cloudfront.net",
+                        "https://1.220.201.108:3000", "https://1.220.201.108:3001")
                 .allowedMethods("OPTIONS", "GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*")
                 .allowCredentials(true)
                 .maxAge(3600);
     }
-}
+

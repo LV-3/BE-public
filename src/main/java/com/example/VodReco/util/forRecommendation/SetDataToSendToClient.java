@@ -8,6 +8,7 @@ import com.example.VodReco.dto.model.fromModel.MoodModelDataDto;
 import com.example.VodReco.dto.model.fromModel.PersonalModelDataDto;
 import com.example.VodReco.mongoRepository.UserWatchRepository;
 import com.example.VodReco.mongoRepository.VodRepository;
+import com.example.VodReco.service.mainPage.getReco.VodGetRecoServiceImpl;
 import com.example.VodReco.util.CheckNotTranslatedTemplatedWords;
 import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
 import com.example.VodReco.util.series.ValidateDuplicateSeriesIdWrapper;
@@ -34,6 +35,8 @@ public class SetDataToSendToClient {
     private final VodtoVodDtoWrapper vodtoVodDtoWrapper;
     private final VodRepository vodRepository;
     private final CheckNotTranslatedTemplatedWords checkNotTranslatedTemplatedWords;
+
+    private final VodGetRecoServiceImpl vodGetRecoService;
 
     //    TODO : access modifier private으로 바꿀 수 있으면 바꾸기
 //    21개 개수 맞추는 메서드
@@ -76,18 +79,25 @@ public class SetDataToSendToClient {
 
     }
 
-    public void parse(String recResult) {
-        JSONObject jsonObject = new JSONObject(recResult.trim());
-        JSONArray descriptionData = jsonObject.getJSONArray("description_data");
-        System.out.println("descriptionData 확인 = " + descriptionData.toString());
-        JSONArray moodData = jsonObject.getJSONArray("mood_data");
-        System.out.println("moodData 확인 = " + moodData.toString());
-        JSONArray personalData = jsonObject.getJSONArray("personal_data");
-        System.out.println("personalData 확인 = " + personalData.toString());
+    public void parse(String recResult, String subsr) {
+        if (recResult != null) {
+            JSONObject jsonObject = new JSONObject(recResult.trim());
+            JSONArray descriptionData = jsonObject.getJSONArray("description_data");
+            System.out.println("descriptionData 확인 = " + descriptionData.toString());
+            JSONArray moodData = jsonObject.getJSONArray("mood_data");
+            System.out.println("moodData 확인 = " + moodData.toString());
+            JSONArray personalData = jsonObject.getJSONArray("personal_data");
+            System.out.println("personalData 확인 = " + personalData.toString());
 
-        descriptionModelDataDto.setDescriptonData(descriptionData);
-        moodModelDataDto.setMoodData(moodData);
-        personalModelDataDto.setPersonalData(personalData);
+            descriptionModelDataDto.setDescriptonData(descriptionData);
+            moodModelDataDto.setMoodData(moodData);
+            personalModelDataDto.setPersonalData(personalData);
+        }
+//        } else {
+//            descriptionModelDataDto.setDescriptonData(this.getsubList(new ArrayList<>(), subsr));
+//            descriptionModelDataDto.setDescriptonData(this.getsubList(new ArrayList<>(), subsr));
+//            descriptionModelDataDto.setDescriptonData(this.getsubList(new ArrayList<>(), subsr));
+//        }
     }
 
     public ToClient1stDto buildToClient1stDto(String contentId){
