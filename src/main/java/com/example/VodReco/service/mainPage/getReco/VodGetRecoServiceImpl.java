@@ -164,6 +164,7 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
                     .retrieve()
                     .bodyToMono(String.class)
                     .flatMap(result -> {
+                        if (result != null) {
                             setDataToSendToClient.parse(result, subsr);
 
                             // 여기에 원하는 작업 수행
@@ -191,7 +192,12 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
                             receivedDescriptionContentIds.setReceivedDescriptionDataList(validatedDescriptionContentIdList);
                             receivedMoodContentIds.setReceivedMoodDataList(validatedMoodContentIdList);
                             receivedPersonalContentIds.setReceivedPersonalDataList(validatedPersonalContentIdList);
-
+                        }else{
+                            System.out.println("데이터 null 들어옴");
+                            receivedDescriptionContentIds.setReceivedDescriptionDataList(new ArrayList<>());
+                            receivedMoodContentIds.setReceivedMoodDataList(new ArrayList<>());
+                            receivedPersonalContentIds.setReceivedPersonalDataList(new ArrayList<>());
+                        }
 //                            System.out.println("비동기 블럭 내 subsr 사용 가능? = " + subsr);
 
                             //시리즈 처리 통과한 리스트 getsubList처리해서 클라이언트에 리턴하는 리스트의 요소 개수 21개 맞추기
@@ -212,6 +218,7 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
                                     .personal_data(toClientListDto.getPersonalListToClient())
                                     .personal_words(toClientListDto.getPersonal_words())
                                     .build());
+
 
                     })
                     .onErrorResume(WebClientResponseException.class, error -> {
