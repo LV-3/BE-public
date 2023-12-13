@@ -87,7 +87,7 @@ public class SetDataToSendToClient {
     }
 
     public void parse(String recResult, String subsr) {
-        if (recResult != null) {
+        if (recResult != null) { // 생각해보니까 recResult가 null이면 이미 parse까지 못 넘어오고 에러(231213)
             JSONObject jsonObject = new JSONObject(recResult.trim());
             JSONArray descriptionData = jsonObject.getJSONArray("description_data");
             System.out.println("descriptionData 확인 = " + descriptionData.toString());
