@@ -48,96 +48,6 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
     private final ToModelJsonDto toModelJsonDto;
 
 
-
-
-//    //테스트용
-//    List<String> descriptionContentIds21 = new ArrayList<>();
-//    List<String> moodContentIds21 = new ArrayList<>();
-//    List<String> personalContentIds21 = new ArrayList<>();
-//
-//    public List<String> getDescriptionContentIds21() {
-//        descriptionContentIds21.add("7531");
-//        descriptionContentIds21.add("7534");
-//        descriptionContentIds21.add("7535");
-//        descriptionContentIds21.add("7538");
-//        descriptionContentIds21.add("7545");
-//        descriptionContentIds21.add("7547");
-//        descriptionContentIds21.add("7549");
-//        descriptionContentIds21.add("7551");
-//        descriptionContentIds21.add("7553");
-//        descriptionContentIds21.add("7555");
-//        descriptionContentIds21.add("7557");
-//        descriptionContentIds21.add("7558");
-//        descriptionContentIds21.add("7559");
-//        descriptionContentIds21.add("7560");
-//        descriptionContentIds21.add("7545");
-//        descriptionContentIds21.add("7561");
-//        descriptionContentIds21.add("7562");
-//        descriptionContentIds21.add("7563");
-//        descriptionContentIds21.add("7565");
-//        descriptionContentIds21.add("7569");
-//        descriptionContentIds21.add("7579");
-//        return this.descriptionContentIds21;
-//    }
-//
-//    public List<String> getMoodContentIds21() {
-//        moodContentIds21.add("7580");
-//        moodContentIds21.add("7581");
-//        moodContentIds21.add("7582");
-//        moodContentIds21.add("7583");
-//        moodContentIds21.add("7584");
-//        moodContentIds21.add("7586");
-//        moodContentIds21.add("7587");
-//        moodContentIds21.add("7588");
-//        moodContentIds21.add("7589");
-//        moodContentIds21.add("7590");
-//        moodContentIds21.add("7591");
-//        moodContentIds21.add("7592");
-//        moodContentIds21.add("7593");
-//        moodContentIds21.add("7594");
-//        moodContentIds21.add("7595");
-//        moodContentIds21.add("7596");
-//        moodContentIds21.add("7601");
-//        moodContentIds21.add("7604");
-//        moodContentIds21.add("7605");
-//        moodContentIds21.add("7606");
-//        moodContentIds21.add("7611");
-//        return this.moodContentIds21;
-//    }
-//
-//    public List<String> getPersonalContentIds21() {
-//        personalContentIds21.add("7613");
-//        personalContentIds21.add("7614");
-//        personalContentIds21.add("7615");
-//        personalContentIds21.add("7616");
-//        personalContentIds21.add("7617");
-//        personalContentIds21.add("7619");
-//        personalContentIds21.add("7621");
-//        personalContentIds21.add("7622");
-//        personalContentIds21.add("7624");
-//        personalContentIds21.add("7625");
-//        personalContentIds21.add("7627");
-//        personalContentIds21.add("7632");
-//        personalContentIds21.add("7633");
-//        personalContentIds21.add("7634");
-//        personalContentIds21.add("7637");
-//        personalContentIds21.add("7638");
-//        personalContentIds21.add("7639");
-//        personalContentIds21.add("7640");
-//        personalContentIds21.add("7641");
-//        personalContentIds21.add("7642");
-//        personalContentIds21.add("7643");
-
-//        personalContentIds21.add("317");
-//        personalContentIds21.add("318");
-//        personalContentIds21.add("319");
-//        personalContentIds21.add("320");
-//        personalContentIds21.add("321");
-
-//        return this.personalContentIds21;
-//    }
-
-
     @Override
     public Mono<MainResponseDto> getAllContentIdsFromModel(String subsr) {
 //    public MainResponseDto getAllContentIdsFromModel(String subsr) {
@@ -149,7 +59,6 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
             toModelJsonDto.setJsonDto(json);
 
             //테스트용(231212)
-//            String jsonMood = objectMapper.writeValueAsString(toModel2ndDto.getDataForModel());
             String jsonMood = objectMapper.writeValueAsString(toModel2ndDto.getDataForModel().getMood_data());
             String jsonDescription = objectMapper.writeValueAsString(toModel2ndDto.getDataForModel().getDescription_data());
             String jsonPersonal = objectMapper.writeValueAsString(toModel2ndDto.getDataForModel().getPersonal_data());
@@ -227,9 +136,6 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
                                     .build());
                         })
 
-//                            .description_data(vodReloadService.reloadRec(receivedDescriptionContentIds.getReceivedDescriptionDataList()))
-//                            .genre_data(vodReloadService.reloadRec(receivedMoodContentIds.getReceivedMoodDataList()))
-//                            .personal_data(vodReloadService.reloadRec(receivedPersonalContentIds.getReceivedPersonalDataList()))
 //        return MainResponseDto.builder()
 //                .description_data(this.getsubList(this.getDescriptionContentIds21(), subsr).stream().map(vodReloadService::buildToClient1stDto).toList())
 //                .genre_data(this.getsubList(this.getMoodContentIds21(), subsr).stream().map(vodReloadService::buildToClient1stDto).toList())
