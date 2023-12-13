@@ -6,6 +6,9 @@ import com.example.VodReco.dto.client.ToClient1stDto;
 import com.example.VodReco.dto.model.fromModel.DescriptionModelDataDto;
 import com.example.VodReco.dto.model.fromModel.MoodModelDataDto;
 import com.example.VodReco.dto.model.fromModel.PersonalModelDataDto;
+import com.example.VodReco.dto.model.fromModel.receivedContentIds.ReceivedDescriptionContentIds;
+import com.example.VodReco.dto.model.fromModel.receivedContentIds.ReceivedMoodContentIds;
+import com.example.VodReco.dto.model.fromModel.receivedContentIds.ReceivedPersonalContentIds;
 import com.example.VodReco.mongoRepository.UserWatchRepository;
 import com.example.VodReco.mongoRepository.VodRepository;
 import com.example.VodReco.service.mainPage.getReco.VodGetRecoServiceImpl;
@@ -35,6 +38,11 @@ public class SetDataToSendToClient {
     private final VodtoVodDtoWrapper vodtoVodDtoWrapper;
     private final VodRepository vodRepository;
     private final CheckNotTranslatedTemplatedWords checkNotTranslatedTemplatedWords;
+
+    private final ReceivedPersonalContentIds receivedPersonalContentIds;
+    private final ReceivedDescriptionContentIds receivedDescriptionContentIds;
+    private final ReceivedMoodContentIds receivedMoodContentIds;
+
 
     //    TODO : access modifier private으로 바꿀 수 있으면 바꾸기
 //    21개 개수 맞추는 메서드
@@ -90,12 +98,13 @@ public class SetDataToSendToClient {
             descriptionModelDataDto.setDescriptonData(descriptionData);
             moodModelDataDto.setMoodData(moodData);
             personalModelDataDto.setPersonalData(personalData);
+        } else {
+            //FastAPI에서 null 들어올 때 subList로 예외처리(231213)
+            //TODO : 차후 지정된 테이블에서 추천 결과 꺼내오도록 수정
+            receivedDescriptionContentIds.setReceivedDescriptionDataList(this.getsubList(new ArrayList<>(), subsr));
+            receivedMoodContentIds.setReceivedMoodDataList(this.getsubList(new ArrayList<>(), subsr));
+            receivedPersonalContentIds.setReceivedPersonalDataList(this.getsubList(new ArrayList<>(), subsr));
         }
-//        } else {
-//            descriptionModelDataDto.setDescriptonData(this.getsubList(new ArrayList<>(), subsr));
-//            descriptionModelDataDto.setDescriptonData(this.getsubList(new ArrayList<>(), subsr));
-//            descriptionModelDataDto.setDescriptonData(this.getsubList(new ArrayList<>(), subsr));
-//        }
     }
 
     public ToClient1stDto buildToClient1stDto(String contentId){
@@ -115,6 +124,7 @@ public class SetDataToSendToClient {
                     .tags(tags)
                     .build();
             //uniqueTemplates가 null인 경우 빈 리스트 리턴
+
         } else {
             return ToClient1stDto.builder().contentId(contentId).posterurl(vodDto.getPosterurl()).title(vodDto.getTitle())
                     .tags(new ArrayList<>())
