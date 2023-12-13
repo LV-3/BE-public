@@ -1,29 +1,40 @@
 package com.example.VodReco.service.mainPage.viewPopularVods;
 
 import com.example.VodReco.domain.PopularVod;
+import com.example.VodReco.dto.popular.ViewPopularVodsDto;
 import com.example.VodReco.mongoRepository.PopularVodRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ViewPopularVodsServiceImpl implements ViewPopularVodsService{
     private final PopularVodRepository popularVodRepository;
 
-    @Autowired
-    public ViewPopularVodsServiceImpl(PopularVodRepository popularVodRepository) {
-        this.popularVodRepository = popularVodRepository;
-    }
-
-    public List<PopularVod> getTop10PopularVods() {
+    public List<ViewPopularVodsDto> getTop10PopularVods() {
         // 시간대에 따른 VOD 가져오기
         LocalDateTime now = LocalDateTime.now();
         String timeGroup = getTimeGroup(now);
 
         // 시간대에 맞는 상위 10개 VOD 조회
-        return popularVodRepository.findTop10ByTimeGroupOrderByCountDesc(timeGroup);
+        List<PopularVod> popularVods = popularVodRepository.findTop10ByTimeGroupOrderByCountDesc(timeGroup);
+
+        // PopularVod 객체를 BasicInfoOfVodDto로 변환하여 필요한 정보만 추출
+        return popularVods.stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    private ViewPopularVodsDto mapToDto(PopularVod popularVod) {
+        return ViewPopularVodsDto.builder()
+                .contentId(popularVod.getContentId())
+                .title(popularVod.getTitle())
+                .posterurl(popularVod.getPosterurl())
+                .build();
     }
 
     private String getTimeGroup(LocalDateTime now) {

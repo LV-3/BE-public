@@ -149,10 +149,17 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
             toModelJsonDto.setJsonDto(json);
 
             //테스트용(231212)
-            String jsonMood = objectMapper.writeValueAsString(toModel2ndDto.getDataForModel());
+//            String jsonMood = objectMapper.writeValueAsString(toModel2ndDto.getDataForModel());
+            String jsonMood = objectMapper.writeValueAsString(toModel2ndDto.getDataForModel().getMood_data());
+            String jsonDescription = objectMapper.writeValueAsString(toModel2ndDto.getDataForModel().getDescription_data());
+            String jsonPersonal = objectMapper.writeValueAsString(toModel2ndDto.getDataForModel().getPersonal_data());
+            System.out.println("무드 데이터 = 'mood_data':" + jsonMood);
+            System.out.println("줄거리 데이터 = 'description_data':" + jsonDescription);
+            System.out.println("퍼스널 데이터 = 'personal_data':" + jsonPersonal);
 
         WebClient webClient = WebClient.builder()
 //                .baseUrl("http://1.220.201.108:8000")
+//                .baseUrl("http://1.223.55.43:8000")
                 .baseUrl("http://lv3-loadbalancer-f-725358857.ap-northeast-2.elb.amazonaws.com")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
@@ -170,9 +177,9 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
                             // 비동기 작업 완료 후 처리할 로직
 
                     //테스트용
-                    System.out.println(result);
+//                    System.out.println(result);
 
-                            setDataToSendToClient.parse(result);
+                            setDataToSendToClient.parse(result, subsr);
 
 
                             //JSONArray로 받아온 content_id들 리스트로 변환
@@ -201,14 +208,14 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
                             receivedMoodContentIds.setReceivedMoodDataList(validatedMoodContentIdList);
                             receivedPersonalContentIds.setReceivedPersonalDataList(validatedPersonalContentIdList);
 
-                            System.out.println("비동기 블럭 내 subsr 사용 가능? = " + subsr);
+//                            System.out.println("비동기 블럭 내 subsr 사용 가능? = " + subsr);
 
                             //시리즈 처리 통과한 리스트 getsubList처리해서 클라이언트에 리턴하는 리스트의 요소 개수 21개 맞추기
                             List<String> descriptionContentIds21 = setDataToSendToClient.getsubList(receivedDescriptionContentIds.getReceivedDescriptionDataList(), subsr);
                             List<String> moodContentIds21 = setDataToSendToClient.getsubList(receivedMoodContentIds.getReceivedMoodDataList(), subsr);
                             List<String> personalContentIds21 = setDataToSendToClient.getsubList(receivedPersonalContentIds.getReceivedPersonalDataList(), subsr);
 
-                    System.out.println("시리즈 처리 통과한 description 리스트 = " + descriptionContentIds21);
+//                    System.out.println("시리즈 처리 통과한 description 리스트 = " + descriptionContentIds21);
 
                             // 결과 반환
                             return Mono.just(MainResponseDto.builder()
@@ -231,7 +238,8 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
 
                 .doOnError(error -> {
 //                    System.out.println("데이터 = " + toModelJsonDto.getJsonDto());
-                    System.out.println("무드 데이터 = " + jsonMood);
+//                    System.out.println("무드 데이터 = " + jsonMood);
+                    System.err.println("에러 발생: " + error);
                     System.err.println("에러 발생: " + error);
 
                 });
