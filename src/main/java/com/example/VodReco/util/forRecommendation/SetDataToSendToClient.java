@@ -3,7 +3,6 @@ package com.example.VodReco.util.forRecommendation;
 import com.example.VodReco.domain.UserWatch;
 import com.example.VodReco.dto.VodDto;
 import com.example.VodReco.dto.client.ToClient1stDto;
-import com.example.VodReco.dto.genre.BasicInfoOfVodDto;
 import com.example.VodReco.dto.model.fromModel.DescriptionModelDataDto;
 import com.example.VodReco.dto.model.fromModel.MoodModelDataDto;
 import com.example.VodReco.dto.model.fromModel.PersonalModelDataDto;
@@ -12,7 +11,6 @@ import com.example.VodReco.dto.model.fromModel.receivedContentIds.ReceivedMoodCo
 import com.example.VodReco.dto.model.fromModel.receivedContentIds.ReceivedPersonalContentIds;
 import com.example.VodReco.mongoRepository.UserWatchRepository;
 import com.example.VodReco.mongoRepository.VodRepository;
-import com.example.VodReco.service.mainPage.getReco.VodGetRecoServiceImpl;
 import com.example.VodReco.util.CheckNotTranslatedTemplatedWords;
 import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
 import com.example.VodReco.util.series.ValidateDuplicateSeriesIdWrapper;

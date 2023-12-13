@@ -1,7 +1,7 @@
 package com.example.VodReco.service.category.viewMovieVods;
 
 import com.example.VodReco.domain.Vod;
-import com.example.VodReco.dto.genre.BasicInfoOfVodDto;
+import com.example.VodReco.dto.BasicInfoOfVodDto;
 import com.example.VodReco.mongoRepository.VodRepository;
 import com.example.VodReco.util.ContentIdToBasicInfoOfVodsWrapper;
 import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
