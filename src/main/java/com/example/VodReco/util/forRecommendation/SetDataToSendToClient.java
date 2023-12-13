@@ -36,8 +36,6 @@ public class SetDataToSendToClient {
     private final VodRepository vodRepository;
     private final CheckNotTranslatedTemplatedWords checkNotTranslatedTemplatedWords;
 
-    private final VodGetRecoServiceImpl vodGetRecoService;
-
     //    TODO : access modifier private으로 바꿀 수 있으면 바꾸기
 //    21개 개수 맞추는 메서드
     public List<String> getsubList(List<String> list, String subsr) {
