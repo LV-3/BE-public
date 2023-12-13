@@ -1,6 +1,6 @@
 package com.example.VodReco.controller;
 
-import com.example.VodReco.dto.genre.BasicInfoOfVodDto;
+import com.example.VodReco.dto.BasicInfoOfVodDto;
 import com.example.VodReco.service.category.viewKidsEtcCategories.CategoryGenreViewKidsEtcServiceImpl;
 import com.example.VodReco.service.category.viewKidsEtcVods.CategoryGenreViewKidsEtcVodsServiceImpl;
 import com.example.VodReco.service.category.viewMovieCategories.CategoryGenreViewMovieServiceImpl;

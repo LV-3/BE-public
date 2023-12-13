@@ -1,6 +1,6 @@
 package com.example.VodReco.controller;
 
-import com.example.VodReco.dto.genre.BasicInfoOfVodDto;
+import com.example.VodReco.dto.BasicInfoOfVodDto;
 import com.example.VodReco.dto.popular.ViewPopularVodsDto;
 import com.example.VodReco.service.mainPage.searchVods.SearchVodServiceImpl;
 import com.example.VodReco.service.mainPage.viewPopularVods.ViewPopularVodsServiceImpl;
