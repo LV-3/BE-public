@@ -23,9 +23,11 @@ public class VodviewVodsByTagServiceImpl implements VodviewVodsByTagService {
     private final ContentIdToBasicInfoOfVodsWrapper contentIdToBasicInfoOfVodsWrapper;
 
     @Override
-    public List<BasicInfoOfVodDto> sendEachTagVods(String tag) {
+    public List<BasicInfoOfVodDto> sendEachTagVods(String tags) {
+//    public List<BasicInfoOfVodDto> sendEachTagVods(String tag) {
         List<BasicInfoOfVodDto> list = new ArrayList<>();
-        List<String> contentIds = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(vodRepository.findByUniqueTemplatesContaining(tag).stream().map(Vod::getContentId).toList());
+        List<String> contentIds = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(vodRepository.findByUniqueTemplatesContaining(tags).stream().map(Vod::getContentId).toList());
+//        List<String> contentIds = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(vodRepository.findByUniqueTemplatesContaining(tag).stream().map(Vod::getContentId).toList());
         return contentIdToBasicInfoOfVodsWrapper.getBasicInfoOfVodDtos(list, contentIds, vodtoVodDtoWrapper, vodRepository);
     }
 }
