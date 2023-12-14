@@ -8,6 +8,8 @@ import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +22,9 @@ public class CategoryGenreViewMovieVodsServiceImpl implements CategoryGenreViewM
 
     @Override
     public List<BasicInfoOfVodDto> getMovieVodsInfo(String genre2) {
-        List<Vod> list = vodRepository.findByCategoryAndGenre("영화", genre2);
+//        String decodedGenre = URLDecoder.decode(genre2, "ascii");
+        String replacedGenre = genre2.replaceAll(":", "/");
+        List<Vod> list = vodRepository.findByCategoryAndGenre("영화", replacedGenre);
         List<String> contentIds = new ArrayList<>();
         List<BasicInfoOfVodDto> basicInfoOfVodDtoList = new ArrayList<>();
         for (Vod v : list) {
