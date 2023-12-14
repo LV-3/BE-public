@@ -138,8 +138,9 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
     @Override
 //    public Mono<MainResponseDto> getAllContentIdsFromModel(String subsr) {
     public MainResponseDto getAllContentIdsFromModel(String subsr) {
-//        ToModel2ndDto toModel2ndDto = setDataToSendToModel.setDataForModel(subsr);
-//
+
+        ToModel2ndDto toModel2ndDto = setDataToSendToModel.setDataForModel(subsr);
+
 //        try {
 //            String json = objectMapper.writeValueAsString(toModel2ndDto.getDataForModel());
 //            toModelJsonDto.setJsonDto(json);
