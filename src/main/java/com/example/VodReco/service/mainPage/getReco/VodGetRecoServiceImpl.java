@@ -1,7 +1,6 @@
 package com.example.VodReco.service.mainPage.getReco;
 
 import com.example.VodReco.dto.client.MainResponseDto;
-import com.example.VodReco.dto.client.ToClient1stDto;
 import com.example.VodReco.dto.model.fromModel.DescriptionModelDataDto;
 import com.example.VodReco.dto.model.fromModel.MoodModelDataDto;
 import com.example.VodReco.dto.model.fromModel.PersonalModelDataDto;
@@ -12,17 +11,10 @@ import com.example.VodReco.dto.model.toModel.*;
 import com.example.VodReco.util.forRecommendation.SetDataToSendToClient;
 import com.example.VodReco.util.forRecommendation.SetDataToSendToModel;
 import com.example.VodReco.util.series.ValidateDuplicateSeriesIdWrapper;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
-import reactor.core.publisher.Mono;
 
 import java.util.*;
 
@@ -144,102 +136,102 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
 
 
     @Override
-    public Mono<MainResponseDto> getAllContentIdsFromModel(String subsr) {
-//    public MainResponseDto getAllContentIdsFromModel(String subsr) {
-        ToModel2ndDto toModel2ndDto = setDataToSendToModel.setDataForModel(subsr);
-
-        try {
-            String json = objectMapper.writeValueAsString(toModel2ndDto.getDataForModel());
-            toModelJsonDto.setJsonDto(json);
-
-            WebClient webClient = WebClient.builder()
-                    .baseUrl("http://lv3-loadbalancer-f-725358857.ap-northeast-2.elb.amazonaws.com")
-                    .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                    .build();
-
-            return webClient.post()
-                    .uri("/prcs_models")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .body(BodyInserters.fromValue(toModelJsonDto.getJsonDto()))
-                    .retrieve()
-                    .bodyToMono(String.class)
-                    .flatMap(result -> {
-                        if (result != null) {
-                            setDataToSendToClient.parse(result, subsr);
-
-                            // 여기에 원하는 작업 수행
-                            //JSONArray로 받아온 content_id들 리스트로 변환
-                            List<String> descriptionList = new ArrayList<>();
-                            List<String> moodList = new ArrayList<>();
-                            List<String> personalList = new ArrayList<>();
-                            for (int i = 0; i < descriptionModelDataDto.getDescriptonData().length(); i++) {
-                                descriptionList.add((String) descriptionModelDataDto.getDescriptonData().get(i));
-                            }
-                            for (int j = 0; j < moodModelDataDto.getMoodData().length(); j++) {
-                                moodList.add((String) moodModelDataDto.getMoodData().get(j));
-                            }
-                            //                            0번째 index는 별도 처리(231211)
-                            for (int k = 1; k < personalModelDataDto.getPersonalData().length(); k++) {
-                                personalList.add((String) personalModelDataDto.getPersonalData().get(k));
-                            }
-
-                            //시리즈 처리
-                            List<String> validatedDescriptionContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(descriptionList);
-                            List<String> validatedMoodContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(moodList);
-                            List<String> validatedPersonalContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(personalList);
-
-                            //시리즈 처리 통과한 리스트
-                            receivedDescriptionContentIds.setReceivedDescriptionDataList(validatedDescriptionContentIdList);
-                            receivedMoodContentIds.setReceivedMoodDataList(validatedMoodContentIdList);
-                            receivedPersonalContentIds.setReceivedPersonalDataList(validatedPersonalContentIdList);
-                        }else{
-                            System.out.println("데이터 null 들어옴");
-                            receivedDescriptionContentIds.setReceivedDescriptionDataList(new ArrayList<>());
-                            receivedMoodContentIds.setReceivedMoodDataList(new ArrayList<>());
-                            receivedPersonalContentIds.setReceivedPersonalDataList(new ArrayList<>());
-                        }
-//                            System.out.println("비동기 블럭 내 subsr 사용 가능? = " + subsr);
-
-                            //시리즈 처리 통과한 리스트 getsubList처리해서 클라이언트에 리턴하는 리스트의 요소 개수 21개 맞추기
-
-//                    System.out.println("시리즈 처리 통과한 description 리스트 = " + descriptionContentIds21);
-                            List<String> descriptionContentIds21 = setDataToSendToClient.getsubList(receivedDescriptionContentIds.getReceivedDescriptionDataList(), subsr);
-                            List<String> moodContentIds21 = setDataToSendToClient.getsubList(receivedMoodContentIds.getReceivedMoodDataList(), subsr);
-                            List<String> personalContentIds21 = setDataToSendToClient.getsubList(receivedPersonalContentIds.getReceivedPersonalDataList(), subsr);
-
-
-                            toClientListDto.setDescriptionListToClient(descriptionContentIds21.stream().map(setDataToSendToClient::buildToClient1stDto).toList());
-                            toClientListDto.setMoodListToClient(moodContentIds21.stream().map(setDataToSendToClient::buildToClient1stDto).toList());
-                            toClientListDto.setPersonalListToClient(personalContentIds21.stream().map(setDataToSendToClient::buildToClient1stDto).toList());
-                            toClientListDto.setPersonal_words((String) personalModelDataDto.getPersonalData().get(0));
-                            return Mono.just(MainResponseDto.builder()
-                                    .description_data(toClientListDto.getDescriptionListToClient())
-                                    .genre_data(toClientListDto.getMoodListToClient())
-                                    .personal_data(toClientListDto.getPersonalListToClient())
-                                    .personal_words(toClientListDto.getPersonal_words())
-                                    .build());
-
-
-                    })
-                    .onErrorResume(WebClientResponseException.class, error -> {
-                        System.err.println("HTTP error status: " + error.getStatusCode());
-//                         HTTP 에러 발생 시 기본 응답 반환
-                        return Mono.just(MainResponseDto.builder()
-                                .description_data(setDataToSendToClient.sendFakeData(subsr))
-                                .genre_data(setDataToSendToClient.sendFakeData(subsr))
-                                .personal_data(setDataToSendToClient.sendFakeData(subsr))
-                                .personal_words("유쾌한, 사랑스러운, 흥미로운")
-                                .build());
-                    });
-//                        return MainResponseDto.builder()
-//                                .description_data(setDataToSendToClient.getsubList(this.getDescriptionContentIds21(), subsr).stream().map(setDataToSendToClient::buildToClient1stDto).toList())
-//                                .genre_data(setDataToSendToClient.getsubList(this.getMoodContentIds21(), subsr).stream().map(setDataToSendToClient::buildToClient1stDto).toList())
-//                                .genre_data(setDataToSendToClient.getsubList(this.getPersonalContentIds21(), subsr).stream().map(setDataToSendToClient::buildToClient1stDto).toList())
-//                                .build();
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-
-        }
+//    public Mono<MainResponseDto> getAllContentIdsFromModel(String subsr) {
+    public MainResponseDto getAllContentIdsFromModel(String subsr) {
+//        ToModel2ndDto toModel2ndDto = setDataToSendToModel.setDataForModel(subsr);
+//
+//        try {
+//            String json = objectMapper.writeValueAsString(toModel2ndDto.getDataForModel());
+//            toModelJsonDto.setJsonDto(json);
+//
+//            WebClient webClient = WebClient.builder()
+//                    .baseUrl("http://lv3-loadbalancer-f-725358857.ap-northeast-2.elb.amazonaws.com")
+//                    .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+//                    .build();
+//
+//            return webClient.post()
+//                    .uri("/prcs_models")
+//                    .contentType(MediaType.APPLICATION_JSON)
+//                    .body(BodyInserters.fromValue(toModelJsonDto.getJsonDto()))
+//                    .retrieve()
+//                    .bodyToMono(String.class)
+//                    .flatMap(result -> {
+//                        if (result != null) {
+//                            setDataToSendToClient.parse(result, subsr);
+//
+//                            // 여기에 원하는 작업 수행
+//                            //JSONArray로 받아온 content_id들 리스트로 변환
+//                            List<String> descriptionList = new ArrayList<>();
+//                            List<String> moodList = new ArrayList<>();
+//                            List<String> personalList = new ArrayList<>();
+//                            for (int i = 0; i < descriptionModelDataDto.getDescriptonData().length(); i++) {
+//                                descriptionList.add((String) descriptionModelDataDto.getDescriptonData().get(i));
+//                            }
+//                            for (int j = 0; j < moodModelDataDto.getMoodData().length(); j++) {
+//                                moodList.add((String) moodModelDataDto.getMoodData().get(j));
+//                            }
+//                            //                            0번째 index는 별도 처리(231211)
+//                            for (int k = 1; k < personalModelDataDto.getPersonalData().length(); k++) {
+//                                personalList.add((String) personalModelDataDto.getPersonalData().get(k));
+//                            }
+//
+//                            //시리즈 처리
+//                            List<String> validatedDescriptionContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(descriptionList);
+//                            List<String> validatedMoodContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(moodList);
+//                            List<String> validatedPersonalContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(personalList);
+//
+//                            //시리즈 처리 통과한 리스트
+//                            receivedDescriptionContentIds.setReceivedDescriptionDataList(validatedDescriptionContentIdList);
+//                            receivedMoodContentIds.setReceivedMoodDataList(validatedMoodContentIdList);
+//                            receivedPersonalContentIds.setReceivedPersonalDataList(validatedPersonalContentIdList);
+//                        }else{
+//                            System.out.println("데이터 null 들어옴");
+//                            receivedDescriptionContentIds.setReceivedDescriptionDataList(new ArrayList<>());
+//                            receivedMoodContentIds.setReceivedMoodDataList(new ArrayList<>());
+//                            receivedPersonalContentIds.setReceivedPersonalDataList(new ArrayList<>());
+//                        }
+////                            System.out.println("비동기 블럭 내 subsr 사용 가능? = " + subsr);
+//
+//                            //시리즈 처리 통과한 리스트 getsubList처리해서 클라이언트에 리턴하는 리스트의 요소 개수 21개 맞추기
+//
+////                    System.out.println("시리즈 처리 통과한 description 리스트 = " + descriptionContentIds21);
+//                            List<String> descriptionContentIds21 = setDataToSendToClient.getsubList(receivedDescriptionContentIds.getReceivedDescriptionDataList(), subsr);
+//                            List<String> moodContentIds21 = setDataToSendToClient.getsubList(receivedMoodContentIds.getReceivedMoodDataList(), subsr);
+//                            List<String> personalContentIds21 = setDataToSendToClient.getsubList(receivedPersonalContentIds.getReceivedPersonalDataList(), subsr);
+//
+//
+//                            toClientListDto.setDescriptionListToClient(descriptionContentIds21.stream().map(setDataToSendToClient::buildToClient1stDto).toList());
+//                            toClientListDto.setMoodListToClient(moodContentIds21.stream().map(setDataToSendToClient::buildToClient1stDto).toList());
+//                            toClientListDto.setPersonalListToClient(personalContentIds21.stream().map(setDataToSendToClient::buildToClient1stDto).toList());
+//                            toClientListDto.setPersonal_words((String) personalModelDataDto.getPersonalData().get(0));
+//                            return Mono.just(MainResponseDto.builder()
+//                                    .description_data(toClientListDto.getDescriptionListToClient())
+//                                    .genre_data(toClientListDto.getMoodListToClient())
+//                                    .personal_data(toClientListDto.getPersonalListToClient())
+//                                    .personal_words(toClientListDto.getPersonal_words())
+//                                    .build());
+//
+//
+//                    })
+//                    .onErrorResume(WebClientResponseException.class, error -> {
+//                        System.err.println("HTTP error status: " + error.getStatusCode());
+////                         HTTP 에러 발생 시 기본 응답 반환
+//                        return Mono.just(MainResponseDto.builder()
+//                                .description_data(setDataToSendToClient.sendFakeData(subsr))
+//                                .genre_data(setDataToSendToClient.sendFakeData(subsr))
+//                                .personal_data(setDataToSendToClient.sendFakeData(subsr))
+//                                .personal_words("유쾌한, 사랑스러운, 흥미로운")
+//                                .build());
+//                    });
+                        return MainResponseDto.builder()
+                                .description_data(setDataToSendToClient.getsubList(this.getDescriptionContentIds21(), subsr).stream().map(setDataToSendToClient::buildToClient1stDto).toList())
+                                .genre_data(setDataToSendToClient.getsubList(this.getMoodContentIds21(), subsr).stream().map(setDataToSendToClient::buildToClient1stDto).toList())
+                                .personal_data(setDataToSendToClient.getsubList(this.getPersonalContentIds21(), subsr).stream().map(setDataToSendToClient::buildToClient1stDto).toList())
+                                .build();
+//        } catch (JsonProcessingException e) {
+//            throw new RuntimeException(e);
+//
+//        }
 
     }
 
