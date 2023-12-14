@@ -1,19 +1,14 @@
 package com.example.VodReco.controller;
 
 import com.example.VodReco.aspects.LogExecutionTime;
-import com.example.VodReco.domain.PopularVod;
 import com.example.VodReco.dto.UserDto;
-import com.example.VodReco.dto.VodDto;
 import com.example.VodReco.dto.client.MainResponseDto;
-import com.example.VodReco.dto.genre.BasicInfoOfVodDto;
+import com.example.VodReco.dto.BasicInfoOfVodDto;
 import com.example.VodReco.service.mainPage.getReco.VodGetRecoServiceImpl;
-import com.example.VodReco.service.mainPage.searchVods.SearchVodServiceImpl;
-import com.example.VodReco.service.mainPage.viewPopularVods.ViewPopularVodsServiceImpl;
 import com.example.VodReco.service.mainPage.viewVodsByTag.VodviewVodsByTagServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;

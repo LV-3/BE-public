@@ -42,6 +42,9 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
     private final ToModelJsonDto toModelJsonDto;
 
 
+    private final ToClientListDto toClientListDto;
+
+
 
 //    //테스트용
     List<String> descriptionContentIds21 = new ArrayList<>();
@@ -135,8 +138,8 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
     @Override
 //    public Mono<MainResponseDto> getAllContentIdsFromModel(String subsr) {
     public MainResponseDto getAllContentIdsFromModel(String subsr) {
-        ToModel2ndDto toModel2ndDto = setDataToSendToModel.setDataForModel(subsr);
-
+//        ToModel2ndDto toModel2ndDto = setDataToSendToModel.setDataForModel(subsr);
+//
 //        try {
 //            String json = objectMapper.writeValueAsString(toModel2ndDto.getDataForModel());
 //            toModelJsonDto.setJsonDto(json);
@@ -153,69 +156,83 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
 //                    .retrieve()
 //                    .bodyToMono(String.class)
 //                    .flatMap(result -> {
-//                        setDataToSendToClient.parse(result, subsr);
+//                        if (result != null) {
+//                            setDataToSendToClient.parse(result, subsr);
 //
-//                        // 여기에 원하는 작업 수행
-//                        //JSONArray로 받아온 content_id들 리스트로 변환
-//                        List<String> descriptionList = new ArrayList<>();
-//                        List<String> moodList = new ArrayList<>();
-//                        List<String> personalList = new ArrayList<>();
-//                        for (int i = 0; i < descriptionModelDataDto.getDescriptonData().length(); i++) {
-//                        descriptionList.add((String) descriptionModelDataDto.getDescriptonData().get(i));
+//                            // 여기에 원하는 작업 수행
+//                            //JSONArray로 받아온 content_id들 리스트로 변환
+//                            List<String> descriptionList = new ArrayList<>();
+//                            List<String> moodList = new ArrayList<>();
+//                            List<String> personalList = new ArrayList<>();
+//                            for (int i = 0; i < descriptionModelDataDto.getDescriptonData().length(); i++) {
+//                                descriptionList.add((String) descriptionModelDataDto.getDescriptonData().get(i));
+//                            }
+//                            for (int j = 0; j < moodModelDataDto.getMoodData().length(); j++) {
+//                                moodList.add((String) moodModelDataDto.getMoodData().get(j));
+//                            }
+//                            //                            0번째 index는 별도 처리(231211)
+//                            for (int k = 1; k < personalModelDataDto.getPersonalData().length(); k++) {
+//                                personalList.add((String) personalModelDataDto.getPersonalData().get(k));
+//                            }
+//
+//                            //시리즈 처리
+//                            List<String> validatedDescriptionContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(descriptionList);
+//                            List<String> validatedMoodContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(moodList);
+//                            List<String> validatedPersonalContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(personalList);
+//
+//                            //시리즈 처리 통과한 리스트
+//                            receivedDescriptionContentIds.setReceivedDescriptionDataList(validatedDescriptionContentIdList);
+//                            receivedMoodContentIds.setReceivedMoodDataList(validatedMoodContentIdList);
+//                            receivedPersonalContentIds.setReceivedPersonalDataList(validatedPersonalContentIdList);
+//                        }else{
+//                            System.out.println("데이터 null 들어옴");
+//                            receivedDescriptionContentIds.setReceivedDescriptionDataList(new ArrayList<>());
+//                            receivedMoodContentIds.setReceivedMoodDataList(new ArrayList<>());
+//                            receivedPersonalContentIds.setReceivedPersonalDataList(new ArrayList<>());
 //                        }
-//                        for (int j = 0; j < moodModelDataDto.getMoodData().length(); j++) {
-//                        moodList.add((String) moodModelDataDto.getMoodData().get(j));
-//                        }
-//                //                            0번째 index는 별도 처리(231211)
-//                        for (int k = 1; k < personalModelDataDto.getPersonalData().length(); k++) {
-//                        personalList.add((String) personalModelDataDto.getPersonalData().get(k));
-//                        }
-//
-//
-//                        //시리즈 처리
-//                        List<String> validatedDescriptionContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(descriptionList);
-//                        List<String> validatedMoodContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(moodList);
-//                        List<String> validatedPersonalContentIdList = validateDuplicateSeriesIdWrapper.validateDuplicateSeriesId(personalList);
-//
-//                        //시리즈 처리 통과한 리스트
-//                        receivedDescriptionContentIds.setReceivedDescriptionDataList(validatedDescriptionContentIdList);
-//                        receivedMoodContentIds.setReceivedMoodDataList(validatedMoodContentIdList);
-//                        receivedPersonalContentIds.setReceivedPersonalDataList(validatedPersonalContentIdList);
-//
 ////                            System.out.println("비동기 블럭 내 subsr 사용 가능? = " + subsr);
 //
-//                         //시리즈 처리 통과한 리스트 getsubList처리해서 클라이언트에 리턴하는 리스트의 요소 개수 21개 맞추기
+//                            //시리즈 처리 통과한 리스트 getsubList처리해서 클라이언트에 리턴하는 리스트의 요소 개수 21개 맞추기
 //
 ////                    System.out.println("시리즈 처리 통과한 description 리스트 = " + descriptionContentIds21);
-//                        List<String> descriptionContentIds21 = setDataToSendToClient.getsubList(receivedDescriptionContentIds.getReceivedDescriptionDataList(), subsr);
-//                        List<String> moodContentIds21 = setDataToSendToClient.getsubList(receivedMoodContentIds.getReceivedMoodDataList(), subsr);
-//                        List<String> personalContentIds21 = setDataToSendToClient.getsubList(receivedPersonalContentIds.getReceivedPersonalDataList(), subsr);
+//                            List<String> descriptionContentIds21 = setDataToSendToClient.getsubList(receivedDescriptionContentIds.getReceivedDescriptionDataList(), subsr);
+//                            List<String> moodContentIds21 = setDataToSendToClient.getsubList(receivedMoodContentIds.getReceivedMoodDataList(), subsr);
+//                            List<String> personalContentIds21 = setDataToSendToClient.getsubList(receivedPersonalContentIds.getReceivedPersonalDataList(), subsr);
 //
-//                        return Mono.just(MainResponseDto.builder()
-//                                .description_data(descriptionContentIds21.stream().map(setDataToSendToClient::buildToClient1stDto).toList())
-//                                .genre_data(moodContentIds21.stream().map(setDataToSendToClient::buildToClient1stDto).toList())
-//                                .personal_data(personalContentIds21.stream().map(setDataToSendToClient::buildToClient1stDto).toList())
-//                                .personal_words((String) personalModelDataDto.getPersonalData().get(0))
-//                                .build());
+//
+//                            toClientListDto.setDescriptionListToClient(descriptionContentIds21.stream().map(setDataToSendToClient::buildToClient1stDto).toList());
+//                            toClientListDto.setMoodListToClient(moodContentIds21.stream().map(setDataToSendToClient::buildToClient1stDto).toList());
+//                            toClientListDto.setPersonalListToClient(personalContentIds21.stream().map(setDataToSendToClient::buildToClient1stDto).toList());
+//                            toClientListDto.setPersonal_words((String) personalModelDataDto.getPersonalData().get(0));
+//                            return Mono.just(MainResponseDto.builder()
+//                                    .description_data(toClientListDto.getDescriptionListToClient())
+//                                    .genre_data(toClientListDto.getMoodListToClient())
+//                                    .personal_data(toClientListDto.getPersonalListToClient())
+//                                    .personal_words(toClientListDto.getPersonal_words())
+//                                    .build());
+//
+//
 //                    })
 //                    .onErrorResume(WebClientResponseException.class, error -> {
 //                        System.err.println("HTTP error status: " + error.getStatusCode());
-                        // HTTP 에러 발생 시 기본 응답 반환
+////                         HTTP 에러 발생 시 기본 응답 반환
 //                        return Mono.just(MainResponseDto.builder()
-//                                .description_data(new ArrayList<>())
-//                                .genre_data(new ArrayList<>())
-//                                .personal_data(new ArrayList<>())
+//                                .description_data(setDataToSendToClient.sendFakeData(subsr))
+//                                .genre_data(setDataToSendToClient.sendFakeData(subsr))
+//                                .personal_data(setDataToSendToClient.sendFakeData(subsr))
 //                                .personal_words("유쾌한, 사랑스러운, 흥미로운")
 //                                .build());
 //                    });
                         return MainResponseDto.builder()
                                 .description_data(setDataToSendToClient.getsubList(this.getDescriptionContentIds21(), subsr).stream().map(setDataToSendToClient::buildToClient1stDto).toList())
                                 .genre_data(setDataToSendToClient.getsubList(this.getMoodContentIds21(), subsr).stream().map(setDataToSendToClient::buildToClient1stDto).toList())
-                                .genre_data(setDataToSendToClient.getsubList(this.getPersonalContentIds21(), subsr).stream().map(setDataToSendToClient::buildToClient1stDto).toList())
+                                .personal_data(setDataToSendToClient.getsubList(this.getPersonalContentIds21(), subsr).stream().map(setDataToSendToClient::buildToClient1stDto).toList())
                                 .build();
 //        } catch (JsonProcessingException e) {
 //            throw new RuntimeException(e);
+//
 //        }
+
     }
 
 

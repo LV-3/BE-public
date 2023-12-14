@@ -11,7 +11,6 @@ import com.example.VodReco.dto.model.fromModel.receivedContentIds.ReceivedMoodCo
 import com.example.VodReco.dto.model.fromModel.receivedContentIds.ReceivedPersonalContentIds;
 import com.example.VodReco.mongoRepository.UserWatchRepository;
 import com.example.VodReco.mongoRepository.VodRepository;
-import com.example.VodReco.service.mainPage.getReco.VodGetRecoServiceImpl;
 import com.example.VodReco.util.CheckNotTranslatedTemplatedWords;
 import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
 import com.example.VodReco.util.series.ValidateDuplicateSeriesIdWrapper;
@@ -55,7 +54,7 @@ public class SetDataToSendToClient {
             return list.subList(0, 21);
         } else {
         Set<String> set = new HashSet<>(list); //이론상 이 상태에는 중복 없음. 이후 처리 위해 set으로 미리 변환한 것
-            while (set.size() < 21) {
+            while (set.size() <= 21) {
 //                전체 중복 방지 위해 set 사용
                 set.addAll(this.getSortedByUserPreference(subsr));
             }
@@ -86,7 +85,7 @@ public class SetDataToSendToClient {
     }
 
     public void parse(String recResult, String subsr) {
-        if (recResult != null) {
+        if (recResult != null) { // 생각해보니까 recResult가 null이면 이미 parse까지 못 넘어오고 에러(231213)
             JSONObject jsonObject = new JSONObject(recResult.trim());
             JSONArray descriptionData = jsonObject.getJSONArray("description_data");
             System.out.println("descriptionData 확인 = " + descriptionData.toString());
@@ -101,9 +100,10 @@ public class SetDataToSendToClient {
         } else {
             //FastAPI에서 null 들어올 때 subList로 예외처리(231213)
             //TODO : 차후 지정된 테이블에서 추천 결과 꺼내오도록 수정
-            receivedDescriptionContentIds.setReceivedDescriptionDataList(this.getsubList(new ArrayList<>(), subsr));
-            receivedMoodContentIds.setReceivedMoodDataList(this.getsubList(new ArrayList<>(), subsr));
-            receivedPersonalContentIds.setReceivedPersonalDataList(this.getsubList(new ArrayList<>(), subsr));
+            System.out.println("데이터 null 들어옴");
+            receivedDescriptionContentIds.setReceivedDescriptionDataList(new ArrayList<>());
+            receivedMoodContentIds.setReceivedMoodDataList(new ArrayList<>());
+            receivedPersonalContentIds.setReceivedPersonalDataList(new ArrayList<>());
         }
     }
 
@@ -114,8 +114,9 @@ public class SetDataToSendToClient {
             //tags리스트의 요소 개수는 최대 3개까지 && uniqueTemplates의 요소 개수 이하의 i에서 번역검사 + add 반복.
             List<String> tags = new ArrayList<>();
             int i = 0;
-            while (tags.size() <= 3 && i < vodDto.getUniqueTemplates().size()) {
-                if (checkNotTranslatedTemplatedWords.checkIfNotTranslated(vodDto.getUniqueTemplates().get(i))) {
+            while (tags.size() < 3 && i < vodDto.getUniqueTemplates().size()) {
+                //한글 tag만 출력
+                if (!checkNotTranslatedTemplatedWords.checkIfNotTranslated(vodDto.getUniqueTemplates().get(i))) {
                     tags.add(vodDto.getUniqueTemplates().get(i));
                 }
                 i++;
@@ -131,5 +132,12 @@ public class SetDataToSendToClient {
                     .build();
         }
     }
+
+
+    //422 에러 뜨는 사용자 임시 처리(231213)
+    public List<ToClient1stDto> sendFakeData(String subsr) {
+        return this.getsubList(new ArrayList<>(), subsr).stream().map(this::buildToClient1stDto).toList();
+    }
+
 
 }

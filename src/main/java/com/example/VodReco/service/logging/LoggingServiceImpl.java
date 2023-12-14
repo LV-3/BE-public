@@ -1,24 +1,23 @@
 //package com.example.VodReco.service.logging;
 //
 //import com.example.VodReco.domain.LogEntity;
-//import com.example.VodReco.repository.LoggingRepository;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Service;
 //import org.springframework.transaction.annotation.Transactional;
 //
 //@Service
 //public class LoggingServiceImpl implements LoggingService {
-//    private final LoggingRepository loggingRepository;
+////    private final LoggingRepository loggingRepository;
 //
-//    @Autowired
-//    public LoggingServiceImpl(LoggingRepository loggingRepository){
-//        this.loggingRepository = loggingRepository;
-//    }
-//    @Transactional
-//    @Override
-//    public void saveLog(LogEntity logEntity) {
-//        loggingRepository.save(logEntity);
-//    }
+////    @Autowired
+////    public LoggingServiceImpl(LoggingRepository loggingRepository){
+////        this.loggingRepository = loggingRepository;
+////    }
+////    @Transactional
+////    @Override
+////    public void saveLog(LogEntity logEntity) {
+////        loggingRepository.save(logEntity);
+////    }
 //
 //    @Override
 //    public void saveLogConsole(LogEntity log) {

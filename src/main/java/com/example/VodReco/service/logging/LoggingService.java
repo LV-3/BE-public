@@ -5,11 +5,10 @@
 //import org.springframework.transaction.annotation.Transactional;
 //
 //@Service
-//
 //public interface LoggingService
 //{
-//    @Transactional
-//    void saveLog(LogEntity logEntity);
+////    @Transactional
+////    void saveLog(LogEntity logEntity);
 //
 //    void saveLogConsole(LogEntity log);
 //}
