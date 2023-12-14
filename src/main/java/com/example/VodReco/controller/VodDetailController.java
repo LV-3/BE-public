@@ -49,7 +49,9 @@ public class VodDetailController {
     //1. 기본정보
     @GetMapping(value = "/{content_id}")
     @Operation(summary = "vod별 상세페이지", description = "url에 있는 content_id 해당 vod의 상세페이지")
-    public ResponseEntity<VodDetailResponseDto> getVodDetail(@PathVariable("content_id") String contentId) {//변하는 값을 얻을 때는 @PathVariable 써야함
+    public ResponseEntity<VodDetailResponseDto> getVodDetail(@PathVariable("content_id")
+                                                                 @Schema(description = "content_id", example = "551")
+                                                                 String contentId) {//변하는 값을 얻을 때는 @PathVariable 써야함
         //return vodViewDetailInfoService.getVodByContentId(contentId);
         // [jjae] - 변경코드
         VodDetailResponseDto vodDetailResponseDto = vodViewDetailInfoService.getVodByContentId(contentId);
@@ -67,8 +69,8 @@ public class VodDetailController {
     @PostMapping(value = "/{content_id}/mywish")
     @Operation(summary = "vod별 찜 조회", description = "상세페이지 열릴 때 해당 사용자의 wish 있는지 DB 조회")
     public ResponseEntity<Integer> findMyWish(@PathVariable("content_id")
-                                  @Schema(description = "content_id", example = "22222")
-                                  @Parameter(name = "content_id", description = "컨텐츠 고유id", example = "20200622", required = true)
+                                  @Schema(description = "content_id", example = "551")
+                                  @Parameter(name = "content_id", description = "컨텐츠 고유id", example = "551", required = true)
                                   String contentId,
                                              @RequestBody UserDto userDto) {
         ViewMyWishResponseDto viewMyWishResponseDto = userWishViewMyWishService.findMyWish(userDto.getSubsr(), contentId);
@@ -88,7 +90,7 @@ public class VodDetailController {
 //    public Optional<List<ViewEveryRatingResponseDto>> findEveryRating(@PathVariable("content_id")
 //                                                                          @Schema(description = "content_id", example = "22222") String contentId) {
     public ResponseEntity<List<ViewEveryRatingResponseDto>> findEveryRating(@PathVariable("content_id")
-                                                                          @Schema(description = "content_id", example = "22222") String contentId) {
+                                                                          @Schema(description = "content_id", example = "551") String contentId) {
         //return Optional.ofNullable(userRatingViewEveryRatingService.findEveryUserRating(contentId));
         List<ViewEveryRatingResponseDto> ratings = userRatingViewEveryRatingService.findEveryUserRating(contentId);
         //[jjae] - 변경코드
@@ -108,9 +110,9 @@ public class VodDetailController {
 //    public void saveMyFirstWish(@PathVariable("content_id")
 //                                    @Schema(description = "content_id", example = "22222")
     public ResponseEntity<Void> saveMyFirstWish(@PathVariable("content_id")
-                                    @Schema(description = "content_id", example = "22222")
+                                    @Schema(description = "content_id", example = "551")
                                     String contentId,
-                                @Parameter(name = "content_id", description = "컨텐츠 고유id", example = "22222", required = true)
+                                @Parameter(name = "content_id", description = "컨텐츠 고유id", example = "551", required = true)
                                     @RequestBody UpdateMyWishRequestDto updateMyWishRequestDto) {
         //[jjae] - 변경코드
         //[jjae]- [ 발생가능한 에러 ]
@@ -130,7 +132,9 @@ public class VodDetailController {
     // rating 최초 insert
     @PostMapping(value = "/{content_id}/rating")
     @Operation(summary = "vod별 평점 매기기", description = "상세페이지에서 rating, review 최초 등록")
-    public ResponseEntity<String> saveMyFirstRating(@PathVariable("content_id") String contentId, @RequestBody UpdateMyRatingRequestDto updateMyRatingRequestDto) {
+    public ResponseEntity<String> saveMyFirstRating(@PathVariable("content_id")
+                                                        @Schema(description = "content_id", example = "551")
+                                                        String contentId, @RequestBody UpdateMyRatingRequestDto updateMyRatingRequestDto) {
         if (updateMyRatingRequestDto.getRating() == 0 || updateMyRatingRequestDto.getReview().isEmpty()) {
             return ResponseEntity.badRequest().body("Rating cannot be 0 and Review cannot be null.");
         } else {
@@ -157,7 +161,10 @@ public class VodDetailController {
     //rating 변경
     @PutMapping(value = "/{content_id}/rating")
     @Operation(summary = "vod별 평점 변경", description = "상세페이지에서 기존 rating, review 변경한 뒤 저장")
-    public ResponseEntity<Void> updateMyRating(@PathVariable("content_id") String contentId, @RequestBody UpdateMyRatingRequestDto updateMyRatingRequestDto) {
+    public ResponseEntity<Void> updateMyRating(@PathVariable("content_id")
+                                                   @Schema(description = "content_id", example = "551")
+                                                   String contentId,
+                                               @RequestBody UpdateMyRatingRequestDto updateMyRatingRequestDto) {
         if (updateMyRatingRequestDto.getRating() == 0 || updateMyRatingRequestDto.getReview().isEmpty()) {
             return ResponseEntity.badRequest().build();
         } else {
@@ -181,7 +188,9 @@ public class VodDetailController {
     @DeleteMapping(value = "/{content_id}/rating")
     @Operation(summary = "vod별 평점 삭제", description = "상세페이지에서 rating, review 삭제")
 
-    public ResponseEntity<Void> deleteMyRating(@PathVariable("content_id") String contentId, @RequestBody UserDto userDto) {
+    public ResponseEntity<Void> deleteMyRating(@PathVariable("content_id")
+                                                   @Schema(description = "content_id", example = "551")
+                                                   String contentId, @RequestBody UserDto userDto) {
         System.out.println("삭제된 rating 정보 = " + contentId);
         //[jjae] - 변경코드
 //        try {
