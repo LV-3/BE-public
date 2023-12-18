@@ -37,18 +37,7 @@ public class VodDtotoVodWrapper {
 
                 .release_year(vodDto.getRelease_year())
                 .director(vodDto.getDirector())
-                .mood(listToStringWrapper.listToString(vodDto.getMood()))
-                .gpt_genres(listToStringWrapper.listToString(vodDto.getGpt_genres()))
-                .gpt_subjects(listToStringWrapper.listToString(vodDto.getGpt_subjects()))
-
-                .titleDescription(vodDto.getTitleDescription())
-                .isSeries(vodDto.getIsSeries())
-                .seriesId(vodDto.getSeriesId())
-
                 .uniqueTemplates(listToStringWrapper.listToString(vodDto.getUniqueTemplates()))
-                .translatedTemplateA(listToStringWrapper.listToString(vodDto.getTranslatedTemplateA()))
-                .translatedTemplateB(listToStringWrapper.listToString(vodDto.getTranslatedTemplateB()))
-                .translatedTemplateC(listToStringWrapper.listToString(vodDto.getTranslatedTemplateC()))
 
                 .build();
     }

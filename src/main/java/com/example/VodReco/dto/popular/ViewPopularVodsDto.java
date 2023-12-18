@@ -10,11 +10,13 @@ public class ViewPopularVodsDto {
     private String contentId;
     private String title;
     private String posterurl;
+    private String timeGroup;
 
     @Builder
-    public ViewPopularVodsDto(String contentId, String title, String posterurl) {
+    public ViewPopularVodsDto(String contentId, String title, String posterurl, String timeGroup) {
         this.contentId = contentId;
         this.title = title;
         this.posterurl = posterurl;
+        this.timeGroup = timeGroup;
     }
 }

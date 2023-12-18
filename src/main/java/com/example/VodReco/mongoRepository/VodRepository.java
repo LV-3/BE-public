@@ -15,7 +15,7 @@ public interface VodRepository extends MongoRepository<Vod,String> {
 
     List<Vod> findByUniqueTemplatesContaining(String tags);
 //    List<Vod> findByUniqueTemplatesContaining(String tag);
-    List<Vod> findBySeriesId(String seriesId);
+//    List<Vod> findBySeriesId(String seriesId);
 
     List<Vod> findByCategory(String category);
 

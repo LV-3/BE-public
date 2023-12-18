@@ -29,25 +29,13 @@ public class VodDto {
 
     private String release_year;
     private String director;// 한 개의 String으로 받아서 ", " 기준으로 split해서 Array로 만들고 -> List로 convert
-    private List<String> mood;// 한 개의 String으로 받아서 ", " 기준으로 split해서 Array로 만들고 -> List로 convert
-    private List<String> gpt_genres;
-    private List<String> gpt_subjects;
-
-    private String titleDescription;
-    private Integer isSeries;
-    private String seriesId;
-
     private List<String> uniqueTemplates;
-    private List<String> translatedTemplateA;
-    private List<String> translatedTemplateB;
-    private List<String> translatedTemplateC;
+
 
     @Builder
     public VodDto(String contentId, String title, String category, String genre, String disp_rtm,
                   String description, String actors, String posterurl, String grade, String country,
-                  String release_year, String director, List<String> mood, List<String> gpt_genres, List<String> gpt_subjects,
-                  String titleDescription, Integer isSeries, String seriesId,
-                  List<String> uniqueTemplates, List<String> translatedTemplateA, List<String> translatedTemplateB, List<String> translatedTemplateC) {
+                  String release_year, String director, List<String> uniqueTemplates) {
 
         this.contentId = contentId;
         this.title = title;
@@ -63,18 +51,7 @@ public class VodDto {
 
         this.release_year = release_year;
         this.director = director;
-        this.mood = mood;
-        this.gpt_genres = gpt_genres;
-        this.gpt_subjects = gpt_subjects;
-
-        this.titleDescription = titleDescription;
-        this.isSeries = isSeries;
-        this.seriesId = seriesId;
-
         this.uniqueTemplates = uniqueTemplates;
-        this.translatedTemplateA = translatedTemplateA;
-        this.translatedTemplateB = translatedTemplateB;
-        this.translatedTemplateC = translatedTemplateC;
 
 
     }

@@ -1,4 +1,4 @@
-package com.example.VodReco.dto.model.fromModel.receivedContentIds;
+package com.example.VodReco.dto.Recommendation.model.fromModel.receivedContentIds;
 
 import lombok.Getter;
 import lombok.Setter;

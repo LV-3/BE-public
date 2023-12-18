@@ -1,4 +1,4 @@
-package com.example.VodReco.dto.model.fromModel;
+package com.example.VodReco.dto.Recommendation.model.fromModel;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Setter
-public class MoodModelDataDto {
-    private JSONArray moodData;
+public class PersonalModelDataDto {
+    private JSONArray personalData;
 
     @Builder
-    public MoodModelDataDto(JSONArray moodData) {
-        this.moodData = moodData;
+    public PersonalModelDataDto(JSONArray personalData) {
+        this.personalData = personalData;
     }
 }

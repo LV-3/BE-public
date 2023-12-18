@@ -3,6 +3,7 @@ package com.example.VodReco.service.mainPage.viewPopularVods;
 import com.example.VodReco.domain.PopularVod;
 import com.example.VodReco.dto.popular.ViewPopularVodsDto;
 import com.example.VodReco.mongoRepository.PopularVodRepository;
+import com.example.VodReco.util.TimeUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,43 +13,35 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ViewPopularVodsServiceImpl implements ViewPopularVodsService{
+public class ViewPopularVodsServiceImpl implements ViewPopularVodsService {
+
     private final PopularVodRepository popularVodRepository;
+    private final TimeUtil timeUtil;
 
     public List<ViewPopularVodsDto> getTop10PopularVods() {
         // 시간대에 따른 VOD 가져오기
         LocalDateTime now = LocalDateTime.now();
-        String timeGroup = getTimeGroup(now);
+        String timeGroup = timeUtil.getTimeGroup(now);
 
         // 시간대에 맞는 상위 10개 VOD 조회
         List<PopularVod> popularVods = popularVodRepository.findTop10ByTimeGroupOrderByCountDesc(timeGroup);
 
         // PopularVod 객체를 BasicInfoOfVodDto로 변환하여 필요한 정보만 추출
         return popularVods.stream()
-                .map(this::mapToDto)
+                .map(popularVod -> mapToDto(popularVod, timeGroup)) // timeGroup을 매핑하는 부분으로 변경
                 .collect(Collectors.toList());
     }
 
-    private ViewPopularVodsDto mapToDto(PopularVod popularVod) {
+    private ViewPopularVodsDto mapToDto(PopularVod popularVod, String timeGroup) {
         return ViewPopularVodsDto.builder()
                 .contentId(popularVod.getContentId())
                 .title(popularVod.getTitle())
                 .posterurl(popularVod.getPosterurl())
+                .timeGroup(timeGroup) // 시간대 정보 설정
                 .build();
     }
+}
 
-    private String getTimeGroup(LocalDateTime now) {
-        int hour = now.getHour();
-        if (hour >= 18 || hour < 6) {
-            return "night";
-        } else if (hour >= 6 && hour < 12) {
-            return "am";
-        } else if (hour >= 12 && hour < 18) {
-            return "pm";
-        } else {
-            return "dawn";
-        }
-    }
 //    public List<ViewPopularVodsDto> getPopularVodsByTimeGroup(String timeGroup) {
 //        int hour = LocalDateTime.now().getHour();
 //
@@ -85,6 +78,3 @@ public class ViewPopularVodsServiceImpl implements ViewPopularVodsService{
 //                .posterurl(vod.getPosterurl())
 //                .build();
 //    }
-
-
-}

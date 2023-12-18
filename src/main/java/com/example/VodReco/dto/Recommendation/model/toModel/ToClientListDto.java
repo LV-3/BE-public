@@ -1,6 +1,6 @@
-package com.example.VodReco.dto.model.toModel;
+package com.example.VodReco.dto.Recommendation.model.toModel;
 
-import com.example.VodReco.dto.client.ToClient1stDto;
+import com.example.VodReco.dto.Recommendation.client.ToClient1stDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

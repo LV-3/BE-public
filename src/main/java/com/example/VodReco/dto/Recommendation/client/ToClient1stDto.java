@@ -1,4 +1,4 @@
-package com.example.VodReco.dto.client;
+package com.example.VodReco.dto.Recommendation.client;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
@@ -14,13 +14,13 @@ public class ToClient1stDto {
     private String contentId;
     private String posterurl;
     private String title;
-    private List<String> tags;
+//    private List<String> tags;
 
     @Builder
-    public ToClient1stDto(String contentId, String posterurl, String title, List<String> tags) {
+    public ToClient1stDto(String contentId, String posterurl, String title) {
         this.contentId = contentId;
         this.posterurl = posterurl;
         this.title = title;
-        this.tags = tags;
+//        this.tags = tags;
     }
 }
