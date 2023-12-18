@@ -1,6 +1,6 @@
 package com.example.VodReco.service.viewWeatherRec;
 
-import com.example.VodReco.domain.WeatherRec;
+import com.example.VodReco.domain.Rec.WeatherRec;
 import com.example.VodReco.dto.WeatherRecDto;
 import com.example.VodReco.mongoRepository.VodRepository;
 import com.example.VodReco.mongoRepository.WeatherRecRepository;

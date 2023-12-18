@@ -3,7 +3,6 @@ package com.example.VodReco.service.mypage.viewMyWatchList;
 import com.example.VodReco.domain.UserWatch;
 import com.example.VodReco.dto.mypage.ViewMyWatchListDto;
 import com.example.VodReco.mongoRepository.UserWatchRepository;
-import com.example.VodReco.util.series.ValidateDuplicateSeriesIdWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +16,6 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class UserWatchListViewServiceImpl implements UserWatchListViewService{
     private final UserWatchRepository userWatchRepository;
-    private final ValidateDuplicateSeriesIdWrapper validateDuplicateSeriesIdWrapper;
 
     @Override
     public Optional<List<ViewMyWatchListDto>> findMyWatchList(String subsr){
@@ -30,10 +28,9 @@ public class UserWatchListViewServiceImpl implements UserWatchListViewService{
         }
         for (UserWatch w : myWatchList) {
             if (w.getSeriesId() != null) { // seriesId가 있는 경우 = 시리즈물인 경우
-                String minContentId = validateDuplicateSeriesIdWrapper.convertToMinContentId(w.getSeriesId());
                 ViewMyWatchListDto viewMyWatchListDto = ViewMyWatchListDto.builder()
                         .subsr(w.getSubsr())
-                        .contentId(minContentId)
+                        .contentId(w.getContentId())
                         .title(w.getTitle())
                         .user_preference(w.getUserPreference())
                         .posterurl(w.getPosterurl())
