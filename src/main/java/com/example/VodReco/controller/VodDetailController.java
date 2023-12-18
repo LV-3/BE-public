@@ -3,6 +3,7 @@ package com.example.VodReco.controller;
 import com.example.VodReco.dto.UserDto;
 import com.example.VodReco.dto.rating.UpdateMyRatingRequestDto;
 import com.example.VodReco.dto.rating.ViewEveryRatingResponseDto;
+import com.example.VodReco.dto.vodDetail.TagsResponseDto;
 import com.example.VodReco.dto.vodDetail.VodDetailResponseDto;
 import com.example.VodReco.dto.wish.UpdateMyWishRequestDto;
 import com.example.VodReco.dto.wish.ViewMyWishResponseDto;
@@ -12,13 +13,12 @@ import com.example.VodReco.service.vodDetailPage.view.viewEveryRating.UserRating
 import com.example.VodReco.service.vodDetailPage.view.viewDetailInfo.VodViewDetailInfoServiceImpl;
 import com.example.VodReco.service.vodDetailPage.update.updateMyWish.UserWishUpdateMyWishServiceImpl;
 import com.example.VodReco.service.vodDetailPage.view.viewMyWish.UserWishViewMyWishServiceImpl;
+import com.example.VodReco.service.vodDetailPage.view.viewVodsByTag.VodviewVodsByTagServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -40,8 +40,7 @@ public class VodDetailController {
     private final UserRatingViewEveryRatingServiceImpl userRatingViewEveryRatingService;
     private final UserRatingUpdateMyRatingServiceImpl userRatingUpdateMyRatingService;
     private final UserRatingDeleteMyRatingServiceImpl userRatingDeleteMyRatingService;
-
-
+    private final VodviewVodsByTagServiceImpl vodviewVodsByTagService;
     //상세페이지 열릴 때
     //[에러코드 관련] - 상세페이지 열때 모든 정보는 DB에서 꺼내오기 때문에 오류발생확률 낮음 -> GlobalExceptionHandler에서 처리
     // 조회 결과 없는 경우에는 null(200) 전송
@@ -56,7 +55,7 @@ public class VodDetailController {
         // [jjae] - 변경코드
         VodDetailResponseDto vodDetailResponseDto = vodViewDetailInfoService.getVodByContentId(contentId);
 //        if (vodDetailResponseDto != null) {
-            return ResponseEntity.ok(vodDetailResponseDto);
+        return ResponseEntity.ok(vodDetailResponseDto);
 //        } else {
 //            //에러 코드 404
 //            return ResponseEntity.notFound().build();
@@ -69,10 +68,10 @@ public class VodDetailController {
     @PostMapping(value = "/{content_id}/mywish")
     @Operation(summary = "vod별 찜 조회", description = "상세페이지 열릴 때 해당 사용자의 wish 있는지 DB 조회")
     public ResponseEntity<Integer> findMyWish(@PathVariable("content_id")
-                                  @Schema(description = "content_id", example = "551")
-                                  @Parameter(name = "content_id", description = "컨텐츠 고유id", example = "551", required = true)
-                                  String contentId,
-                                             @RequestBody UserDto userDto) {
+                                                  @Schema(description = "content_id", example = "551")
+                                                  @Parameter(name = "content_id", description = "컨텐츠 고유id", example = "551", required = true)
+                                                  String contentId,
+                                              @RequestBody UserDto userDto) {
         ViewMyWishResponseDto viewMyWishResponseDto = userWishViewMyWishService.findMyWish(userDto.getSubsr(), contentId);
         //[jjae] - 변경코드
         if (viewMyWishResponseDto == null) {
@@ -90,7 +89,7 @@ public class VodDetailController {
 //    public Optional<List<ViewEveryRatingResponseDto>> findEveryRating(@PathVariable("content_id")
 //                                                                          @Schema(description = "content_id", example = "22222") String contentId) {
     public ResponseEntity<List<ViewEveryRatingResponseDto>> findEveryRating(@PathVariable("content_id")
-                                                                          @Schema(description = "content_id", example = "551") String contentId) {
+                                                                                @Schema(description = "content_id", example = "551") String contentId) {
         //return Optional.ofNullable(userRatingViewEveryRatingService.findEveryUserRating(contentId));
         List<ViewEveryRatingResponseDto> ratings = userRatingViewEveryRatingService.findEveryUserRating(contentId);
         //[jjae] - 변경코드
@@ -110,17 +109,17 @@ public class VodDetailController {
 //    public void saveMyFirstWish(@PathVariable("content_id")
 //                                    @Schema(description = "content_id", example = "22222")
     public ResponseEntity<Void> saveMyFirstWish(@PathVariable("content_id")
-                                    @Schema(description = "content_id", example = "551")
-                                    String contentId,
-                                @Parameter(name = "content_id", description = "컨텐츠 고유id", example = "551", required = true)
-                                    @RequestBody UpdateMyWishRequestDto updateMyWishRequestDto) {
+                                                    @Schema(description = "content_id", example = "551")
+                                                    String contentId,
+                                                @Parameter(name = "content_id", description = "컨텐츠 고유id", example = "551", required = true)
+                                                    @RequestBody UpdateMyWishRequestDto updateMyWishRequestDto) {
         //[jjae] - 변경코드
         //[jjae]- [ 발생가능한 에러 ]
         //유효성 검사 오류: 클라이언트가 잘못된 데이터를 보낸 경우 (예: 필수 필드 누락, 잘못된 형식 등)
         //데이터베이스 오류: 데이터 저장 시 데이터베이스 연결이 실패하는 경우, 저장 실패 등
 //        try {
-            userWishUpdateMyWishService.saveWish(updateMyWishRequestDto, contentId);
-            return ResponseEntity.ok().build();
+        userWishUpdateMyWishService.saveWish(updateMyWishRequestDto, contentId);
+        return ResponseEntity.ok().build();
 //        } catch (Exception e) {
 ////            에러 코드 500
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -174,9 +173,9 @@ public class VodDetailController {
         }
         //[jjae] - 변경코드
 //        try {
-            //userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
-            //던져지는 exception때문에 롤백됨 -> 에러. 일단 200만 남기고 1차 구현(231206)
-            //return ResponseEntity.ok().build();
+        //userRatingUpdateMyRatingService.saveRating(contentId, updateMyRatingRequestDto);
+        //던져지는 exception때문에 롤백됨 -> 에러. 일단 200만 남기고 1차 구현(231206)
+        //return ResponseEntity.ok().build();
 //        } catch (Exception e) {
 ////            에러코드 500
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -194,12 +193,18 @@ public class VodDetailController {
         System.out.println("삭제된 rating 정보 = " + contentId);
         //[jjae] - 변경코드
 //        try {
-            userRatingDeleteMyRatingService.deleteRating(contentId, userDto.getSubsr());
-            return ResponseEntity.ok().build();
+        userRatingDeleteMyRatingService.deleteRating(contentId, userDto.getSubsr());
+        return ResponseEntity.ok().build();
 //        } catch (Exception e) {
 ////            에러코드 500
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 //        }
+    }
+
+    //이거 리턴 데이터형식 어떻게 맞추지?? → List<String> 으로 잡고ㅓ
+    @GetMapping("/{content_id}/tags")
+    public TagsResponseDto sendEachTagVods(@PathVariable("content_id") String contentId) {
+        return vodviewVodsByTagService.sendEachTagVods(contentId);
     }
 }
 

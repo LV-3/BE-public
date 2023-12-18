@@ -44,9 +44,9 @@ public class VodViewDetailInfoServiceImpl implements VodViewDetailInfoService {
 
                 .disp_rtm(vodDto.getDisp_rtm())
                 .grade(vodDto.getGrade())
+                .tags(vodDto.getUniqueTemplates().subList(0, 3))
 
                 .build();
-
 
     }
 }
