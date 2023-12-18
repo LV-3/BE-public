@@ -28,10 +28,11 @@ public class VodDetailResponseDto {
     private String grade;
     private String category;
 
+    private List<String> tags;
     @Builder
     public VodDetailResponseDto(String title, String contentId, String genre, String country, String director,
                                 String actors, String posterurl, String description,
-                                String disp_rtm, String release_year, String grade, String category ) {
+                                String disp_rtm, String release_year, String grade, String category, List<String> tags) {
         this.title = title;
         this.contentId = contentId;
         this.genre = genre;
@@ -46,6 +47,8 @@ public class VodDetailResponseDto {
 
         this.grade = grade;
         this.category = category;
+
+        this.tags = tags;
     }
 
 }
