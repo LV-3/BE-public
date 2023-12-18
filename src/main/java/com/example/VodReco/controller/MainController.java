@@ -24,9 +24,6 @@ import java.util.List;
 @RequestMapping("/main")
 public class MainController {
     private final VodGetRecoServiceImpl vodGetRecoService;
-
-    private final ObjectMapper objectMapper;
-
     private final WeatherRecViewServiceImpl weatherRecViewService;
 
 
@@ -35,10 +32,8 @@ public class MainController {
     //    @Autowired
 //    두 개 붙으면 Lazy가 이김
     public MainController(VodGetRecoServiceImpl vodGetRecoService,
-                          ObjectMapper objectMapper, WeatherRecViewServiceImpl weatherRecViewService) {
+                          WeatherRecViewServiceImpl weatherRecViewService) {
         this.vodGetRecoService = vodGetRecoService;
-
-        this.objectMapper = objectMapper;
         this.weatherRecViewService = weatherRecViewService;
     }
 
@@ -59,16 +54,6 @@ public class MainController {
 
     }
 
-
-    //태그(템플릿 단어)별 vod 조회
-//    @GetMapping("/{tags}")
-//    public ResponseEntity<List<BasicInfoOfVodDto>> sendEachTagVods(@PathVariable String tags) {
-//        if (vodviewVodsByMoodService.sendEachTagVods(tags).isEmpty()) {
-//            //에러코드 204
-//            return ResponseEntity.noContent().build();
-//        }
-//        return ResponseEntity.ok(vodviewVodsByMoodService.sendEachTagVods(tags));
-//    }
 
 
     //날씨 기반 추천
