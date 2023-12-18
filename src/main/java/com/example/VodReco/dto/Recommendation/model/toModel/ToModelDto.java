@@ -1,10 +1,9 @@
-package com.example.VodReco.dto.model.toModel;
+package com.example.VodReco.dto.Recommendation.model.toModel;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 

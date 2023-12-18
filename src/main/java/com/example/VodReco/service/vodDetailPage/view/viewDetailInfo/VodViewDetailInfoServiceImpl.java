@@ -23,11 +23,11 @@ public class VodViewDetailInfoServiceImpl implements VodViewDetailInfoService {
         String d;
         //findByContentId 조회 불가능한 에러: @Id 제거하니 해결(231124)
         VodDto vodDto = vodtoVodDtoWrapper.toVodDto(vodRepository.findByContentId(contentId));
-        if (vodDto.getIsSeries() == 1) {
-            d = vodDto.getTitleDescription();
-        } else {
-            d = vodDto.getDescription();
-        }
+//        if (vodDto.getIsSeries() == 1) {
+//            d = vodDto.getTitleDescription();
+//        } else {
+//            d = vodDto.getDescription();
+//        }
         return VodDetailResponseDto.builder()
 
                 .title(vodDto.getTitle())
@@ -39,7 +39,7 @@ public class VodViewDetailInfoServiceImpl implements VodViewDetailInfoService {
                 .actors(vodDto.getActors())
                 .director(vodDto.getDirector())
                 .posterurl(vodDto.getPosterurl())
-                .description(d)
+                .description(vodDto.getDescription())
                 .release_year(vodDto.getRelease_year())
 
                 .disp_rtm(vodDto.getDisp_rtm())

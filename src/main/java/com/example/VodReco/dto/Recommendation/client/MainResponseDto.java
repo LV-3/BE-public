@@ -1,4 +1,4 @@
-package com.example.VodReco.dto.client;
+package com.example.VodReco.dto.Recommendation.client;
 
 import lombok.Builder;
 import lombok.Getter;

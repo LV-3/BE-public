@@ -1,4 +1,4 @@
-package com.example.VodReco.dto.model.fromModel;
+package com.example.VodReco.dto.Recommendation.model.fromModel;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

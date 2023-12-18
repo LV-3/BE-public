@@ -21,7 +21,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
                         "https://d225nwg9l5o274.cloudfront.net",
 
-                        "https://1.220.201.108:3000", "https://1.220.201.108:3001")
+                        "https://1.220.201.108:3000", "https://1.220.201.108:3001",
+                        "https://172.30.64.1:3000")
                 .allowedMethods("OPTIONS", "GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*")
                 .allowCredentials(true)
