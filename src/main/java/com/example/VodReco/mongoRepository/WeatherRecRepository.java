@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface WeatherRecRepository extends MongoRepository<WeatherRec, String> {
 
-    List<WeatherRec> findAll();
+    List<WeatherRec> findAll(); //findAll하면 PK만 나옴? (231218) TODO : 확인 필요
 }

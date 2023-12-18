@@ -1,6 +1,7 @@
 package com.example.VodReco.service.viewWeatherRec;
 
 import com.example.VodReco.domain.Rec.WeatherRec;
+import com.example.VodReco.dto.BasicInfoOfVodDto;
 import com.example.VodReco.dto.WeatherRecDto;
 import com.example.VodReco.mongoRepository.VodRepository;
 import com.example.VodReco.mongoRepository.WeatherRecRepository;
@@ -24,8 +25,8 @@ public class WeatherRecViewServiceImpl implements WeatherRecViewService{
     public WeatherRecDto sendWeatherRecommendations() {
         WeatherRec weatherRec = weatherRecRepository.findAll().get(0);
         List<String> contentIdList = weatherRec.getContentIdList();
-        List list = new ArrayList();
-        List basicInfoOfVodDtos = contentIdToBasicInfoOfVodsWrapper.getBasicInfoOfVodDtos(list, contentIdList, vodtoVodDtoWrapper, vodRepository);
+        List<BasicInfoOfVodDto> list = new ArrayList();
+        List<BasicInfoOfVodDto> basicInfoOfVodDtos = contentIdToBasicInfoOfVodsWrapper.getBasicInfoOfVodDtos(list, contentIdList, vodtoVodDtoWrapper, vodRepository);
         return WeatherRecDto.builder()
                 .weather(weatherRec.getWeather()).vodsList(basicInfoOfVodDtos).weatherImg(weatherRec.getWeatherImg())
                 .build();
