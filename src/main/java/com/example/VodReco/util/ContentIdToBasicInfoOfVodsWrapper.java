@@ -22,12 +22,16 @@ public class ContentIdToBasicInfoOfVodsWrapper {
 
     private List<BasicInfoOfVodDto> getBasicInfo(List<BasicInfoOfVodDto> list, List<String> contentIds, VodtoVodDtoWrapper vodtoVodDtoWrapper, VodRepository vodRepository) {
         for (String c : contentIds) {
-            VodDto vodDto = vodtoVodDtoWrapper.toVodDto((vodRepository.findByContentId(c)));
-            BasicInfoOfVodDto basicInfoOfVodDto = BasicInfoOfVodDto.builder()
-                    .title(vodDto.getTitle()).contentId(vodDto.getContentId())
-                    .posterurl(vodDto.getPosterurl()).build();
-            list.add(basicInfoOfVodDto);
+            if (vodRepository.findByContentId(c) != null) {
+                VodDto vodDto = vodtoVodDtoWrapper.toVodDto((vodRepository.findByContentId(c)));
+                BasicInfoOfVodDto basicInfoOfVodDto = BasicInfoOfVodDto.builder()
+                        .title(vodDto.getTitle()).contentId(vodDto.getContentId())
+                        .posterurl(vodDto.getPosterurl()).build();
+                list.add(basicInfoOfVodDto);
+            }
         }
-        return list;
+            return list;
+
     }
+
 }
