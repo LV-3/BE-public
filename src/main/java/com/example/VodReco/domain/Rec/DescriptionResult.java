@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class DescriptionResult {
     @Field
     private String subsr;
-    @Field(name = "unique_id")
+    @Field(name = "recommend_list")
     @JsonProperty("content_id")
     private String contentId;
 
