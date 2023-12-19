@@ -1,6 +1,6 @@
 package com.example.VodReco.util.forRecommendation;
 
-import com.example.VodReco.domain.PersonalResult;
+import com.example.VodReco.domain.Rec.PersonalResult;
 import com.example.VodReco.dto.Recommendation.PersonalResultDto;
 import com.example.VodReco.util.StringToListWrapper;
 import lombok.Getter;
