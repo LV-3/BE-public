@@ -1,9 +1,8 @@
 package com.example.VodReco.service.mainPage.getReco;
 
-import com.example.VodReco.domain.PersonalResult;
+import com.example.VodReco.domain.Rec.PersonalResult;
 import com.example.VodReco.domain.Rec.DescriptionResult;
 import com.example.VodReco.domain.Rec.MoodResult;
-import com.example.VodReco.dto.BasicInfoOfVodDto;
 import com.example.VodReco.dto.Recommendation.client.MainResponseDto;
 import com.example.VodReco.mongoRepository.DescriptionResultRepository;
 import com.example.VodReco.mongoRepository.MoodResultRepository;
@@ -13,10 +12,6 @@ import com.example.VodReco.util.forRecommendation.SetDataToSendToClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
