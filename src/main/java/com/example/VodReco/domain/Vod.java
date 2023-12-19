@@ -54,7 +54,7 @@ public class Vod {
     @Field
     private String director;// 한 개의 String으로 받아서 ", " 기준으로 split해서 Array로 만들고 -> List로 convert
 
-    @Field(name = "front_view_template")
+    @Field(name = "translated_front_view_template")
     private String uniqueTemplates;
 
 
