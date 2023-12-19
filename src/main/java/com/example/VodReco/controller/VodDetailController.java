@@ -201,7 +201,6 @@ public class VodDetailController {
 //        }
     }
 
-    //이거 리턴 데이터형식 어떻게 맞추지?? → List<String> 으로 잡고ㅓ
     @GetMapping("/{content_id}/tags")
     public TagsResponseDto sendEachTagVods(@PathVariable("content_id") String contentId) {
         return vodviewVodsByTagService.sendEachTagVods(contentId);
