@@ -1,4 +1,4 @@
-package com.example.VodReco.domain;
+package com.example.VodReco.domain.Rec;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
