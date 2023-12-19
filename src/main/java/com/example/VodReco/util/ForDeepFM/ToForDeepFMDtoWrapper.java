@@ -1,6 +1,5 @@
 package com.example.VodReco.util.ForDeepFM;
 
-import com.example.VodReco.domain.ForDeepFM;
 import com.example.VodReco.dto.Recommendation.model.toModel.ForDeepFMDto;
 import com.example.VodReco.util.StringToListWrapper;
 import lombok.RequiredArgsConstructor;
