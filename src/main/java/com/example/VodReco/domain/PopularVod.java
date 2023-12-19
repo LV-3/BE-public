@@ -16,7 +16,7 @@ public class PopularVod {
     @JsonIgnore
     @Field(name = "_id")
     private ObjectId mongoId;
-    @Field(name = "content_id")
+    @Field(name = "unique_id")
     private String contentId;
     @Field(name = "TimeGroup")
     private String timeGroup;

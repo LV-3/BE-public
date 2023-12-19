@@ -1,23 +1,10 @@
 package com.example.VodReco.util.forRecommendation;
 
-import com.example.VodReco.domain.UserWatch;
-import com.example.VodReco.dto.BasicInfoOfVodDto;
 import com.example.VodReco.dto.VodDto;
 import com.example.VodReco.dto.Recommendation.client.ToClient1stDto;
-import com.example.VodReco.dto.Recommendation.model.fromModel.DescriptionModelDataDto;
-import com.example.VodReco.dto.Recommendation.model.fromModel.MoodModelDataDto;
-import com.example.VodReco.dto.Recommendation.model.fromModel.PersonalModelDataDto;
-import com.example.VodReco.dto.Recommendation.model.fromModel.receivedContentIds.ReceivedDescriptionContentIds;
-import com.example.VodReco.dto.Recommendation.model.fromModel.receivedContentIds.ReceivedMoodContentIds;
-import com.example.VodReco.dto.Recommendation.model.fromModel.receivedContentIds.ReceivedPersonalContentIds;
-import com.example.VodReco.mongoRepository.UserWatchRepository;
 import com.example.VodReco.mongoRepository.VodRepository;
-import com.example.VodReco.util.CheckNotTranslatedTemplatedWords;
-import com.example.VodReco.util.ContentIdToBasicInfoOfVodsWrapper;
 import com.example.VodReco.util.Vod.VodtoVodDtoWrapper;
 import lombok.RequiredArgsConstructor;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -25,22 +12,9 @@ import java.util.*;
 @Component
 @RequiredArgsConstructor
 public class SetDataToSendToClient {
-    private final UserWatchRepository userWatchRepository;
-
-    private final DescriptionModelDataDto descriptionModelDataDto;
-    private final MoodModelDataDto moodModelDataDto;
-    private final PersonalModelDataDto personalModelDataDto;
 
     private final VodtoVodDtoWrapper vodtoVodDtoWrapper;
     private final VodRepository vodRepository;
-    private final CheckNotTranslatedTemplatedWords checkNotTranslatedTemplatedWords;
-
-    private final ReceivedPersonalContentIds receivedPersonalContentIds;
-    private final ReceivedDescriptionContentIds receivedDescriptionContentIds;
-    private final ReceivedMoodContentIds receivedMoodContentIds;
-
-    private final ContentIdToBasicInfoOfVodsWrapper contentIdToBasicInfoOfVodsWrapper;
-
 
     //    TODO : access modifier private으로 바꿀 수 있으면 바꾸기
 //    21개 개수 맞추는 메서드
@@ -84,37 +58,10 @@ public class SetDataToSendToClient {
 //    }
 
 
-
-
-//    public void parse(String recResult, String subsr) {
-//        if (recResult != null) { // 생각해보니까 recResult가 null이면 이미 parse까지 못 넘어오고 에러(231213)
-//            JSONObject jsonObject = new JSONObject(recResult.trim());
-//            JSONArray descriptionData = jsonObject.getJSONArray("description_data");
-//            System.out.println("descriptionData 확인 = " + descriptionData.toString());
-//            JSONArray moodData = jsonObject.getJSONArray("mood_data");
-//            System.out.println("moodData 확인 = " + moodData.toString());
-//            JSONArray personalData = jsonObject.getJSONArray("personal_data");
-//            System.out.println("personalData 확인 = " + personalData.toString());
-//
-//            descriptionModelDataDto.setDescriptonData(descriptionData);
-//            moodModelDataDto.setMoodData(moodData);
-//            personalModelDataDto.setPersonalData(personalData);
-//        } else {
-//            //FastAPI에서 null 들어올 때 subList로 예외처리(231213)
-//            //TODO : 차후 지정된 테이블에서 추천 결과 꺼내오도록 수정
-//            System.out.println("데이터 null 들어옴");
-//            receivedDescriptionContentIds.setReceivedDescriptionDataList(new ArrayList<>());
-//            receivedMoodContentIds.setReceivedMoodDataList(new ArrayList<>());
-//            receivedPersonalContentIds.setReceivedPersonalDataList(new ArrayList<>());
-//        }
-//    }
-
-
     //content_id로 {title, content_id, posterurl, tags} 객체 만드는 메서드
     public ToClient1stDto buildToClient1stDto(String contentId){
         if (vodRepository.findByContentId(contentId) != null) {
         VodDto vodDto = vodtoVodDtoWrapper.toVodDto(vodRepository.findByContentId(contentId));
-            System.out.println("왜 null찍힘" + vodDto);
 //        if (vodDto.getPosterurl() != null) {        // posterurl이 null이 아닌 vod만 사용자에게 추천(231218)
 
             /*
