@@ -4,18 +4,18 @@
 //import lombok.Builder;
 //import lombok.Getter;
 //import lombok.NoArgsConstructor;
+//import org.springframework.data.mongodb.core.mapping.Document;
 //import org.springframework.data.mongodb.core.mapping.Field;
 //
 //import java.time.LocalDateTime;
 //
-//@Entity
 //@Getter
-//@Table(name = "log")
+//@Document(collection = "log")
 //@NoArgsConstructor
 //public class LogEntity {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
+////    @Id
+////    @GeneratedValue(strategy = GenerationType.IDENTITY)
+////    private Long id;
 //
 //    @Column(nullable = false)
 //    private String divide;
