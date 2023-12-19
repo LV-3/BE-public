@@ -12,6 +12,7 @@ public class PersonalResult {
     @Field
     private String subsr;
     @Field(name = "unique_id")
+//    @Field(name = "recommend_list")
     @JsonProperty("content_id")
     private String contentId;
     @Field(name = "title_info")
