@@ -8,11 +8,12 @@ import java.time.LocalDateTime;
 public class TimeUtil {
     public String getTimeGroup(LocalDateTime now) {
         int hour = now.getHour();
-        if (hour >= 6 && hour < 12){
+        System.out.print(hour);
+        if (hour >= 21 && hour < 3){
             return "am";
-        } else if (hour >= 12 && hour < 18) {
+        } else if (hour >= 3 && hour < 9) {
             return "pm";
-        } else if (hour >= 0 && hour <6){
+        } else if (hour >= 15 && hour < 21){
             return "dawn";
         } else {
             return "night";
