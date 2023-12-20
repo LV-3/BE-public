@@ -1,6 +1,6 @@
 package com.example.VodReco.service.mainPage.viewPopularVods;
 
-import com.example.VodReco.domain.PopularVod;
+import com.example.VodReco.domain.Rec.PopularVod;
 import com.example.VodReco.dto.popular.ViewPopularVodsDto;
 import com.example.VodReco.mongoRepository.PopularVodRepository;
 import com.example.VodReco.util.TimeUtil;

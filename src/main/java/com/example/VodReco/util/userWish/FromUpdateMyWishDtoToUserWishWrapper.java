@@ -1,6 +1,6 @@
 package com.example.VodReco.util.userWish;
 
-import com.example.VodReco.domain.UserWish;
+import com.example.VodReco.domain.user.UserWish;
 import com.example.VodReco.dto.wish.UpdateMyWishDto;
 import org.springframework.stereotype.Component;
 

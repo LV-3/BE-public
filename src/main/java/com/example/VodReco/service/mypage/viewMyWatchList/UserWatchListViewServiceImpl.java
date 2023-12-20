@@ -1,6 +1,6 @@
 package com.example.VodReco.service.mypage.viewMyWatchList;
 
-import com.example.VodReco.domain.UserWatch;
+import com.example.VodReco.domain.user.UserWatch;
 import com.example.VodReco.dto.mypage.ViewMyWatchListDto;
 import com.example.VodReco.mongoRepository.UserWatchRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package com.example.VodReco.dto.rating;
 
-import com.example.VodReco.domain.UserRating;
-import com.example.VodReco.domain.UserRatingView;
+import com.example.VodReco.domain.user.UserRating;
+import com.example.VodReco.domain.user.UserRatingView;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import lombok.Builder;

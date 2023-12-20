@@ -1,14 +1,9 @@
 package com.example.VodReco.dto;
 
 
-import com.example.VodReco.domain.User;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.example.VodReco.domain.user.User;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter

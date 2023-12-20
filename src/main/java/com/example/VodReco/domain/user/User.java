@@ -1,4 +1,4 @@
-package com.example.VodReco.domain;
+package com.example.VodReco.domain.user;
 
 import jakarta.persistence.*;
 import lombok.*;
