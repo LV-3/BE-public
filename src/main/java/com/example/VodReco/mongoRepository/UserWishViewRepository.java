@@ -1,10 +1,9 @@
 package com.example.VodReco.mongoRepository;
 
-import com.example.VodReco.domain.UserWishView;
+import com.example.VodReco.domain.user.UserWishView;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserWishViewRepository extends MongoRepository<UserWishView, String> {
 

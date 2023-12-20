@@ -1,6 +1,6 @@
 package com.example.VodReco.service.mypage.viewMyWishList;
 
-import com.example.VodReco.domain.UserWishView;
+import com.example.VodReco.domain.user.UserWishView;
 import com.example.VodReco.dto.mypage.ViewMyWishListDto;
 import com.example.VodReco.mongoRepository.UserWishViewRepository;
 import lombok.RequiredArgsConstructor;

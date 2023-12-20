@@ -1,6 +1,6 @@
 package com.example.VodReco.mongoRepository;
 
-import com.example.VodReco.domain.UserWatch;
+import com.example.VodReco.domain.user.UserWatch;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

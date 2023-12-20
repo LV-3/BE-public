@@ -1,6 +1,6 @@
 package com.example.VodReco.service.mypage.viewMyRatingList;
 
-import com.example.VodReco.domain.UserRating;
+import com.example.VodReco.domain.user.UserRating;
 import com.example.VodReco.dto.mypage.ViewMyRatingListDto;
 import com.example.VodReco.repository.UserRatingRepository;
 import lombok.RequiredArgsConstructor;

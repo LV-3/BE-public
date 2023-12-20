@@ -1,6 +1,6 @@
 package com.example.VodReco.util.userRating;
 
-import com.example.VodReco.domain.UserRating;
+import com.example.VodReco.domain.user.UserRating;
 import com.example.VodReco.dto.rating.UpdateMyRatingDto;
 import org.springframework.stereotype.Component;
 

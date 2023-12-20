@@ -1,7 +1,7 @@
 package com.example.VodReco.mongoRepository;
 
 
-import com.example.VodReco.domain.User;
+import com.example.VodReco.domain.user.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
