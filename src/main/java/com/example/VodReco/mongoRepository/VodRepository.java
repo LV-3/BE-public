@@ -1,11 +1,11 @@
 package com.example.VodReco.mongoRepository;
 
+import com.example.VodReco.aspects.LogExecutionTime;
 import com.example.VodReco.domain.Vod;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 //@Repository jpa가 아니라면 안 써도 됨
 public interface VodRepository extends MongoRepository<Vod,String> {
@@ -13,6 +13,7 @@ public interface VodRepository extends MongoRepository<Vod,String> {
     Vod findByContentId(String contentId);
     List<Vod> findAllByGenre(String genre);
 
+    @LogExecutionTime
     List<Vod> findByUniqueTemplatesContaining(String tags);
 //    List<Vod> findByUniqueTemplatesContaining(String tag);
 //    List<Vod> findBySeriesId(String seriesId);
