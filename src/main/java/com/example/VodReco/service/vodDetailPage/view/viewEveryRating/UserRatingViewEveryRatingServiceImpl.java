@@ -1,6 +1,6 @@
 package com.example.VodReco.service.vodDetailPage.view.viewEveryRating;
 
-import com.example.VodReco.domain.UserRatingView;
+import com.example.VodReco.domain.user.UserRatingView;
 import com.example.VodReco.dto.rating.ViewEveryRatingResponseDto;
 import com.example.VodReco.mongoRepository.UserRatingViewRepository;
 import lombok.RequiredArgsConstructor;

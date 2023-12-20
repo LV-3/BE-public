@@ -1,6 +1,6 @@
 package com.example.VodReco.repository;
 
-import com.example.VodReco.domain.UserRating;
+import com.example.VodReco.domain.user.UserRating;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package com.example.VodReco.mongoRepository;
 
-import com.example.VodReco.domain.UserRatingView;
+import com.example.VodReco.domain.user.UserRatingView;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

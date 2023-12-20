@@ -1,11 +1,10 @@
-package com.example.VodReco.domain;
+package com.example.VodReco.domain.user;
 
 import com.example.VodReco.dto.rating.UpdateMyRatingDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "user_rating")

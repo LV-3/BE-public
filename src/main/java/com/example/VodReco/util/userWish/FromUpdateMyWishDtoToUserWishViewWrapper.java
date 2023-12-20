@@ -1,6 +1,6 @@
 package com.example.VodReco.util.userWish;
 
-import com.example.VodReco.domain.UserWishView;
+import com.example.VodReco.domain.user.UserWishView;
 import com.example.VodReco.dto.wish.UpdateMyWishDto;
 import com.example.VodReco.mongoRepository.UserWishViewRepository;
 import lombok.RequiredArgsConstructor;
