@@ -22,6 +22,7 @@ public class ContentIdToBasicInfoOfVodsWrapper {
 
     private List<BasicInfoOfVodDto> getBasicInfo(List<BasicInfoOfVodDto> list, List<String> contentIds, VodtoVodDtoWrapper vodtoVodDtoWrapper, VodRepository vodRepository) {
         for (String c : contentIds) {
+            //vods에 존재하는지 확인
             if (vodRepository.findByContentId(c) != null) {
                 VodDto vodDto = vodtoVodDtoWrapper.toVodDto((vodRepository.findByContentId(c)));
                 BasicInfoOfVodDto basicInfoOfVodDto = BasicInfoOfVodDto.builder()

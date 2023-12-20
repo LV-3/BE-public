@@ -44,6 +44,8 @@ public class VodviewVodsByTagServiceImpl implements VodviewVodsByTagService {
             for (Vod v : byUniqueTemplatesContaining) {
                 contentIds.add(v.getContentId());
             }
+            //contentId 리스트에서 자기 자신 제외
+            contentIds.remove(contentId);
             //5개 랜덤 추출
             List<String> extractedContentIds = randomContentIdsExtractor.extractFiveRandContentIds(contentIds);
 
@@ -62,6 +64,8 @@ public class VodviewVodsByTagServiceImpl implements VodviewVodsByTagService {
             for (Vod v : byUniqueTemplatesContaining2) {
                 contentIds2.add(v.getContentId());
             }
+            contentIds1.remove(contentId);
+            contentIds2.remove(contentId);
             //5개 랜덤 추출
             List<String> extractedContentIds1 = randomContentIdsExtractor.extractFiveRandContentIds(contentIds1);
             List<String> extractedContentIds2 = randomContentIdsExtractor.extractFiveRandContentIds(contentIds2);
@@ -87,6 +91,9 @@ public class VodviewVodsByTagServiceImpl implements VodviewVodsByTagService {
             for (Vod v : byUniqueTemplatesContaining3) {
                 contentIds3.add(v.getContentId());
             }
+            contentIds1.remove(contentId);
+            contentIds2.remove(contentId);
+            contentIds3.remove(contentId);
             //5개 랜덤 추출
             List<String> extractedContentIds1 = randomContentIdsExtractor.extractFiveRandContentIds(contentIds1);
             List<String> extractedContentIds2 = randomContentIdsExtractor.extractFiveRandContentIds(contentIds2);
