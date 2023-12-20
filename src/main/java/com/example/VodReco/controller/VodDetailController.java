@@ -1,5 +1,6 @@
 package com.example.VodReco.controller;
 
+import com.example.VodReco.aspects.LogExecutionTime;
 import com.example.VodReco.dto.UserDto;
 import com.example.VodReco.dto.rating.UpdateMyRatingRequestDto;
 import com.example.VodReco.dto.rating.ViewEveryRatingResponseDto;
@@ -201,6 +202,7 @@ public class VodDetailController {
 //        }
     }
 
+    @LogExecutionTime
     @GetMapping("/{content_id}/tags")
     public TagsResponseDto sendEachTagVods(@PathVariable("content_id") String contentId) {
         return vodviewVodsByTagService.sendEachTagVods(contentId);
