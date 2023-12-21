@@ -27,7 +27,7 @@ public class UserWatchListViewServiceImpl implements UserWatchListViewService{
             return Optional.empty();
         }
         for (UserWatch w : myWatchList) {
-            if (w.getSeriesId() != null) { // seriesId가 있는 경우 = 시리즈물인 경우
+//            if (w.getSeriesId() != null) { // seriesId가 있는 경우 = 시리즈물인 경우
                 ViewMyWatchListDto viewMyWatchListDto = ViewMyWatchListDto.builder()
                         .subsr(w.getSubsr())
                         .contentId(w.getContentId())
@@ -36,16 +36,16 @@ public class UserWatchListViewServiceImpl implements UserWatchListViewService{
                         .posterurl(w.getPosterurl())
                         .build();
                 myWatchListDtos.add(viewMyWatchListDto);
-            } else { //content_id 있는 경우 = 시리즈물이 아닌 경우
-                ViewMyWatchListDto viewMyWatchListDto = ViewMyWatchListDto.builder()
-                        .subsr(w.getSubsr())
-                        .contentId(w.getContentId())
-                        .title(w.getTitle())
-                        .user_preference(w.getUserPreference())
-                        .posterurl(w.getPosterurl())
-                        .build();
-                myWatchListDtos.add(viewMyWatchListDto);
-            }
+//            } else { //content_id 있는 경우 = 시리즈물이 아닌 경우
+//                ViewMyWatchListDto viewMyWatchListDto = ViewMyWatchListDto.builder()
+//                        .subsr(w.getSubsr())
+//                        .contentId(w.getContentId())
+//                        .title(w.getTitle())
+//                        .user_preference(w.getUserPreference())
+//                        .posterurl(w.getPosterurl())
+//                        .build();
+//                myWatchListDtos.add(viewMyWatchListDto);
+//            }
         }
         return Optional.of(myWatchListDtos);
     }
