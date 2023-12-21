@@ -10,14 +10,14 @@ public class TimeUtil {
         int hour = now.getHour();
         //0-6(오후 3시부터 저녁 9시), 6-12(저녁 9시부터 새벽 3시), 12-18(새벽 3시부터 오전 9시), 18-24(오전9시-오후 3시)
 
-        if(hour >= 15 && hour < 21){
+        if (hour >= 21 || hour < 3) {
+            return "night";
+        } else if (hour >= 15 && hour < 21) {
             return "dawn";
-        } else if (hour >= 21 && hour < 3) {
-            return "am";
         } else if (hour >= 9 && hour < 15) {
             return "pm";
         } else {
-            return "night";
+            return "am";
         }
 
 //        if (hour >= 18) {
