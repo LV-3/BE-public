@@ -1,5 +1,6 @@
 package com.example.VodReco.dto.mypage;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +10,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ViewMyRatingListDto {
     private String subsr;
-    private String content_id;
+    @JsonProperty("content_id")
+    private String contentId;
     private String title;
     private String posterurl;
     private Integer rating;
@@ -17,9 +19,9 @@ public class ViewMyRatingListDto {
     private String review;
 
     @Builder
-    public ViewMyRatingListDto(String subsr,String contentId, String title,String posterurl, Integer rating, String rating_date, String review) {
+    public ViewMyRatingListDto(String subsr, String contentId, String title,String posterurl, Integer rating, String rating_date, String review) {
         this.subsr = subsr;
-        this.content_id = contentId;
+        this.contentId = contentId;
         this.title =title;
         this.posterurl = posterurl;
         this.rating = rating;

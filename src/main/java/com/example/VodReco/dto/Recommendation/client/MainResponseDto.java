@@ -18,11 +18,15 @@ public class MainResponseDto {
 //    (231211) 추후 구조나 key값 수정 가능
     private String personal_words;
 
+    private String genre_words;
+
     @Builder
-    public MainResponseDto(List<ToClient1stDto> description_data, List<ToClient1stDto> genre_data, List<ToClient1stDto> personal_data, String personal_words) {
+    public MainResponseDto(List<ToClient1stDto> description_data, List<ToClient1stDto> genre_data,
+                           List<ToClient1stDto> personal_data, String personal_words, String genre_words) {
         this.description_data = description_data;
         this.genre_data = genre_data;
         this.personal_data = personal_data;
         this.personal_words = personal_words;
+        this.genre_words = genre_words;
     }
 }
