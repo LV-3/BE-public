@@ -22,12 +22,14 @@ public class UserWatchListViewServiceImpl implements UserWatchListViewService{
         List<ViewMyWatchListDto> myWatchListDtos = new ArrayList<>();
         List<UserWatch> myWatchList = userWatchRepository.findAllBySubsr(subsr);
 
-
         if(myWatchList.isEmpty()){
             return Optional.empty();
         }
         for (UserWatch w : myWatchList) {
 //            if (w.getSeriesId() != null) { // seriesId가 있는 경우 = 시리즈물인 경우
+            if (w.getPosterurl() == null) {
+                return Optional.empty();
+            }
                 ViewMyWatchListDto viewMyWatchListDto = ViewMyWatchListDto.builder()
                         .subsr(w.getSubsr())
                         .contentId(w.getContentId())
