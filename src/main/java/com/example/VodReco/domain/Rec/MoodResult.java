@@ -15,10 +15,13 @@ public class MoodResult {
     @Field(name = "recommend_list")
     @JsonProperty("content_id")
     private String contentId;
+    @Field(name = "title_info")
+    private String genre_words;
 
     @Builder
-    public MoodResult(String subsr, String contentId) {
+    public MoodResult(String subsr, String contentId, String genre_words) {
         this.subsr = subsr;
         this.contentId = contentId;
+        this.genre_words = genre_words;
     }
 }

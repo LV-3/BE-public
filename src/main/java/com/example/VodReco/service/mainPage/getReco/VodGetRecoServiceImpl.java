@@ -40,6 +40,7 @@ public class VodGetRecoServiceImpl implements VodGetRecoService {
                 .genre_data(stringToListWrapper.stringToList(allMoodBySubsr.getContentId()).stream().map(setDataToSendToClient :: buildToClient1stDto).toList())
                 .personal_data(stringToListWrapper.stringToList(allPersBySubsr.getContentId()).stream().map(setDataToSendToClient :: buildToClient1stDto).toList())
                 .personal_words(personalResultRepository.findBySubsr(subsr).getPersonal_words())
+                .genre_words(moodResultRepository.findBySubsr(subsr).getGenre_words())
                 .build();
 
 
