@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 public class UserWatch {
     private String subsr;
-    @Field(name = "content_id")
+    @Field(name = "unique_id")
     private String contentId;
 
     @Field(name = "user_preference")
@@ -23,17 +23,14 @@ public class UserWatch {
     private String title;
     @Field(name = "ImgUrl")
     private String posterurl;
-    @Field(name = "series_id")
-    private String seriesId;
 
     @Builder
-    public UserWatch(String subsr, String contentId, Integer userPreference, String title, String posterurl, String seriesId) {
+    public UserWatch(String subsr, String contentId, Integer userPreference, String title, String posterurl) {
 
         this.contentId = contentId;
         this.subsr = subsr;
         this.userPreference = userPreference;
         this.title = title;
         this.posterurl = posterurl;
-        this.seriesId = seriesId;
     }
 }
