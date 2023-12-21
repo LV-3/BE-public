@@ -8,16 +8,15 @@ import java.time.LocalDateTime;
 public class TimeUtil {
     public String getTimeGroup(LocalDateTime now) {
         int hour = now.getHour();
-        //0-6(오후 3시부터 저녁 9시), 6-12(저녁 9시부터 새벽 3시), 12-18(새벽 3시부터 오전 9시), 18-24(오전9시-오후 3시)
 
         if (hour >= 21 || hour < 3) {
-            return "night";
+            return "am";
         } else if (hour >= 15 && hour < 21) {
             return "dawn";
         } else if (hour >= 9 && hour < 15) {
-            return "pm";
+            return "night";
         } else {
-            return "am";
+            return "pm";
         }
 
 //        if (hour >= 18) {
