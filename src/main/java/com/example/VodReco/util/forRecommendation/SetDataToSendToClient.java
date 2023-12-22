@@ -32,7 +32,7 @@ public class SetDataToSendToClient {
 //                set.addAll(this.getSortedByUserPreference(subsr));
                 return set.stream().toList(); // TODO : 수정 필요(231218)
             }
-//            TODO : user_preference 데이터까지 전부 써도 21개가 안 되는 예외는 아직 처리 안 함
+//            TODO : user_preference 데이터까지 전부 써도 21개가 안 되는 예외는 아직 처리 안 함(231221)
             List<String> first21s = set.stream().toList();
             return first21s;
         }
@@ -60,7 +60,6 @@ public class SetDataToSendToClient {
 
     //content_id로 {title, content_id, posterurl, tags} 객체 만드는 메서드
     public ToClient1stDto buildToClient1stDto(String contentId){
-        if (vodRepository.findByContentId(contentId) != null) {
         VodDto vodDto = vodtoVodDtoWrapper.toVodDto(vodRepository.findByContentId(contentId));
 //        if (vodDto.getPosterurl() != null) {        // posterurl이 null이 아닌 vod만 사용자에게 추천(231218)
 
@@ -80,12 +79,6 @@ public class SetDataToSendToClient {
          */
             return ToClient1stDto.builder().contentId(contentId).posterurl(vodDto.getPosterurl()).title(vodDto.getTitle())
                     .build();
-        }
-//        else {
-//            return ToClient1stDto.builder().contentId(contentId).posterurl(vodDto.getPosterurl()).title(vodDto.getTitle())
-//                    .build();
-        return ToClient1stDto.builder().contentId(contentId)
-                .build();
     }
 
     //
