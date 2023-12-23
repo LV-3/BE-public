@@ -204,8 +204,8 @@ public class VodDetailController {
 
     @LogExecutionTime
     @GetMapping("/{content_id}/tags")
-    public TagsResponseDto sendEachTagVods(@PathVariable("content_id") String contentId) {
-        return vodviewVodsByTagService.sendEachTagVods(contentId);
+    public ResponseEntity<TagsResponseDto> sendEachTagVods(@PathVariable("content_id") String contentId) {
+        return ResponseEntity.ok(vodviewVodsByTagService.sendEachTagVods(contentId));
     }
 }
 
