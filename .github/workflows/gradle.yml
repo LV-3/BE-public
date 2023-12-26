@@ -34,7 +34,14 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          
+      - name: Copy Secret
+        env:
+          SECRET: ${{ secrets.app_yml}}
+          SECRET_DIR: src/main/resources
+          SECRET_DIR_FILE_NAME: application.yml
+        run: echo $SECRET | base64 --decode > $SECRET_DIR/$SECRET_DIR_FILE_NAME
+      
+      
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
