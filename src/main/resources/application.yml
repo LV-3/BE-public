@@ -22,7 +22,7 @@ spring:
 
   data:
     mongodb:
-    uri: ${DB_URI}
+      uri: ${DB_URI}
 
 server:
   tomcat:
