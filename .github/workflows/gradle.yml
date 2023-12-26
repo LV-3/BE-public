@@ -16,11 +16,9 @@ permissions:
   id-token: write
 
 env:
-  AWS_REGION: ap-northeast-2
-  ECR_REPOSITORY: lv3-springboot
-
-  ECS_SERVICE: lv3-springboot-svc
-
+  AWS_REGION: ${{secrets.AWS_REGION}}
+  ECR_REPOSITORY: ${{secrets.AWS_REPO}}
+  ECS_SERVICE: ${{secrets.AWS_SVC}}
   ECS_CLUSTER: lv3cluster
   ECS_TASK_DEFINITION: task-definition.json
   CONTAINER_NAME: lv3container
@@ -36,14 +34,21 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-            
+      - name: Copy Secret
+        env:
+          SECRET: ${{ secrets.app_yml}}
+          SECRET_DIR: src/main/resources
+          SECRET_DIR_FILE_NAME: application.yml
+        run: echo $SECRET | base64 --decode > $SECRET_DIR/$SECRET_DIR_FILE_NAME
+      
+      
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
 
-          role-to-assume: arn:aws:iam::682971737440:role/eunhadeploy
+          role-to-assume: ${{secrets.AWS_ROLE}}
           role-session-name: sampleSessionName
-          aws-region: ap-northeast-2
+          aws-region: ${{secrets.AWS_REGION}}
 
       - name: Login to Amazon ECR
         id: login-ecr
