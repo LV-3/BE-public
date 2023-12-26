@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -20,7 +22,7 @@ public class VodViewDetailInfoServiceImpl implements VodViewDetailInfoService {
     // content_id로 Vod 조회
     @Override
     public VodDetailResponseDto getVodByContentId(String contentId) {
-        String d;
+//        String d;
         //findByContentId 조회 불가능한 에러: @Id 제거하니 해결(231124)
         VodDto vodDto = vodtoVodDtoWrapper.toVodDto(vodRepository.findByContentId(contentId));
 //        if (vodDto.getIsSeries() == 1) {
@@ -44,7 +46,7 @@ public class VodViewDetailInfoServiceImpl implements VodViewDetailInfoService {
 
                 .disp_rtm(vodDto.getDisp_rtm())
                 .grade(vodDto.getGrade())
-                .tags(vodDto.getUniqueTemplates().subList(0, 3))
+                .tags(vodDto.getUniqueTemplates())
 
                 .build();
 
