@@ -38,8 +38,7 @@ out/
 ### VS Code ###
 .vscode/
 
-### application copy.yml ###
-src/main/resources/application_copy.yml
-
+### .env ###
+.env
 
 
