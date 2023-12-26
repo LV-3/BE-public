@@ -13,16 +13,9 @@ spring:
     async:
       request-timeout: 1000
 
-
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PWD}
-
-  data:
-    mongodb:
-      uri: ${DB_URI}
+  profiles.include:
+    - mysql
+    - mongodb
 
 server:
   tomcat:
