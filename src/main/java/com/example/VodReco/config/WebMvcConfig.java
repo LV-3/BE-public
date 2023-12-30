@@ -15,6 +15,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "http://lv3-s3.s3-website.ap-northeast-2.amazonaws.com", "http://lv3-loadbalancer-f-725358857.ap-northeast-2.elb.amazonaws.com",
 
                         "https://www.hellogptv.com",
+                        "https://api.hellogptv.com",
 
                         "http://192.168.123.105:3000",
 
