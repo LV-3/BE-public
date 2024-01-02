@@ -21,6 +21,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "http://192.168.123.105:3000",
 
                         "https://d225nwg9l5o274.cloudfront.net",
+                        "https://d3l7tgeznk7sw9.cloudfront.net",
 
                         "https://1.220.201.108:3000", "https://1.220.201.108:3001", "https://1.220.201.108:3002",
 
